@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cancer in the Commonwealth | Self-Paced Cancer Education</title>
+  <meta name="description" content="A self-paced, module-based cancer education site for Appalachian Kentucky students, adapted from the UK Markey Cancer Center curriculum." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
+          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
+          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+        </svg>
+        <span class="brand__text">
+          <span class="brand__title">Cancer in the Commonwealth</span>
+          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html" class="is-active">Home</a>
+        <a href="module1.html">Module 1</a>
+        <a href="module2.html">Module 2</a>
+        <a href="module3.html">Module 3</a>
+
+      <a href="certificate.html" id="certNavLink" class="cert-nav-link">Certificates</a>      <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+      </nav>
+      <div class="account-ui">
+        <span class="account-status" id="accountStatus"></span>
+        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__inner">
+      <p class="eyebrow on-dark">A self-paced learning trail</p>
+      <h1>Cancer in the&nbsp;Commonwealth</h1>
+      <p class="lede">
+        An interactive, go-at-your-own-pace introduction to cancer biology, risk and prevention,
+        and treatment &mdash; built around the realities of life in Appalachian Kentucky. Work
+        through three short modules, try the built-in activities, and check what you've learned
+        along the way.
+      </p>
+      <div class="hero__meta">
+        <div>
+          <strong>3</strong>
+          Modules
+        </div>
+        <div>
+          <strong>~20&ndash;30 min</strong>
+          Per module
+        </div>
+        <div id="heroProgressMeta">
+          <strong>Self-paced</strong>
+          Your progress is saved on this device
+        </div>
+      </div>
+
+      <!-- Shown only when accounts are enabled (account.js toggles hidden) -->
+      <div class="hero__signup" id="heroSignup" hidden>
+        <button class="btn btn--gold" id="heroCreateAccountBtn">
+          Create a free account
+        </button>
+        <span class="hero__signup-or">or</span>
+        <button class="btn btn--ghost hero__signin-link" id="heroSignInBtn">
+          Sign in
+        </button>
+      </div>
+
+      <!-- Shown when already signed in (account.js toggles hidden) -->
+      <div class="hero__signed-in" id="heroSignedIn" hidden>
+        <p class="hero__signed-in-msg">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline;vertical-align:-2px;margin-right:5px;" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" fill="#d9a23b" opacity="0.25"/>
+            <path d="M4.5 8.5L7 11L11.5 5.5" stroke="#d9a23b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Signed in &mdash; your progress syncs across devices.
+        </p>
+      </div>
+    </div>
+    <div class="ridgeline" aria-hidden="true">
+      <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="1180" cy="50" r="34" fill="#d9a23b" opacity="0.85" />
+        <path d="M0,140 L140,75 L300,130 L470,55 L640,125 L820,45 L1000,115 L1180,70 L1320,130 L1440,90 L1440,220 L0,220 Z" fill="#6f9482" opacity="0.55" />
+        <path d="M0,180 L180,110 L360,165 L540,100 L720,175 L900,120 L1080,180 L1260,130 L1440,175 L1440,220 L0,220 Z" fill="#3c5c4c" opacity="0.85" />
+        <path d="M0,220 L200,165 L380,205 L560,150 L760,210 L960,160 L1160,215 L1340,175 L1440,205 L1440,220 Z" fill="#f2f6f0" />
+      </svg>
+    </div>
+  </section>
+
+  <main>
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow">Pick a module</p>
+        <h2>Three modules, one trail</h2>
+        <p class="lede" style="max-width: 60ch; margin-top: 0.6rem;">
+          Modules build on each other, but you can hop to whichever one you need. Each module is
+          broken into short sections you click through at your own speed, with activities,
+          knowledge checks, and a short quiz at the end.
+        </p>
+
+        <div class="module-grid">
+          <a class="module-card" href="module1.html" data-module="module1" data-total-screens="16">
+            <span class="module-card__number">Module 1 &middot; 16 sections</span>
+            <h3>Cancer Basics &amp; Health Disparities</h3>
+            <p>
+              What cancer actually is, how tumors and metastasis work, and why some places
+              &mdash; including Appalachian Kentucky &mdash; see higher rates of cancer than
+              others.
+            </p>
+            <div class="mini-progress"><div class="mini-progress__fill"></div></div>
+            <div class="module-card__footer">
+              <span class="module-card__cta">Start module &rarr;</span>
+              <span class="status-pill">Not started</span>
+            </div>
+          </a>
+
+          <a class="module-card" href="module2.html" data-module="module2" data-total-screens="9">
+            <span class="module-card__number">Module 2 &middot; 9 sections</span>
+            <h3>Risk Factors &amp; Modifiable Behaviors</h3>
+            <p>
+              A tour of the major risk factors for cancer &mdash; from age and genetics to
+              tobacco, alcohol, and sun exposure &mdash; and a simple framework for lowering
+              your own risk.
+            </p>
+            <div class="mini-progress"><div class="mini-progress__fill"></div></div>
+            <div class="module-card__footer">
+              <span class="module-card__cta">Start module &rarr;</span>
+              <span class="status-pill">Not started</span>
+            </div>
+          </a>
+
+          <a class="module-card" href="module3.html" data-module="module3" data-total-screens="11">
+            <span class="module-card__number">Module 3 &middot; 11 sections</span>
+            <h3>Diagnosis &amp; Treatment</h3>
+            <p>
+              How cancer gets diagnosed, why early detection matters so much in rural
+              communities, and a walkthrough of the eight major types of cancer treatment.
+            </p>
+            <div class="mini-progress"><div class="mini-progress__fill"></div></div>
+            <div class="module-card__footer">
+              <span class="module-card__cta">Start module &rarr;</span>
+              <span class="status-pill">Not started</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="wrap">
+        <p class="eyebrow">Good to know</p>
+        <h2>How this site works</h2>
+        <div class="about-grid mt-lg">
+          <div class="callout">
+            <h3>Built for going at your own speed</h3>
+            <p>
+              Each module is a sequence of short sections. Use the <strong>Next</strong> and
+              <strong>Back</strong> buttons, or click any numbered marker on the trail at the top
+              of a module to jump straight to a section. There's no time limit &mdash; re-read,
+              skip ahead, or come back tomorrow.
+            </p>
+          </div>
+          <div class="callout callout--sky" id="progressCallout">
+            <h3>Your progress stays on this device</h3>
+            <p>
+              This site remembers which sections you've viewed and how you scored on each
+              module's quiz &mdash; right in your browser, on this device. It isn't sent
+              anywhere or shared with anyone else.
+            </p>
+            <!-- Shown only when accounts are enabled -->
+            <div id="accountCalloutSignedOut" hidden style="margin-top:0.9rem;">
+              <p style="font-size:0.92rem; margin-bottom:0.7rem;">
+                Want your progress to follow you to any device?
+              </p>
+              <button class="btn btn--sm" style="background:var(--sky);border-color:var(--sky);color:#fff;" id="calloutCreateBtn">
+                Create a free account
+              </button>
+              <button class="btn btn--ghost btn--sm" style="margin-left:0.4rem;border-color:var(--sky);color:var(--sky);" id="calloutSignInBtn">
+                Sign in
+              </button>
+            </div>
+            <!-- Shown when signed in -->
+            <p id="accountCalloutSignedIn" hidden style="margin-top:0.7rem;font-size:0.88rem;color:var(--sky);">
+              &#10003;&nbsp; Signed in — your progress syncs automatically.
+            </p>
+          </div>
+          <div class="callout callout--clay">
+            <h3>Activities and quizzes give instant feedback</h3>
+            <p>
+              Throughout each module you'll find short activities, reflection questions, and
+              a knowledge-check quiz. Click an answer to see right away whether you got it
+              and why &mdash; there's no grade, just a chance to check your understanding.
+            </p>
+          </div>
+          <div class="callout">
+            <h3>Certificates &amp; starting over</h3>
+            <p>
+              Finish a module's post-test to unlock a printable
+              <a href="certificate.html">certificate of completion</a> for that
+              module. Finish all three to unlock a full-course certificate.
+            </p>
+            <p style="margin-top: 0.6rem;">
+              Using a shared computer, or want a clean slate? Use the button below to
+              clear all saved progress on this device.
+            </p>
+            <button class="btn btn--ghost btn--sm" id="resetProgress" style="margin-top: 0.9rem;">Reset my progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="wrap">
+        <p class="eyebrow">About the curriculum</p>
+        <h2>Where this content comes from</h2>
+        <p class="lede" style="max-width: 68ch; margin-top: 0.6rem;">
+          The lessons on this site are adapted from <em>Cancer in the Commonwealth</em>, a
+          cancer education curriculum developed by the University of Kentucky Markey Cancer
+          Center specifically for students in Appalachian Kentucky. The original curriculum
+          covers cancer biology, regional health disparities, modifiable risk factors, and
+          how cancer is diagnosed and treated &mdash; with an emphasis on the issues that
+          matter most to rural Kentucky communities.
+        </p>
+        <p class="source-note" style="margin-top: 1.2rem; max-width: 68ch;">
+          Adapted with attribution from the <em>Cancer in the Commonwealth</em> curriculum,
+          &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025. For more
+          information about the original program, contact
+          <a href="mailto:nathan.vanderford@uky.edu">nathan.vanderford@uky.edu</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div>
+        <strong style="color:#fbfbf6; font-family: var(--font-display); font-size:1.1rem;">Cancer in the Commonwealth</strong>
+        <p style="margin-top: 0.5rem;">
+          A self-paced introduction to cancer biology, prevention, and treatment for
+          Appalachian Kentucky students.
+        </p>
+      </div>
+      <div>
+        <p><a href="module1.html">Module 1: Cancer Basics &amp; Health Disparities</a></p>
+        <p><a href="module2.html">Module 2: Risk Factors &amp; Modifiable Behaviors</a></p>
+        <p><a href="module3.html">Module 3: Diagnosis &amp; Treatment</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="accountModal" hidden>
+    <div class="modal">
+      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
+      <p class="eyebrow">Optional</p>
+      <h2>Save your progress</h2>
+      <p>
+        Create a free account to save your progress and pick up where you left off on any
+        device. You can also keep using this site without an account &mdash; your progress
+        will just stay on this device.
+      </p>
+      <form id="accountForm">
+        <label for="accountEmail">Email</label>
+        <input type="email" id="accountEmail" autocomplete="email" required>
+        <label for="accountPassword">Password</label>
+        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
+        <p class="form-error" id="accountError"></p>
+        <p class="form-info" id="accountInfo"></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
+          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+        </div>
+        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+      </form>
+      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+    </div>
+  </div>
+
+  <script src="assets/script.js"></script>
+  <script>
+    CIC.initIndexCards();
+  </script>
+  <script type="module" src="assets/account.js"></script>
+</body>
+</html>

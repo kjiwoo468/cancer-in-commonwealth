@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 1: Cancer Basics &amp; Health Disparities | Cancer in the Commonwealth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
+          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
+          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+        </svg>
+        <span class="brand__text">
+          <span class="brand__title">Cancer in the Commonwealth</span>
+          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="module1.html" class="is-active">Module 1</a>
+        <a href="module2.html">Module 2</a>
+        <a href="module3.html">Module 3</a>
+
+      <a href="certificate.html" id="certNavLink" class="cert-nav-link">Certificates</a>      <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+      </nav>
+      <div class="account-ui">
+        <span class="account-status" id="accountStatus"></span>
+        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="module-shell">
+    <div class="module-head">
+      <div>
+        <p class="eyebrow">Module 1 of 3</p>
+        <h1>Cancer Basics &amp; Health Disparities</h1>
+      </div>
+      <a class="module-head__back" href="index.html">&larr; All modules</a>
+    </div>
+
+    <nav class="trail-nav" aria-label="Module sections">
+      <div class="trail-nav__track" id="trailTrack"></div>
+      <p class="trail-nav__label" id="trailLabel">Section <span>1</span></p>
+    </nav>
+
+    <div class="screen-stage" id="screenStage">
+
+      <!-- 1 -->
+      <section class="screen" data-title="Welcome">
+        <div class="screen__kicker"><span class="eyebrow">Welcome</span></div>
+        <h2>What this module covers</h2>
+        <p class="lede">
+          This first module lays the groundwork for everything else in this course. By the end,
+          you'll be able to explain what cancer is at the cellular level, describe the difference
+          between benign and malignant tumors, and talk about why some groups of people &mdash;
+          including people living in Appalachian Kentucky &mdash; are more affected by cancer than
+          others.
+        </p>
+        <h3>You'll work through:</h3>
+        <ul>
+          <li>What cancer is and how it starts at the cellular level</li>
+          <li>Tumor types, metastasis, and how cancer is diagnosed</li>
+          <li>An activity comparing normal cells to cancer cells</li>
+          <li>Where cancer rates are highest and lowest, and why</li>
+          <li>A short knowledge-check quiz</li>
+        </ul>
+        <div class="reflection">
+          <label for="m1q_pre">Before you start: in a sentence or two, what do you already know (or think you know) about cancer?</label>
+          <textarea id="m1q_pre" data-key="m1_pre" placeholder="Type your thoughts here&hellip;"></textarea>
+          <p class="save-note">Saved on this device</p>
+        </div>
+        <p class="lede">You'll come back to this at the end of the module &mdash; there's no wrong answer.</p>
+      </section>
+
+      <!-- 2 -->
+      <section class="screen" data-title="Pre-Test">
+        <div class="screen__kicker"><span class="eyebrow">Before you begin</span></div>
+        <h2>Pre-test: what do you know already?</h2>
+        <p class="lede">
+          Try these 10 questions before you start. Don't worry about getting them "right" &mdash;
+          this is just a snapshot of where you're starting from. You'll see this exact set of
+          questions again at the end of the module so you can see what's changed.
+        </p>
+        <div class="quiz" data-test-type="pre" data-bank="module1" data-module="module1" data-result="m1pretestResult"></div>
+        <div class="quiz-result" id="m1pretestResult">
+          <p class="eyebrow">Your starting score</p>
+          <p class="quiz-result__score">0 / 10</p>
+          <p class="quiz-result__msg"></p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="screen" data-title="What Is Cancer?">
+        <div class="screen__kicker"><span class="eyebrow">Section 3</span></div>
+        <h2>What is cancer?</h2>
+        <p class="lede">
+          At its core, cancer is a disease of cells dividing when they shouldn't. Every cell in
+          your body carries instructions &mdash; DNA &mdash; that tell it when to grow, when to
+          divide, and when to die. Cancer happens when those instructions get damaged.
+        </p>
+        <div class="card-grid">
+          <div class="info-card">
+            <span class="tag">Step 1</span>
+            <h4>A mutation occurs</h4>
+            <p>A change (mutation) happens in a cell's DNA. Mutations can happen naturally, or be
+            caused by things like sun exposure, tobacco smoke, or other substances.</p>
+          </div>
+          <div class="info-card">
+            <span class="tag">Step 2</span>
+            <h4>Controls break down</h4>
+            <p>The mutation damages the cell's normal "off switches." Damaged cells that should die
+            instead survive, and cells that aren't needed keep dividing anyway.</p>
+          </div>
+          <div class="info-card">
+            <span class="tag">Step 3</span>
+            <h4>A tumor can form</h4>
+            <p>As these abnormal cells keep dividing, they can build up into a mass of tissue
+            called a tumor. This can happen almost anywhere in the body.</p>
+          </div>
+        </div>
+        <p>
+          Not every tumor is cancer &mdash; you'll compare the two main categories,
+          <strong>benign</strong> and <strong>malignant</strong>, in a few sections.
+        </p>
+      </section>
+
+      <!-- 3 -->
+      <section class="screen" data-title="Activity: Who's More Likely?">
+        <div class="screen__kicker"><span class="eyebrow">Activity</span></div>
+        <h2>Who's more likely to develop cancer?</h2>
+        <p class="lede">
+          Read about these two people. Based on what you just learned about how cancer starts,
+          which one do you think is statistically more likely to develop cancer at some point?
+        </p>
+        <div class="card-grid">
+          <div class="info-card">
+            <span class="tag">Person A</span>
+            <h4>Maya, age 15</h4>
+            <p>Maya's cells have been dividing and replacing themselves for about 15 years.</p>
+          </div>
+          <div class="info-card">
+            <span class="tag">Person B</span>
+            <h4>Mr. Adkins, age 70</h4>
+            <p>Mr. Adkins's cells have been dividing and replacing themselves for about 70 years.</p>
+          </div>
+        </div>
+        <div class="activity">
+          <p class="activity__label">Make your prediction</p>
+          <p><strong>Hint:</strong> think about what happens to your body's cells the longer you're
+          alive, and how many times they've had to copy their DNA.</p>
+          <div class="choice-list" data-correct="1">
+            <button class="choice">Maya is more likely to develop cancer</button>
+            <button class="choice">Mr. Adkins is more likely to develop cancer</button>
+          </div>
+          <p class="feedback is-correct-msg">
+            <strong>Right.</strong> Every time a cell divides, it has to copy its entire set of DNA
+            &mdash; and copying isn't perfect. Over a longer lifetime, cells go through far more
+            divisions, so there's more opportunity for copying errors (mutations) to build up.
+            That's a big reason why <strong>advancing age is the single most significant risk
+            factor for cancer</strong> &mdash; a topic Module 2 explores in depth. (This idea is
+            explored further in HHMI Biointeractive's <em>Cell Division and Cancer Risk</em>
+            activity, 2020.)
+          </p>
+          <p class="feedback is-incorrect-msg">
+            Actually, it's Mr. Adkins. Every time a cell divides, it copies its DNA &mdash; and
+            copying isn't perfect. Over 70 years of cell divisions, far more copying errors
+            (mutations) have had a chance to build up than in 15 years. That's why
+            <strong>advancing age is the single most significant risk factor for cancer</strong>,
+            a topic Module 2 explores in depth.
+          </p>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="screen" data-title="Metastasis">
+        <div class="screen__kicker"><span class="eyebrow">Section 5</span></div>
+        <h2>What is metastasis?</h2>
+        <p class="lede">
+          Sometimes, cancer cells break away from the tissue or organ where they started and
+          travel &mdash; usually through the bloodstream or lymphatic system &mdash; to another
+          part of the body. This spread is called <strong>metastasis</strong>.
+        </p>
+        <div style="background: var(--card-soft); border: 1px solid var(--bg-deep); border-radius: var(--radius-md); padding: 1.4rem; margin: 1.2rem 0;">
+          <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing cancer cells traveling from a primary tumor site to a new location in the body via the bloodstream">
+            <ellipse cx="110" cy="100" rx="70" ry="55" fill="#d9e8ec" stroke="#51808f" stroke-width="2"/>
+            <text x="110" y="95" text-anchor="middle" font-family="Figtree, sans-serif" font-size="14" font-weight="700" fill="#233b32">Original</text>
+            <text x="110" y="113" text-anchor="middle" font-family="Figtree, sans-serif" font-size="14" font-weight="700" fill="#233b32">tumor site</text>
+            <path d="M180,100 C300,30 320,170 430,100" fill="none" stroke="#b9cdbd" stroke-width="3" stroke-dasharray="6 6"/>
+            <circle cx="240" cy="65" r="6" fill="#d9a23b"/>
+            <circle cx="320" cy="135" r="6" fill="#d9a23b"/>
+            <circle cx="380" cy="105" r="6" fill="#d9a23b"/>
+            <ellipse cx="490" cy="100" rx="70" ry="55" fill="#f3dccf" stroke="#c1623f" stroke-width="2"/>
+            <text x="490" y="95" text-anchor="middle" font-family="Figtree, sans-serif" font-size="14" font-weight="700" fill="#233b32">New tumor site</text>
+            <text x="490" y="113" text-anchor="middle" font-family="Figtree, sans-serif" font-size="12" fill="#5d6e64">(same cancer type)</text>
+            <text x="300" y="25" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" letter-spacing="1" fill="#5d6e64">CANCER CELLS TRAVEL VIA BLOODSTREAM OR LYMPH SYSTEM</text>
+          </svg>
+        </div>
+        <h3>A few key points about metastasis</h3>
+        <ul>
+          <li>Even after spreading, the cancer is still classified as the <strong>same type</strong>
+            of cancer it started as. For example, breast cancer that spreads to the lungs is still
+            called metastatic breast cancer &mdash; not lung cancer.</li>
+          <li><strong>When</strong> and <strong>where</strong> a cancer spreads depends on the type
+            of cancer and how quickly it's growing.</li>
+        </ul>
+      </section>
+
+      <!-- 5 -->
+      <section class="screen" data-title="Benign vs. Malignant">
+        <div class="screen__kicker"><span class="eyebrow">Section 6</span></div>
+        <h2>Benign vs. malignant tumors</h2>
+        <p class="lede">Not all tumors are cancer. Tumors generally fall into one of two categories:</p>
+        <div class="compare">
+          <div class="compare__col compare__col--a">
+            <h4>Benign</h4>
+            <ul>
+              <li>Usually small</li>
+              <li>Not cancerous</li>
+              <li>Slow-growing</li>
+              <li>Non-invasive (doesn't grow into nearby tissue)</li>
+              <li>Cannot metastasize</li>
+            </ul>
+          </div>
+          <div class="compare__col compare__col--b">
+            <h4>Malignant</h4>
+            <ul>
+              <li>Often large</li>
+              <li>Cancerous</li>
+              <li>Fast-growing</li>
+              <li>Invasive (grows into nearby tissue)</li>
+              <li>Can metastasize</li>
+            </ul>
+          </div>
+        </div>
+        <div class="activity">
+          <p class="activity__label">Quick check</p>
+          <p><strong>True or false:</strong> A benign tumor can spread (metastasize) to other parts of the body.</p>
+          <div class="choice-list" data-correct="1">
+            <button class="choice">True</button>
+            <button class="choice">False</button>
+          </div>
+          <p class="feedback is-correct-msg">
+            <strong>Correct &mdash; false.</strong> By definition, benign tumors don't invade
+            nearby tissue or spread to other parts of the body. That's one of the key things that
+            separates them from malignant (cancerous) tumors.
+          </p>
+          <p class="feedback is-incorrect-msg">
+            Not quite. The statement is <strong>false</strong>. Benign tumors don't invade nearby
+            tissue or spread to other parts of the body &mdash; that ability to invade and spread
+            is one of the defining features of a malignant (cancerous) tumor.
+          </p>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="screen" data-title="Types of Cancer">
+        <div class="screen__kicker"><span class="eyebrow">Section 7</span></div>
+        <h2>There are more than 100 types of cancer</h2>
+        <p class="lede">
+          "Cancer" isn't one disease &mdash; it's a category covering well over 100 different
+          diseases. Most are named for the organ or tissue where they form, and some are named for
+          the type of cell involved (for example, <em>carcinoma</em>, <em>leukemia</em>, and
+          <em>melanoma</em> all describe cancers that start in particular cell types).
+        </p>
+        <div class="card-grid">
+          <div class="info-card">
+            <span class="tag">More common</span>
+            <h4>Frequently diagnosed types</h4>
+            <ul>
+              <li>Breast</li>
+              <li>Cervical</li>
+              <li>Prostate</li>
+              <li>Colorectal</li>
+              <li>Liver</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <span class="tag">Less common</span>
+            <h4>Rarer types</h4>
+            <ul>
+              <li>Ependymoma (a type of brain/spinal cord tumor)</li>
+              <li>Fallopian tube cancer</li>
+              <li>Heart cancer</li>
+            </ul>
+          </div>
+        </div>
+        <p>
+          Knowing that cancer comes in so many forms helps explain why there isn't a single
+          "cure for cancer" &mdash; different cancers behave differently and often need very
+          different approaches to treatment, which you'll dig into in Module 3.
+        </p>
+      </section>
+
+      <!-- 7 -->
+      <section class="screen" data-title="How Cancer Is Diagnosed">
+        <div class="screen__kicker"><span class="eyebrow">Section 8</span></div>
+        <h2>How is cancer diagnosed?</h2>
+        <p class="lede">
+          Sometimes cancer is found because a person notices symptoms. Other times, it's
+          discovered during a routine screening &mdash; before a person notices anything at all.
+          Either way, doctors follow a similar process to confirm a diagnosis.
+        </p>
+        <div class="card-grid">
+          <div class="info-card">
+            <span class="tag">1</span>
+            <h4>Something is noticed</h4>
+            <p>A routine screening detects an abnormality, or a patient reports symptoms (though
+            sometimes there are no symptoms at all).</p>
+          </div>
+          <div class="info-card">
+            <span class="tag">2</span>
+            <h4>A biopsy is performed</h4>
+            <p>A doctor performs a <strong>biopsy</strong> &mdash; removing a small sample of the
+            tissue in question.</p>
+          </div>
+          <div class="info-card">
+            <span class="tag">3</span>
+            <h4>Cells are examined</h4>
+            <p>The sample is examined under a microscope for the physical characteristics of
+            cancerous cells.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="screen" data-title="Activity: Spot the Difference">
+        <div class="screen__kicker"><span class="eyebrow">Activity</span></div>
+        <h2>Spot the difference: normal vs. cancer cells</h2>
+        <p class="lede">
+          When a pathologist looks at a tissue sample under a microscope, they're looking for
+          differences in how the cells look and are arranged. Compare these two simplified
+          illustrations of cell groups.
+        </p>
+        <div class="cell-figure">
+          <figure>
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Group A: nine evenly-sized, evenly-spaced circular cells, each with a single round nucleus, arranged in a neat grid">
+              <rect width="200" height="200" fill="#eaf3ec"/>
+              <g fill="#a9c8b6" stroke="#3c5c4c" stroke-width="2">
+                <circle cx="45" cy="45" r="26"/><circle cx="100" cy="45" r="26"/><circle cx="155" cy="45" r="26"/>
+                <circle cx="45" cy="100" r="26"/><circle cx="100" cy="100" r="26"/><circle cx="155" cy="100" r="26"/>
+                <circle cx="45" cy="155" r="26"/><circle cx="100" cy="155" r="26"/><circle cx="155" cy="155" r="26"/>
+              </g>
+              <g fill="#233b32">
+                <circle cx="45" cy="45" r="7"/><circle cx="100" cy="45" r="7"/><circle cx="155" cy="45" r="7"/>
+                <circle cx="45" cy="100" r="7"/><circle cx="100" cy="100" r="7"/><circle cx="155" cy="100" r="7"/>
+                <circle cx="45" cy="155" r="7"/><circle cx="100" cy="155" r="7"/><circle cx="155" cy="155" r="7"/>
+              </g>
+            </svg>
+            <figcaption><strong>Group A</strong> &mdash; cells are similar in size and shape, evenly
+            spaced, each with one round nucleus.</figcaption>
+          </figure>
+          <figure>
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Group B: irregularly shaped and sized cells, crowded and overlapping, some with multiple or oddly shaped nuclei">
+              <rect width="200" height="200" fill="#f3dccf"/>
+              <g fill="#e3b49c" stroke="#c1623f" stroke-width="2">
+                <ellipse cx="55" cy="50" rx="34" ry="24" transform="rotate(-15 55 50)"/>
+                <circle cx="120" cy="40" r="18"/>
+                <ellipse cx="165" cy="80" rx="40" ry="30" transform="rotate(20 165 80)"/>
+                <circle cx="40" cy="130" r="30"/>
+                <ellipse cx="110" cy="130" rx="36" ry="26" transform="rotate(-10 110 130)"/>
+                <circle cx="165" cy="165" r="22"/>
+                <ellipse cx="55" cy="180" rx="28" ry="18"/>
+              </g>
+              <g fill="#8a3e23">
+                <circle cx="50" cy="48" r="9"/><circle cx="65" cy="55" r="5"/>
+                <circle cx="120" cy="40" r="6"/>
+                <circle cx="160" cy="75" r="10"/><circle cx="175" cy="88" r="6"/>
+                <circle cx="38" cy="128" r="11"/>
+                <circle cx="105" cy="125" r="8"/><circle cx="120" cy="138" r="5"/>
+                <circle cx="165" cy="165" r="8"/>
+              </g>
+            </svg>
+            <figcaption><strong>Group B</strong> &mdash; cells vary widely in size and shape, are
+            crowded and overlapping, and some have unusually large nuclei relative to the rest
+            of the cell (a higher nucleus-to-cytoplasm ratio).</figcaption>
+          </figure>
+        </div>
+        <div class="activity">
+          <p class="activity__label">Make your call</p>
+          <p>Based on what a doctor looks for during a biopsy, which group shows
+          <strong>cancer cells</strong>?</p>
+          <div class="choice-list" data-correct="1">
+            <button class="choice">Group A</button>
+            <button class="choice">Group B</button>
+          </div>
+          <p class="feedback is-correct-msg">
+            <strong>Correct &mdash; Group B.</strong> Cancer cells often look different from the
+            healthy cells around them: irregular sizes and shapes, crowding and overlapping
+            (a sign of uncontrolled division), and an unusually large nucleus compared to the
+            rest of the cell (a higher nucleus-to-cytoplasm ratio). These are the kinds of
+            features a pathologist looks for under a microscope after a biopsy.
+          </p>
+          <p class="feedback is-incorrect-msg">
+            Actually, it's <strong>Group B</strong>. Group A shows cells that are uniform and
+            orderly &mdash; what you'd expect from healthy tissue. Group B shows the irregular
+            sizes, shapes, crowding, and the larger nucleus-to-cytoplasm ratio that signal
+            uncontrolled division &mdash; features a pathologist looks for after a biopsy.
+          </p>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section class="screen" data-title="Geography of Cancer">
+        <div class="screen__kicker"><span class="eyebrow">Section 10</span></div>
+        <h2>The geography of cancer</h2>
+        <p class="lede">
+          Cancer doesn't affect every part of the country equally. According to CDC cancer
+          statistics, here's how the states with the highest and lowest rates of new cancer
+          cases compare (cases per 100,000 people):
+        </p>
+        <h3>States with the highest rates</h3>
+        <div class="stat-bars">
+          <div class="stat-bar__row stat-bar__row--highlight">
+            <span class="stat-bar__label">Kentucky</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 84%;"></span></span>
+            <span class="stat-bar__value">503 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">Louisiana</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 81%;"></span></span>
+            <span class="stat-bar__value">486.6 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">Arkansas</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 81%;"></span></span>
+            <span class="stat-bar__value">486.4 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">West Virginia</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 80%;"></span></span>
+            <span class="stat-bar__value">484 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">New Jersey</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 80%;"></span></span>
+            <span class="stat-bar__value">479 / 100k</span>
+          </div>
+        </div>
+        <h3>States with the lowest rates</h3>
+        <div class="stat-bars">
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">Wyoming</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 66%;"></span></span>
+            <span class="stat-bar__value">394 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">California</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 65%;"></span></span>
+            <span class="stat-bar__value">388 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">Colorado</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 65%;"></span></span>
+            <span class="stat-bar__value">387 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">Arizona</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 61%;"></span></span>
+            <span class="stat-bar__value">368 / 100k</span>
+          </div>
+          <div class="stat-bar__row">
+            <span class="stat-bar__label">New Mexico</span>
+            <span class="stat-bar__track"><span class="stat-bar__fill" style="width: 58%;"></span></span>
+            <span class="stat-bar__value">350 / 100k</span>
+          </div>
+        </div>
+        <p class="source-note">Source: CDC Cancer Statistics, as referenced in the <em>Cancer in the Commonwealth</em> curriculum.</p>
+        <p class="lede">
+          Notice anything? <strong>Kentucky has the highest rate of new cancer cases (1st in
+          incidence) of any state in the country &mdash; and ranks 2nd in the nation for cancer
+          deaths (mortality).</strong> The next few sections dig into some of the reasons why.
+        </p>
+      </section>
+
+      <!-- 10 -->
+      <section class="screen" data-title="Income & Education">
+        <div class="screen__kicker"><span class="eyebrow">Section 11</span></div>
+        <h2>Who is most affected? Income and education</h2>
+        <p class="lede">
+          Research consistently shows a link between socioeconomic status and cancer outcomes:
+        </p>
+        <ul>
+          <li>People without a high school diploma have higher cancer rates than people who
+            attended college.</li>
+          <li>Families earning less than $12,500 per year are about <strong>1.7 times more
+            likely</strong> to develop lung cancer than families earning $50,000 per year.</li>
+          <li>People in lower socioeconomic groups are also more likely to be diagnosed at
+            <strong>more advanced stages</strong> of cancer.</li>
+        </ul>
+        <h3>Why might this be?</h3>
+        <div class="card-grid">
+          <div class="info-card">
+            <h4>Less cancer-related knowledge</h4>
+            <p>Limited exposure to health information can mean fewer people recognize early
+            warning signs or know about screening recommendations.</p>
+          </div>
+          <div class="info-card">
+            <h4>Less access to healthcare</h4>
+            <p>Cost, insurance coverage, and the availability of nearby providers all affect
+            whether and when someone gets screened or treated.</p>
+          </div>
+          <div class="info-card">
+            <h4>Competing priorities</h4>
+            <p>When resources are tight, healthcare &mdash; especially preventive care &mdash;
+            can understandably take a back seat to more immediate needs.</p>
+          </div>
+        </div>
+        <p class="source-note">
+          Based on findings summarized in Clegg et al., "Impact of socioeconomic status on cancer
+          incidence and stage at diagnosis," <em>Cancer Causes &amp; Control</em>, 2009.
+        </p>
+      </section>
+
+      <!-- 11 -->
+      <section class="screen" data-title="Race & Health Inequities">
+        <div class="screen__kicker"><span class="eyebrow">Section 12</span></div>
+        <h2>Who is most affected? Race</h2>
+        <p class="lede">
+          In the United States, <strong>Black populations have the highest rates of new cancer
+          cases and the highest number of cancer deaths</strong> of any racial group. Researchers
+          point to a combination of factors:
+        </p>
+        <div class="card-grid">
+          <div class="info-card">
+            <h4>Genetics</h4>
+            <p>Some genetic factors can play a role in cancer risk and how certain cancers behave.</p>
+          </div>
+          <div class="info-card">
+            <h4>Healthcare inequities</h4>
+            <p>Unequal access to high-quality care contributes to gaps in outcomes.</p>
+          </div>
+          <div class="info-card">
+            <h4>Delayed care</h4>
+            <p>Past experiences of racism within the healthcare system can delay people from
+            seeking care.</p>
+          </div>
+          <div class="info-card">
+            <h4>Access to state-of-the-art care</h4>
+            <p>Black patients are statistically less likely to receive the most advanced
+            available treatments.</p>
+          </div>
+          <div class="info-card">
+            <h4>Research representation</h4>
+            <p>Black patients are statistically less likely to be included in clinical research
+            studies, which can affect how well treatments are tailored to them.</p>
+          </div>
+          <div class="info-card">
+            <h4>Socioeconomic factors</h4>
+            <p>Differences in education and access to health insurance compound the other
+            factors above.</p>
+          </div>
+        </div>
+        <p class="source-note">
+          See Maria Aspan's reporting on racial disparities in breast cancer outcomes,
+          <em>Fortune</em>, 2020, for a deeper look at how these factors connect.
+        </p>
+      </section>
+
+      <!-- 12 -->
+      <section class="screen" data-title="Cancer in Appalachian KY">
+        <div class="screen__kicker"><span class="eyebrow">Section 13</span></div>
+        <h2>Cancer close to home: Appalachian Kentucky</h2>
+        <p class="lede">
+          Within Kentucky &mdash; the state with the nation's highest overall rate of new cancer
+          cases &mdash; cancer doesn't affect every region equally either.
+        </p>
+        <ul>
+          <li>Rural residents, in general, are more likely to develop cancer than people living in
+            urban areas.</li>
+          <li><strong>Residents of Appalachian Kentucky are about 8% more likely to die from a
+            preventable cancer</strong> than people living outside Appalachia.</li>
+        </ul>
+        <h3>Why?</h3>
+        <div class="card-grid">
+          <div class="info-card">
+            <h4>Lifestyle habits</h4>
+            <p>Behaviors that increase cancer risk &mdash; covered in depth in Module 2 &mdash;
+            are more common in the region.</p>
+          </div>
+          <div class="info-card">
+            <h4>Healthcare access</h4>
+            <p>Distance to providers, transportation, and availability of specialists all play a
+            role &mdash; this comes up again in Module 3.</p>
+          </div>
+          <div class="info-card">
+            <h4>Education &amp; socioeconomic levels</h4>
+            <p>As in Section 10, lower education and income levels are linked to later diagnoses
+            and worse outcomes.</p>
+          </div>
+        </div>
+        <p>
+          The good news: most of these factors are things that communities, healthcare systems,
+          and individuals can work to change &mdash; which is exactly what the rest of this course
+          is about.
+        </p>
+      </section>
+
+      <!-- 13 -->
+      <section class="screen" data-title="Summary">
+        <div class="screen__kicker"><span class="eyebrow">Section 14</span></div>
+        <h2>Module 1 summary</h2>
+        <ul>
+          <li>Cancer is caused by cells dividing uncontrollably, usually starting with a DNA
+            mutation.</li>
+          <li>Tumors can be <strong>benign</strong> (not cancerous, can't spread) or
+            <strong>malignant</strong> (cancerous, can spread).</li>
+          <li><strong>Metastasis</strong> is when cancer cells spread to a new part of the body
+            &mdash; but the cancer keeps the name of where it started.</li>
+          <li>There are more than 100 types of cancer, usually named for the organ or cell type
+            involved.</li>
+          <li>Cancer is diagnosed through screening and biopsy, followed by examining cells under
+            a microscope.</li>
+          <li>Certain groups &mdash; including Black communities, lower-income communities, and
+            residents of Kentucky's Appalachian region &mdash; experience higher rates of cancer
+            and worse outcomes.</li>
+        </ul>
+      </section>
+
+      <!-- 15 -->
+      <section class="screen" data-title="Post-Test">
+        <div class="screen__kicker"><span class="eyebrow">Post-test</span></div>
+        <h2>Post-test: the same 10 questions</h2>
+        <p class="lede">
+          Here's that same set of 10 questions from the start of the module. This time,
+          you'll see right away whether each answer is correct, along with a short
+          explanation &mdash; and how your score compares to your starting score.
+        </p>
+        <div class="quiz" data-test-type="post" data-bank="module1" data-module="module1" data-result="m1posttestResult"></div>
+        <div class="quiz-result" id="m1posttestResult">
+          <p class="eyebrow">Your score</p>
+          <p class="quiz-result__score">0 / 10</p>
+          <p class="quiz-result__msg"></p>
+          <p class="quiz-result__compare" hidden></p>
+        </div>
+      </section>
+
+      <!-- 16 -->
+      <section class="screen" data-title="Wrap-Up">
+        <div class="screen__kicker"><span class="eyebrow">Wrap-up</span></div>
+        <h2>Looking back</h2>
+        <p class="lede">
+          At the start of this module, you wrote down what you already knew about cancer. Take a
+          look back at that, then jot down a few things you'd add or change now.
+        </p>
+        <div class="reflection">
+          <label for="m1q_post">What's one new thing you learned in this module, and one question you still have?</label>
+          <textarea id="m1q_post" data-key="m1_post" placeholder="Type your thoughts here&hellip;"></textarea>
+          <p class="save-note">Saved on this device</p>
+        </div>
+
+        <div class="complete-banner" id="completeBanner" hidden>
+          <p class="eyebrow on-dark">Module complete</p>
+          <h2>Nice work!</h2>
+          <p>You've finished Module 1: Cancer Basics &amp; Health Disparities. Up next, Module 2
+          dives into the specific behaviors and exposures that raise &mdash; or lower &mdash;
+          your personal cancer risk.</p>
+          <div class="complete-banner__actions">
+            <a class="btn btn--gold" href="module2.html">Continue to Module 2 &rarr;</a>
+            <a class="btn btn--ghost" style="border-color:#fff; color:#fff;" href="certificate.html">Get certificate</a>
+            <a class="btn btn--ghost" style="border-color:rgba(255,255,255,0.4); color:rgba(255,255,255,0.7);" href="index.html">Back to all modules</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="stage-controls">
+      <button class="btn btn--ghost" id="prevBtn">&larr; Back</button>
+      <div class="progress-track"><div class="progress-track__fill" id="progressFill"></div></div>
+      <button class="btn" id="nextBtn">Next &rarr;</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p>Adapted from the <em>Cancer in the Commonwealth</em> curriculum, &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.</p>
+      <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="accountModal" hidden>
+    <div class="modal">
+      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
+      <p class="eyebrow">Optional</p>
+      <h2>Save your progress</h2>
+      <p>
+        Create a free account to save your progress and pick up where you left off on any
+        device. You can also keep using this site without an account &mdash; your progress
+        will just stay on this device.
+      </p>
+      <form id="accountForm">
+        <label for="accountEmail">Email</label>
+        <input type="email" id="accountEmail" autocomplete="email" required>
+        <label for="accountPassword">Password</label>
+        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
+        <p class="form-error" id="accountError"></p>
+        <p class="form-info" id="accountInfo"></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
+          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+        </div>
+        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+      </form>
+      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+    </div>
+  </div>
+
+  <script src="assets/tests-data.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    CIC.initModule('module1');
+    CIC.initAccordions();
+    CIC.initChoiceActivities();
+    CIC.initReveals();
+    CIC.initReflections();
+    CIC.initTests('module1');
+  </script>
+  <script type="module" src="assets/account.js"></script>
+</body>
+</html>

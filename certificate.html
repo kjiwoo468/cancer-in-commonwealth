@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificates | Cancer in the Commonwealth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+  <header class="site-header no-print">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
+          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
+          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+        </svg>
+        <span class="brand__text">
+          <span class="brand__title">Cancer in the Commonwealth</span>
+          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="module1.html">Module 1</a>
+        <a href="module2.html">Module 2</a>
+        <a href="module3.html">Module 3</a>
+        <a href="certificate.html" id="certNavLink" class="cert-nav-link is-active">Certificates</a>
+        <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+      </nav>
+      <div class="account-ui">
+        <span class="account-status" id="accountStatus"></span>
+        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="simple-shell">
+    <div class="module-head no-print">
+      <div>
+        <p class="eyebrow">Nice work</p>
+        <h1>Your certificates</h1>
+      </div>
+      <a class="module-head__back" href="index.html">&larr; All modules</a>
+    </div>
+
+    <div class="simple-card">
+      <div class="dashboard-empty" id="certEmptyState" hidden>
+        <p class="eyebrow">No certificates yet</p>
+        <h2>Complete a module to unlock its certificate</h2>
+        <p>
+          Once you finish a module's post-test, a certificate for that module will appear
+          here. Finish all three modules to unlock a certificate for the full course.
+        </p>
+        <p class="mt-lg"><a class="btn btn--gold" href="module1.html">Go to Module 1</a></p>
+      </div>
+
+      <div id="certControls" hidden>
+        <p class="lede no-print">
+          Pick a certificate below, add your name, and print it (or save it as a PDF using
+          your browser's print dialog).
+        </p>
+        <div class="certificate-controls no-print" id="certControlsRow">
+          <div class="field">
+            <label for="certName">Your name</label>
+            <input type="text" id="certName" placeholder="e.g., Jordan Combs" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="certSelect">Certificate</label>
+            <select id="certSelect"></select>
+          </div>
+          <div class="field">
+            <button class="btn btn--gold" id="certPrintBtn" hidden>Print certificate</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="certificate" id="certificateOutput" hidden></div>
+    </div>
+  </div>
+
+  <footer class="site-footer no-print">
+    <div class="site-footer__inner">
+      <p>Adapted from the <em>Cancer in the Commonwealth</em> curriculum, &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.</p>
+      <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="accountModal" hidden>
+    <div class="modal">
+      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
+      <p class="eyebrow">Optional</p>
+      <h2>Save your progress</h2>
+      <p>
+        Create a free account to save your progress and pick up where you left off on any
+        device. You can also keep using this site without an account &mdash; your progress
+        will just stay on this device.
+      </p>
+      <form id="accountForm">
+        <label for="accountEmail">Email</label>
+        <input type="email" id="accountEmail" autocomplete="email" required>
+        <label for="accountPassword">Password</label>
+        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
+        <p class="form-error" id="accountError"></p>
+        <p class="form-info" id="accountInfo"></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
+          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+        </div>
+        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+      </form>
+      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+    </div>
+  </div>
+
+  <script src="assets/script.js"></script>
+  <script src="assets/certificate.js"></script>
+  <script type="module" src="assets/account.js"></script>
+</body>
+</html>

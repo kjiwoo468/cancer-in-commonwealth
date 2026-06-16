@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 2: Risk Factors &amp; Modifiable Behaviors | Cancer in the Commonwealth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
+          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
+          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+        </svg>
+        <span class="brand__text">
+          <span class="brand__title">Cancer in the Commonwealth</span>
+          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="module1.html">Module 1</a>
+        <a href="module2.html" class="is-active">Module 2</a>
+        <a href="module3.html">Module 3</a>
+
+      <a href="certificate.html" id="certNavLink" class="cert-nav-link">Certificates</a>      <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+      </nav>
+      <div class="account-ui">
+        <span class="account-status" id="accountStatus"></span>
+        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="module-shell">
+    <div class="module-head">
+      <div>
+        <p class="eyebrow">Module 2 of 3</p>
+        <h1>Risk Factors &amp; Modifiable Behaviors</h1>
+      </div>
+      <a class="module-head__back" href="index.html">&larr; All modules</a>
+    </div>
+
+    <nav class="trail-nav" aria-label="Module sections">
+      <div class="trail-nav__track" id="trailTrack"></div>
+      <p class="trail-nav__label" id="trailLabel">Section <span>1</span></p>
+    </nav>
+
+    <div class="screen-stage" id="screenStage">
+
+      <!-- 1 -->
+      <section class="screen" data-title="Welcome Back">
+        <div class="screen__kicker"><span class="eyebrow">Welcome back</span></div>
+        <h2>A quick review, then what's ahead</h2>
+        <p class="lede">Before diving in, here's a refresher on the big ideas from Module 1:</p>
+        <ul>
+          <li>Cancer is caused by <strong>uncontrollable cell division</strong>, usually starting
+            with a DNA mutation.</li>
+          <li>Tumors can be <strong>malignant</strong> (cancerous) or <strong>benign</strong>
+            (not cancerous).</li>
+          <li>Cancer cells can spread to other parts of the body &mdash; this is called
+            <strong>metastasis</strong>.</li>
+          <li>Certain groups see higher numbers of cancer cases, including Black communities,
+            lower socioeconomic groups, and people living in Kentucky &mdash; especially
+            Appalachian Kentucky.</li>
+        </ul>
+        <h3>What's ahead in Module 2</h3>
+        <p>
+          If some people and places are more affected by cancer than others, what's actually
+          driving that? This module looks at the major <strong>risk factors</strong> for
+          cancer &mdash; some you can change, and some you can't &mdash; and ends with a simple
+          framework for lowering your own risk.
+        </p>
+      </section>
+
+      <!-- 2 -->
+      <section class="screen" data-title="Pre-Test">
+        <div class="screen__kicker"><span class="eyebrow">Before you begin</span></div>
+        <h2>Pre-test: what do you know already?</h2>
+        <p class="lede">
+          Try these 10 questions before you start. Don't worry about getting them "right" &mdash;
+          this is just a snapshot of where you're starting from. You'll see this exact set of
+          questions again at the end of the module so you can see what's changed.
+        </p>
+        <div class="quiz" data-test-type="pre" data-bank="module2" data-module="module2" data-result="m2pretestResult"></div>
+        <div class="quiz-result" id="m2pretestResult">
+          <p class="eyebrow">Your starting score</p>
+          <p class="quiz-result__score">0 / 10</p>
+          <p class="quiz-result__msg"></p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="screen" data-title="Activity: Brainstorm">
+        <div class="screen__kicker"><span class="eyebrow">Activity</span></div>
+        <h2>Brainstorm: what raises cancer risk?</h2>
+        <p class="lede">
+          In a classroom, students would get into small groups, brainstorm a list of behaviors
+          that might increase someone's risk of developing cancer, and then explain their
+          thinking using a <strong>Claim &mdash; Evidence &mdash; Reasoning</strong> (CER) model.
+        </p>
+        <div class="activity">
+          <p class="activity__label">Your turn</p>
+          <p>Jot down as many behaviors as you can think of that might raise someone's cancer
+          risk. For one or two of them, try to explain <em>why</em> &mdash; that's the
+          "reasoning" part of CER.</p>
+          <div class="reflection" style="margin-top: 0.8rem;">
+            <label for="m2q_brainstorm">My list &amp; reasoning</label>
+            <textarea id="m2q_brainstorm" data-key="m2_brainstorm" placeholder="e.g., Smoking &mdash; I think this is risky because&hellip;"></textarea>
+            <p class="save-note">Saved on this device</p>
+          </div>
+        </div>
+        <button class="btn btn--ghost reveal-trigger" data-target="m2reveal1" data-show-text="Show the list this module covers" data-hide-text="Hide the list"></button>
+        <div class="reveal-box" id="m2reveal1">
+          <p>This module covers ten major risk factors: <strong>age, alcohol,
+          immunosuppression, environmental carcinogens, hormones, obesity, radiation, excessive
+          sun exposure, tobacco, and infectious disease.</strong> How many did you come up with?</p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="screen" data-title="What Is a Risk Factor?">
+        <div class="screen__kicker"><span class="eyebrow">Section 4</span></div>
+        <h2>What is a risk factor?</h2>
+        <p class="lede">
+          A <strong>risk factor</strong> is anything that increases a person's likelihood of
+          developing a disease &mdash; in this case, cancer.
+        </p>
+        <div class="activity">
+          <p class="activity__label">Quick question</p>
+          <p><strong>Are risk factors always within someone's control?</strong></p>
+          <div class="choice-list" data-correct="1">
+            <button class="choice">Yes &mdash; people can always change their risk factors</button>
+            <button class="choice">No &mdash; some risk factors, like genetics and family history, can't be changed</button>
+          </div>
+          <p class="feedback is-correct-msg">
+            <strong>Right.</strong> Things like genetics and family history are risk factors, but
+            they're not modifiable behaviors &mdash; you can't change your genes. The good news is
+            that <strong>most</strong> of the risk factors covered in this module
+            <em>can</em> be changed, which is exactly why this module focuses on them.
+          </p>
+          <p class="feedback is-incorrect-msg">
+            Not quite. Some risk factors &mdash; like genetics and family history &mdash; aren't
+            modifiable behaviors; you can't change your genes. The good news is that
+            <strong>most</strong> of the risk factors in this module <em>can</em> be changed,
+            which is why this module focuses on them.
+          </p>
+        </div>
+        <p>
+          One more piece of local context: the <strong>average age in Appalachian Kentucky is
+          about 40.9 years old</strong>. Keep that in mind as you read the next section &mdash;
+          age turns out to matter a lot.
+        </p>
+      </section>
+
+      <!-- 4 -->
+      <section class="screen" data-title="Risk Factors A-Z">
+        <div class="screen__kicker"><span class="eyebrow">Section 5</span></div>
+        <h2>Ten major risk factors</h2>
+        <p class="lede">
+          Click each risk factor below to learn what it is, why it matters, and &mdash; where
+          relevant &mdash; how it connects to Kentucky.
+        </p>
+
+        <div class="accordion">
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">1. Age</button>
+            <div class="accordion__panel">
+              <p><strong>Advancing age is the most significant risk factor for cancer.</strong>
+              About one in four new cancer cases are diagnosed in people ages 65&ndash;74.</p>
+              <p><strong>Why?</strong> Mutations in a cell's DNA can cause it to begin dividing
+              uncontrollably, and studies show that DNA mutations tend to increase with age &mdash;
+              simply because cells have divided (and copied their DNA) more times.</p>
+              <p><strong>Kentucky connection:</strong> the average age in Appalachian Kentucky is
+              about 40.9 &mdash; relatively young &mdash; which is one reason this module focuses
+              on the risk factors people <em>can</em> influence well before age becomes the
+              dominant factor.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">2. Alcohol</button>
+            <div class="accordion__panel">
+              <p>Drinking too much alcohol increases the risk of several cancers, including
+              <strong>mouth, throat, larynx, liver, and breast cancer</strong>.</p>
+              <p><strong>Does the type of alcohol matter?</strong> No &mdash; beer, wine, and
+              hard liquor all contain ethanol, and it's the <em>amount</em> consumed that matters,
+              not the type.</p>
+              <p><strong>Why?</strong> Alcohol is an irritant that can damage cells. As damaged
+              cells try to repair themselves, mistakes in that repair process can lead to the
+              kinds of DNA mutations that cause cancer.</p>
+              <p><strong>Kentucky connection:</strong> Kentucky ranks 17th in the nation for the
+              percentage of adults who drink excessively.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">3. Immunosuppression</button>
+            <div class="accordion__panel">
+              <p>People whose immune systems are underactive &mdash; "immunosuppressed" &mdash;
+              are more likely to develop cancer.</p>
+              <p><strong>Why?</strong> A weaker immune system is less able to detect and destroy
+              cancer cells before they can grow into tumors.</p>
+              <p>People who have recently received an organ transplant and are taking
+              immunosuppressive drugs (to prevent their body from rejecting the new organ) are at
+              especially high risk.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">4. Environmental Carcinogens</button>
+            <div class="accordion__panel">
+              <p>Long-term exposure to certain substances in the environment &mdash; called
+              <strong>carcinogens</strong> &mdash; can increase cancer risk. Common examples
+              include air pollution, radon, asbestos, engine exhaust, and heavy metals.</p>
+              <p><strong>Why?</strong> Some carcinogens directly cause DNA mutations. Others cause
+              cells to divide faster, which increases the chances that a mutation will occur
+              during one of those extra divisions.</p>
+              <p><strong>Kentucky connection:</strong> coal is an important resource and industry
+              in Kentucky, but too much exposure to coal-related substances can increase a
+              person's risk of developing a harmful mutation.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">5. Hormones</button>
+            <div class="accordion__panel">
+              <p>Increased levels of estrogen and progesterone increase a woman's risk of
+              developing breast cancer. Women receiving hormone replacement therapy are at
+              especially high risk.</p>
+              <p><strong>Why?</strong> Higher hormone levels can speed up how often cells
+              multiply, which increases the odds that a DNA mutation will occur along the way.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">6. Obesity</button>
+            <div class="accordion__panel">
+              <p>Being significantly overweight increases the risk for many diseases, including
+              cancers of the <strong>breast, colon, rectum, endometrium, esophagus, kidney,
+              pancreas, and gallbladder</strong>, among others.</p>
+              <p><strong>Why?</strong></p>
+              <ul>
+                <li>Excess fat can deprive cells of oxygen, triggering inflammation. Long-term
+                  inflammation can damage cells and make mutations more likely.</li>
+                <li>High insulin levels (common with obesity) can stimulate cell division and
+                  suppress normal cell death &mdash; both of which favor tumor growth.</li>
+                <li>High cytokine levels (also common with obesity) can drive inflammation and
+                  mutations.</li>
+              </ul>
+              <p><strong>Kentucky connection:</strong> Kentucky has the 10th-highest obesity rate
+              in the country &mdash; about 41% of adults.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">7. Radiation</button>
+            <div class="accordion__panel">
+              <p>Excessive exposure to radiation &mdash; including X-rays, gamma rays, and
+              neutrons &mdash; increases cancer risk.</p>
+              <p><strong>Why?</strong> Radiation is known to damage DNA, creating mutations that
+              can lead to cancer.</p>
+              <p>This is why patients receiving X-rays wear a lead vest &mdash; the lead reduces
+              the amount of radiation that reaches the rest of the body.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">8. Excessive Sun Exposure</button>
+            <div class="accordion__panel">
+              <p>Like radiation, too much exposure to ultraviolet (UV) light &mdash; from natural
+              sunlight <em>or</em> artificial sources like tanning beds &mdash; increases cancer
+              risk.</p>
+              <p><strong>Why?</strong> UV rays damage skin cells, which can cause the kinds of
+              mutations that lead to uncontrolled cell division.</p>
+              <p><strong>Kentucky connection:</strong> it's common for Kentucky farmers and other
+              outdoor workers to skip sunscreen during long days of physical work &mdash;
+              increasing their cumulative UV exposure over time.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">9. Tobacco</button>
+            <div class="accordion__panel">
+              <p>Tobacco use is a leading cause of cancer &mdash; and of death from cancer.</p>
+              <ul>
+                <li>People who smoke are regularly exposed to tobacco smoke and its chemicals.</li>
+                <li>People who live around smokers are exposed to secondhand smoke.</li>
+                <li>People who use smokeless (chewing) tobacco have an increased risk of mouth and
+                  esophagus cancers.</li>
+              </ul>
+              <p><strong>Why?</strong> Tobacco products contain many chemicals that damage DNA and
+              create mutations.</p>
+              <p><strong>Kentucky connection:</strong> in Kentucky, about 19.6% of adults smoke
+              (4th highest in the nation), 5.3% of high school students smoke, and 19.7% of high
+              school students use e-vapor (vaping) products.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">10. Infectious Disease</button>
+            <div class="accordion__panel">
+              <p>Certain viruses, bacteria, and parasites can increase cancer risk &mdash; for
+              example, Epstein-Barr virus, hepatitis, HIV, and HPV.</p>
+              <p><strong>Why?</strong></p>
+              <ul>
+                <li>Some viruses disrupt the cell signaling that normally controls cell division,
+                  leading to uncontrolled growth.</li>
+                <li>Some infections weaken the immune system, making it harder for the body to
+                  fight off cancer-causing infections.</li>
+                <li>Some infectious agents cause chronic inflammation, which increases the chance
+                  of a mutation occurring.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="screen" data-title="The Three A's">
+        <div class="screen__kicker"><span class="eyebrow">Section 6</span></div>
+        <h2>What can you do? The three A's</h2>
+        <p class="lede">
+          Knowing the risk factors is useful &mdash; but what can you actually <em>do</em> about
+          them? This module groups practical steps into three categories.
+        </p>
+        <div class="card-grid">
+          <div class="info-card">
+            <span class="tag">1. Avoid</span>
+            <h4>Avoid</h4>
+            <p>Stay away from substances and behaviors known to increase cancer risk:</p>
+            <ul>
+              <li>Tobacco</li>
+              <li>Excessive sun exposure (including tanning beds)</li>
+              <li>Excessive alcohol</li>
+              <li>Environmental carcinogens, where possible</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <span class="tag">2. Develop</span>
+            <h4>Develop</h4>
+            <p>Build lifestyle habits that decrease cancer risk:</p>
+            <ul>
+              <li>A sustainable exercise routine</li>
+              <li>A healthy diet</li>
+            </ul>
+            <p>These habits also help prevent obesity &mdash; lowering risk for many other
+            diseases at the same time.</p>
+          </div>
+          <div class="info-card">
+            <span class="tag">3. Act</span>
+            <h4>Act</h4>
+            <p>Take action to improve cancer knowledge and catch problems early:</p>
+            <ul>
+              <li>Seek out informative books, pamphlets, and presentations &mdash; and share what
+                you learn with friends and family</li>
+              <li>Schedule medical appointments and follow your doctor's recommendations for
+                check-ups</li>
+              <li>Attend preventive screenings, which can catch cancer before it spreads and
+                greatly improve survival</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="screen" data-title="Summary">
+        <div class="screen__kicker"><span class="eyebrow">Section 7</span></div>
+        <h2>Module 2 summary</h2>
+        <ul>
+          <li>A <strong>risk factor</strong> is anything that increases the likelihood of
+            developing a disease &mdash; some can be changed, and some (like genetics) can't.</li>
+          <li>Major modifiable risk factors for cancer include: <strong>old age</strong> (not
+            modifiable, but informative), <strong>excessive alcohol use, immunosuppression,
+            environmental carcinogens, increased hormone levels, obesity, radiation, excessive
+            sun exposure, tobacco use, and certain infections</strong>.</li>
+          <li>You can lower your own risk by following the three A's:
+            <strong>Avoid</strong> risk-increasing behaviors, <strong>Develop</strong> a healthy
+            lifestyle, and <strong>Act</strong> &mdash; build your knowledge and use preventive
+            care.</li>
+          <li>Don't forget to share what you learn with others!</li>
+        </ul>
+      </section>
+
+      <!-- 8 -->
+      <section class="screen" data-title="Post-Test">
+        <div class="screen__kicker"><span class="eyebrow">Post-test</span></div>
+        <h2>Post-test: the same 10 questions</h2>
+        <p class="lede">
+          Here's that same set of 10 questions from the start of the module. This time,
+          you'll see right away whether each answer is correct, along with a short
+          explanation &mdash; and how your score compares to your starting score.
+        </p>
+        <div class="quiz" data-test-type="post" data-bank="module2" data-module="module2" data-result="m2posttestResult"></div>
+        <div class="quiz-result" id="m2posttestResult">
+          <p class="eyebrow">Your score</p>
+          <p class="quiz-result__score">0 / 10</p>
+          <p class="quiz-result__msg"></p>
+          <p class="quiz-result__compare" hidden></p>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section class="screen" data-title="Wrap-Up">
+        <div class="screen__kicker"><span class="eyebrow">Wrap-up</span></div>
+        <h2>One small change</h2>
+        <p class="lede">
+          You don't have to overhaul your whole life at once. Pick one risk factor from this
+          module that feels most relevant to you or someone you know.
+        </p>
+        <div class="reflection">
+          <label for="m2q_post">Which risk factor did you pick, and what's one "Avoid," "Develop," or "Act" step related to it?</label>
+          <textarea id="m2q_post" data-key="m2_post" placeholder="Type your thoughts here&hellip;"></textarea>
+          <p class="save-note">Saved on this device</p>
+        </div>
+
+        <div class="complete-banner" id="completeBanner" hidden>
+          <p class="eyebrow on-dark">Module complete</p>
+          <h2>Nice work!</h2>
+          <p>You've finished Module 2: Risk Factors &amp; Modifiable Behaviors. Module 3 picks up
+          with how cancer gets diagnosed and treated &mdash; and why early detection matters so
+          much.</p>
+          <div class="complete-banner__actions">
+            <a class="btn btn--gold" href="module3.html">Continue to Module 3 &rarr;</a>
+            <a class="btn btn--ghost" style="border-color:#fff; color:#fff;" href="certificate.html">Get certificate</a>
+            <a class="btn btn--ghost" style="border-color:rgba(255,255,255,0.4); color:rgba(255,255,255,0.7);" href="index.html">Back to all modules</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="stage-controls">
+      <button class="btn btn--ghost" id="prevBtn">&larr; Back</button>
+      <div class="progress-track"><div class="progress-track__fill" id="progressFill"></div></div>
+      <button class="btn" id="nextBtn">Next &rarr;</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p>Adapted from the <em>Cancer in the Commonwealth</em> curriculum, &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.</p>
+      <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="accountModal" hidden>
+    <div class="modal">
+      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
+      <p class="eyebrow">Optional</p>
+      <h2>Save your progress</h2>
+      <p>
+        Create a free account to save your progress and pick up where you left off on any
+        device. You can also keep using this site without an account &mdash; your progress
+        will just stay on this device.
+      </p>
+      <form id="accountForm">
+        <label for="accountEmail">Email</label>
+        <input type="email" id="accountEmail" autocomplete="email" required>
+        <label for="accountPassword">Password</label>
+        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
+        <p class="form-error" id="accountError"></p>
+        <p class="form-info" id="accountInfo"></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
+          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+        </div>
+        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+      </form>
+      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+    </div>
+  </div>
+
+  <script src="assets/tests-data.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    CIC.initModule('module2');
+    CIC.initAccordions();
+    CIC.initChoiceActivities();
+    CIC.initReveals();
+    CIC.initReflections();
+    CIC.initTests('module2');
+  </script>
+  <script type="module" src="assets/account.js"></script>
+</body>
+</html>
