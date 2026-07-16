@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ask Common | Cancer in the Commonwealth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    /* ---- Ask Common page-specific styles ---- */
+
+    /* Hero: slightly deeper gradient with a starfield texture */
+    .ask-hero {
+      background: linear-gradient(155deg, #1a3328 0%, var(--ridge-1) 55%, #2d4e43 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ask-hero__stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ask-hero__inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5.5rem;
+    }
+
+    .ask-hero h1 {
+      color: #fbfbf6;
+      font-size: clamp(2.6rem, 5.5vw, 4rem);
+      margin: 0.4rem 0 1rem;
+    }
+
+    /* AI badge next to title */
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ridge-1);
+      background: var(--gold);
+      border-radius: 100px;
+      padding: 0.3rem 0.75rem;
+      font-weight: 700;
+      vertical-align: middle;
+      margin-left: 0.6rem;
+      position: relative;
+      top: -0.2rem;
+    }
+
+    .ai-badge__dot {
+      width: 6px;
+      height: 6px;
+      background: var(--ridge-1);
+      border-radius: 50%;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ---- Input card ---- */
+    .ask-card {
+      max-width: 760px;
+    }
+
+    .ask-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ask-textarea {
+      width: 100%;
+      min-height: 110px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--ridge-4);
+      background: var(--card-soft);
+      padding: 1rem 1.1rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--ink);
+      resize: vertical;
+      transition: border-color 0.15s;
+      margin-top: 0.9rem;
+    }
+
+    .ask-textarea:focus {
+      border-color: var(--gold);
+      outline: none;
+    }
+
+    .ask-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.4rem;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .char-count {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-faint);
+    }
+
+    .char-count.is-near { color: var(--clay); }
+
+    /* Example chips */
+    .example-questions {
+      margin-top: 1.3rem;
+    }
+
+    .example-questions p {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.55rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .chip {
+      background: var(--bg-deep);
+      border: 1px solid var(--ridge-4);
+      border-radius: 100px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.83rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: all 0.13s ease;
+      font-family: var(--font-body);
+    }
+
+    .chip:hover {
+      border-color: var(--gold);
+      color: var(--gold-dark);
+      background: var(--gold-soft);
+    }
+
+    /* Submit row */
+    .ask-submit-row {
+      margin-top: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* ---- Loading state ---- */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1rem;
+      text-align: center;
+      gap: 1.2rem;
+    }
+
+    .loading-rings {
+      width: 52px;
+      height: 52px;
+      position: relative;
+    }
+
+    .loading-rings span {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      animation: spin 1.4s linear infinite;
+    }
+
+    .loading-rings span:nth-child(1) {
+      border-top-color: var(--gold);
+      animation-duration: 1.4s;
+    }
+
+    .loading-rings span:nth-child(2) {
+      border-right-color: var(--ridge-3);
+      animation-duration: 1.9s;
+      animation-direction: reverse;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-msg {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      min-height: 1.5em;
+      transition: opacity 0.3s;
+    }
+
+    /* ---- Disabled / setup notice ---- */
+    .setup-notice {
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .setup-notice__icon {
+      font-size: 2.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* ---- Lesson output ---- */
+    .lesson-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .lesson-toolbar__actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    /* Lesson header card */
+    .lesson-header {
+      background: linear-gradient(135deg, var(--ridge-1), var(--ridge-2));
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .lesson-header h2 {
+      color: #fbfbf6;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin: 0.4rem 0 0.8rem;
+    }
+
+    .lesson-header p {
+      color: var(--ridge-4);
+      max-width: 60ch;
+    }
+
+    .lesson-header .question-echo {
+      margin-top: 1.2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      color: var(--ridge-4);
+      font-style: italic;
+    }
+
+    /* Section cards */
+    .lesson-section {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 2rem clamp(1.4rem, 4vw, 2.8rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .lesson-section h3 {
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      margin: 0.4rem 0 1rem;
+    }
+
+    .lesson-section__body {
+      color: var(--ink);
+      max-width: 70ch;
+    }
+
+    .lesson-section__body p + p {
+      margin-top: 0.9em;
+    }
+
+    .key-points {
+      background: var(--bg-deep);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.3rem;
+      margin-top: 1.2rem;
+    }
+
+    .key-points__label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .key-points ul {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
+    .key-points li + li {
+      margin-top: 0.4em;
+    }
+
+    /* Knowledge check */
+    .knowledge-check {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 2rem clamp(1.4rem, 4vw, 2.8rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .knowledge-check h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .kc-score-bar {
+      background: var(--bg-deep);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1.2rem;
+      margin: 0 0 1.6rem;
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .kc-score-bar.is-visible { display: flex; }
+
+    .kc-score-num {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ridge-1);
+    }
+
+    .kc-score-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    /* Takeaways */
+    .takeaways-card {
+      background: linear-gradient(135deg, var(--gold-soft), #fff8ec);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .takeaways-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+      color: var(--gold-dark);
+    }
+
+    .takeaways-card ul {
+      margin: 0;
+    }
+
+    .takeaways-card li + li {
+      margin-top: 0.5em;
+    }
+
+    /* Print styles for the page */
+    @media print {
+      .lesson-toolbar,
+      .site-header,
+      .site-footer,
+      .ask-phase,
+      .modal-overlay,
+      #askPhase {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
+          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
+          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+        </svg>
+        <span class="brand__text">
+          <span class="brand__title">Cancer in the Commonwealth</span>
+          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="module1.html">Module 1</a>
+        <a href="module2.html">Module 2</a>
+        <a href="module3.html">Module 3</a>
+        <a href="certificate.html" class="cert-nav-link">Certificates</a>
+        <a href="ask-common.html" class="is-active" style="color:var(--gold); border-color:var(--gold);">Ask Common</a>
+        <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+      </nav>
+      <div class="account-ui">
+        <span class="account-status" id="accountStatus"></span>
+        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="ask-hero" aria-label="Ask Common hero">
+    <svg class="ask-hero__stars" viewBox="0 0 1440 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+      <circle cx="80"  cy="40"  r="1.2" fill="#d9a23b" opacity="0.55"/>
+      <circle cx="220" cy="20"  r="0.9" fill="#b9cdbd" opacity="0.5"/>
+      <circle cx="400" cy="55"  r="1.5" fill="#d9a23b" opacity="0.4"/>
+      <circle cx="610" cy="18"  r="0.8" fill="#b9cdbd" opacity="0.6"/>
+      <circle cx="820" cy="38"  r="1.3" fill="#d9a23b" opacity="0.5"/>
+      <circle cx="1050" cy="12" r="1"   fill="#b9cdbd" opacity="0.4"/>
+      <circle cx="1280" cy="44" r="1.6" fill="#d9a23b" opacity="0.55"/>
+      <circle cx="1380" cy="22" r="0.8" fill="#b9cdbd" opacity="0.45"/>
+      <circle cx="160" cy="100" r="0.9" fill="#d9a23b" opacity="0.3"/>
+      <circle cx="520" cy="90"  r="1.1" fill="#b9cdbd" opacity="0.35"/>
+      <circle cx="950" cy="75"  r="1.4" fill="#d9a23b" opacity="0.35"/>
+      <circle cx="1200" cy="95" r="0.8" fill="#b9cdbd" opacity="0.3"/>
+    </svg>
+
+    <div class="ask-hero__inner">
+      <p class="eyebrow on-dark">AI-Powered Learning</p>
+      <h1>
+        Ask Common
+        <span class="ai-badge"><span class="ai-badge__dot"></span>AI</span>
+      </h1>
+      <p class="lede" style="color: var(--ridge-4); max-width: 52ch;">
+        Have a question about cancer? Ask it below and get a personalized self-paced lesson
+        covering cancer basics, risk factors, and treatment options &mdash; grounded in the
+        realities of Appalachian Kentucky.
+      </p>
+    </div>
+
+    <div class="ridgeline" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,100 L140,55 L300,95 L470,30 L640,90 L820,25 L1000,80 L1180,45 L1320,90 L1440,60 L1440,160 L0,160 Z" fill="#6f9482" opacity="0.55"/>
+        <path d="M0,130 L180,80 L360,120 L540,65 L720,130 L900,80 L1080,130 L1260,90 L1440,125 L1440,160 L0,160 Z" fill="#3c5c4c" opacity="0.85"/>
+        <path d="M0,160 L200,125 L380,155 L560,115 L760,158 L960,125 L1160,158 L1340,130 L1440,155 L1440,160 Z" fill="#f2f6f0"/>
+      </svg>
+    </div>
+  </section>
+
+  <main>
+    <div class="simple-shell" style="padding-top: 2rem;">
+
+      <!-- ======== ASK PHASE ======== -->
+      <div id="askPhase">
+        <div class="simple-card ask-card">
+
+          <!-- Setup notice (shown when ANTHROPIC_ENABLED is false) -->
+          <div id="setupNotice" hidden>
+            <div class="setup-notice">
+              <div class="setup-notice__icon">⚙️</div>
+              <p class="eyebrow">Setup needed</p>
+              <h2>Ask Common isn&rsquo;t configured yet</h2>
+              <p style="max-width:46ch; margin: 0.6rem auto 1.4rem; color: var(--ink-soft);">
+                Add your Anthropic API key to <code>assets/anthropic-config.js</code> and set
+                <code>ANTHROPIC_ENABLED</code> to <code>true</code>. Full instructions are in
+                that file and in the README.
+              </p>
+              <a class="btn btn--gold" href="index.html">Back to all modules</a>
+            </div>
+          </div>
+
+          <!-- Question form -->
+          <div id="askFormWrap">
+            <p class="eyebrow">Your question</p>
+            <h2>What do you want to learn about cancer?</h2>
+            <p style="color: var(--ink-soft); font-size: 0.97rem; max-width: 56ch;">
+              Ask anything &mdash; about causes, symptoms, treatments, statistics, or anything
+              else related to cancer. The more specific your question, the more focused your
+              lesson will be.
+            </p>
+
+            <label for="questionInput" class="visually-hidden">Your question about cancer</label>
+            <textarea
+              id="questionInput"
+              class="ask-textarea"
+              maxlength="480"
+              placeholder="e.g. Why do people in Eastern Kentucky have higher cancer rates than most of the country?"
+              rows="4"
+            ></textarea>
+
+            <div class="ask-meta">
+              <span class="char-count" id="charCount">0 / 480</span>
+              <span style="font-size:0.82rem; color:var(--ink-faint);">Press Generate when ready</span>
+            </div>
+
+            <div class="example-questions">
+              <p>Try an example</p>
+              <div class="chips" id="chipContainer">
+                <button class="chip" data-q="How does smoking cause lung cancer at the cellular level?">How does smoking cause lung cancer?</button>
+                <button class="chip" data-q="Why do Appalachian Kentucky residents have higher cancer mortality than the national average?">Why is cancer worse in Appalachian KY?</button>
+                <button class="chip" data-q="What is the difference between chemotherapy and radiation therapy, and when is each used?">Chemo vs. radiation therapy</button>
+                <button class="chip" data-q="Can viruses and infections actually cause cancer, and how?">Can infections cause cancer?</button>
+                <button class="chip" data-q="Why does catching cancer early make such a big difference in survival rates?">Why does early detection matter so much?</button>
+                <button class="chip" data-q="What role does obesity play in cancer risk, and why does Kentucky have especially high rates?">Obesity and cancer risk in Kentucky</button>
+              </div>
+            </div>
+
+            <div class="ask-submit-row">
+              <button class="btn btn--gold" id="generateBtn" disabled>
+                Generate lesson &rarr;
+              </button>
+              <span style="font-size: 0.85rem; color: var(--ink-faint);">
+                Takes about 15&ndash;20 seconds
+              </span>
+            </div>
+          </div>
+
+          <!-- Loading state -->
+          <div id="loadingState" hidden>
+            <div class="loading-state">
+              <div class="loading-rings">
+                <span></span>
+                <span></span>
+              </div>
+              <p class="loading-msg" id="loadingMsg">Thinking&hellip;</p>
+              <p style="font-size: 0.88rem; color: var(--ink-faint); max-width: 36ch;">
+                Building a lesson just for your question. This usually takes 15&ndash;25 seconds.
+              </p>
+            </div>
+          </div>
+
+          <!-- Error state -->
+          <div id="errorState" hidden>
+            <div class="setup-notice">
+              <div class="setup-notice__icon">⚠️</div>
+              <p class="eyebrow" style="color: var(--clay);">Something went wrong</p>
+              <h2 id="errorHeading">Couldn&rsquo;t generate a lesson</h2>
+              <p id="errorDetail" style="color: var(--ink-soft); max-width: 46ch; margin: 0.5rem auto 1.4rem;"></p>
+              <button class="btn btn--gold" id="tryAgainBtn">Try again</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======== LESSON PHASE ======== -->
+      <div id="lessonPhase" hidden>
+
+        <div class="lesson-toolbar no-print">
+          <button class="btn btn--ghost btn--sm" id="startOverBtn">&larr; Ask another question</button>
+          <div class="lesson-toolbar__actions">
+            <button class="btn btn--ghost btn--sm" id="printBtn">Print lesson</button>
+            <button class="btn btn--gold btn--sm" id="downloadBtn">Download HTML</button>
+          </div>
+        </div>
+
+        <!-- Lesson content rendered here by JS -->
+        <div id="lessonContent"></div>
+
+      </div>
+
+    </div><!-- /.simple-shell -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p>
+        Adapted from the <em>Cancer in the Commonwealth</em> curriculum,
+        &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.
+        AI lessons generated by Claude (Anthropic) and may contain errors &mdash;
+        always verify health information with a qualified professional.
+      </p>
+      <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+  </footer>
+
+  <!-- Account modal (same as other pages) -->
+  <div class="modal-overlay" id="accountModal" hidden>
+    <div class="modal">
+      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
+      <p class="eyebrow">Optional</p>
+      <h2>Save your progress</h2>
+      <p>Create a free account to save your progress across devices.</p>
+      <form id="accountForm">
+        <label for="accountEmail">Email</label>
+        <input type="email" id="accountEmail" autocomplete="email" required>
+        <label for="accountPassword">Password</label>
+        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
+        <p class="form-error" id="accountError"></p>
+        <p class="form-info" id="accountInfo"></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
+          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+        </div>
+        <p class="modal__forgot">
+          <button type="button" class="link-btn" id="accountForgot">Forgot password?</button>
+        </p>
+      </form>
+      <p class="modal__note">
+        <button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button>
+      </p>
+    </div>
+  </div>
+
+  <script src="assets/script.js"></script>
+  <script type="module" src="assets/account.js"></script>
+
+  <!-- ======================================================
+       Ask Common — main logic
+       ====================================================== -->
+  <script type="module">
+    /* ---- DOM refs ---- */
+    const setupNotice  = document.getElementById('setupNotice');
+    const askFormWrap  = document.getElementById('askFormWrap');
+    const loadingState = document.getElementById('loadingState');
+    const loadingMsg   = document.getElementById('loadingMsg');
+    const errorState   = document.getElementById('errorState');
+    const errorHeading = document.getElementById('errorHeading');
+    const errorDetail  = document.getElementById('errorDetail');
+    const tryAgainBtn  = document.getElementById('tryAgainBtn');
+    const askPhase     = document.getElementById('askPhase');
+    const lessonPhase  = document.getElementById('lessonPhase');
+    const lessonContent = document.getElementById('lessonContent');
+    const questionInput = document.getElementById('questionInput');
+    const charCount    = document.getElementById('charCount');
+    const generateBtn  = document.getElementById('generateBtn');
+    const chipContainer = document.getElementById('chipContainer');
+    const startOverBtn = document.getElementById('startOverBtn');
+    const downloadBtn  = document.getElementById('downloadBtn');
+    const printBtn     = document.getElementById('printBtn');
+
+    /* Setup state is now discovered reactively: we only find out the
+       backend isn't configured when a generate() call actually fails
+       with error "not_configured" (see below), since there's no safe
+       way for client-side code to know a server environment variable
+       is set without asking the server. */
+
+    /* ---- Character count & enable button ---- */
+    questionInput.addEventListener('input', () => {
+      const len = questionInput.value.length;
+      charCount.textContent = `${len} / 480`;
+      charCount.classList.toggle('is-near', len > 420);
+      generateBtn.disabled = len < 10;
+    });
+
+    /* ---- Example chips ---- */
+    chipContainer.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      questionInput.value = chip.dataset.q;
+      questionInput.dispatchEvent(new Event('input'));
+      questionInput.focus();
+    });
+
+    /* ---- Loading messages ---- */
+    const LOADING_MSGS = [
+      'Reading your question\u2026',
+      'Researching cancer basics\u2026',
+      'Connecting to Kentucky context\u2026',
+      'Building your lesson\u2026',
+      'Writing knowledge checks\u2026',
+      'Almost ready\u2026',
+    ];
+    let loadingMsgIdx = 0;
+    let loadingMsgTimer = null;
+
+    function startLoadingMessages() {
+      loadingMsgIdx = 0;
+      loadingMsg.textContent = LOADING_MSGS[0];
+      loadingMsgTimer = setInterval(() => {
+        loadingMsgIdx = (loadingMsgIdx + 1) % LOADING_MSGS.length;
+        loadingMsg.style.opacity = 0;
+        setTimeout(() => {
+          loadingMsg.textContent = LOADING_MSGS[loadingMsgIdx];
+          loadingMsg.style.opacity = 1;
+        }, 200);
+      }, 3500);
+    }
+
+    function stopLoadingMessages() {
+      clearInterval(loadingMsgTimer);
+    }
+
+    /* ---- Transition helpers ---- */
+    function showLoading() {
+      askFormWrap.hidden = true;
+      errorState.hidden = true;
+      loadingState.hidden = false;
+      startLoadingMessages();
+    }
+
+    function showForm() {
+      loadingState.hidden = true;
+      errorState.hidden = true;
+      askFormWrap.hidden = false;
+      stopLoadingMessages();
+    }
+
+    function showError(heading, detail) {
+      stopLoadingMessages();
+      loadingState.hidden = true;
+      askFormWrap.hidden = true;
+      errorHeading.textContent = heading;
+      errorDetail.textContent = detail;
+      errorState.hidden = false;
+    }
+
+    tryAgainBtn.addEventListener('click', showForm);
+    startOverBtn.addEventListener('click', () => {
+      lessonPhase.hidden = true;
+      askPhase.hidden = false;
+      lessonContent.innerHTML = '';
+      showForm();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* The system prompt (and the Anthropic API key) now live entirely
+       server-side, in api/ask-common.js — see that file for the full
+       prompt and the curriculum grounding it includes. Nothing about
+       how the lesson is generated is visible in this client code. */
+
+    /* ---- Generate ---- */
+    generateBtn.addEventListener('click', generate);
+    questionInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && !generateBtn.disabled) generate();
+    });
+
+    let currentLesson = null;
+    let currentQuestion = '';
+
+    async function generate() {
+      const question = questionInput.value.trim();
+      if (!question || question.length < 10) return;
+
+      currentQuestion = question;
+      showLoading();
+
+      try {
+        const res = await fetch('/api/ask-common', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question }),
+        });
+
+        const body = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          if (body.error === 'not_configured') {
+            stopLoadingMessages();
+            loadingState.hidden = true;
+            askFormWrap.hidden = true;
+            errorState.hidden = true;
+            setupNotice.hidden = false;
+            return;
+          }
+          throw new Error(body.message || `Request failed (${res.status})`);
+        }
+
+        stopLoadingMessages();
+        currentLesson = body.lesson;
+        renderLesson(body.lesson, question);
+
+      } catch (err) {
+        let heading = 'Couldn\u2019t generate a lesson';
+        let detail = err.message || 'An unknown error occurred. Please try again.';
+
+        if (/network|fetch|failed/i.test(detail)) {
+          heading = 'Network error';
+          detail = 'Check your internet connection and try again.';
+        } else if (/unexpected format|json/i.test(detail)) {
+          heading = 'Unexpected response';
+          detail = 'The AI returned something we couldn\u2019t read. Please try again.';
+        }
+
+        showError(heading, detail);
+      }
+    }
+
+    /* ---- Section color map ---- */
+    const SECTION_COLORS = {
+      basics:    { border: 'var(--sky)', bg: 'var(--sky-soft)', text: 'var(--sky)' },
+      risk:      { border: 'var(--clay)', bg: 'var(--clay-soft)', text: 'var(--clay)' },
+      treatment: { border: 'var(--gold)', bg: 'var(--gold-soft)', text: 'var(--gold-dark)' },
+    };
+
+    /* ---- Render lesson ---- */
+    function renderLesson(lesson, question) {
+      lessonContent.innerHTML = '';
+
+      // --- Lesson header ---
+      const header = document.createElement('div');
+      header.className = 'lesson-header';
+      const eyebrow = document.createElement('p');
+      eyebrow.className = 'eyebrow on-dark';
+      eyebrow.textContent = 'Your personalized lesson';
+      const title = document.createElement('h2');
+      title.textContent = lesson.title || 'Cancer Lesson';
+      const intro = document.createElement('p');
+      intro.textContent = lesson.introduction || '';
+      const qEcho = document.createElement('div');
+      qEcho.className = 'question-echo';
+      qEcho.textContent = '\u201c' + escText(question) + '\u201d';
+      header.append(eyebrow, title, intro, qEcho);
+      lessonContent.appendChild(header);
+
+      // --- Content sections ---
+      (lesson.sections || []).forEach(sec => {
+        const colors = SECTION_COLORS[sec.id] || SECTION_COLORS.basics;
+        const card = document.createElement('div');
+        card.className = 'lesson-section';
+        card.style.borderTop = `4px solid ${colors.border}`;
+
+        const kicker = document.createElement('div');
+        kicker.className = 'screen__kicker';
+        const eyebrowSpan = document.createElement('span');
+        eyebrowSpan.className = 'eyebrow';
+        eyebrowSpan.style.background = colors.bg;
+        eyebrowSpan.style.color = colors.text;
+        eyebrowSpan.textContent = sec.eyebrow || '';
+        kicker.appendChild(eyebrowSpan);
+
+        const secTitle = document.createElement('h3');
+        secTitle.textContent = sec.title || '';
+
+        const body = document.createElement('div');
+        body.className = 'lesson-section__body';
+        (sec.paragraphs || []).forEach(text => {
+          const p = document.createElement('p');
+          p.textContent = text;
+          body.appendChild(p);
+        });
+
+        const kpBox = document.createElement('div');
+        kpBox.className = 'key-points';
+        kpBox.style.borderLeft = `4px solid ${colors.border}`;
+        const kpLabel = document.createElement('p');
+        kpLabel.className = 'key-points__label';
+        kpLabel.textContent = 'Key Points';
+        const kpList = document.createElement('ul');
+        (sec.keyPoints || []).forEach(pt => {
+          const li = document.createElement('li');
+          li.textContent = pt;
+          kpList.appendChild(li);
+        });
+        kpBox.append(kpLabel, kpList);
+
+        card.append(kicker, secTitle, body, kpBox);
+        lessonContent.appendChild(card);
+      });
+
+      // --- Knowledge check ---
+      const kcWrap = document.createElement('div');
+      kcWrap.className = 'knowledge-check';
+      const kcEyebrow = document.createElement('p');
+      kcEyebrow.className = 'eyebrow';
+      kcEyebrow.textContent = 'Check Your Understanding';
+      const kcTitle = document.createElement('h3');
+      kcTitle.textContent = 'Knowledge Check';
+      const kcSubtitle = document.createElement('p');
+      kcSubtitle.className = 'lede';
+      kcSubtitle.style.marginBottom = '1.4rem';
+      kcSubtitle.textContent = 'Answer each question \u2014 you\u2019ll see right away whether you got it and why.';
+
+      const scoreBar = document.createElement('div');
+      scoreBar.className = 'kc-score-bar';
+      const scoreNum = document.createElement('div');
+      scoreNum.className = 'kc-score-num';
+      const scoreLbl = document.createElement('div');
+      scoreLbl.className = 'kc-score-label';
+      scoreLbl.textContent = 'Questions answered correctly';
+      scoreBar.append(scoreNum, scoreLbl);
+
+      kcWrap.append(kcEyebrow, kcTitle, kcSubtitle, scoreBar);
+
+      const questions = lesson.knowledgeCheck || [];
+      let answered = 0;
+      let correct = 0;
+
+      questions.forEach((q, qi) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'quiz-question';
+
+        const qHead = document.createElement('h3');
+        const num = document.createElement('span');
+        num.className = 'quiz-question__num';
+        num.textContent = (qi + 1) + '.';
+        qHead.append(num, ' ', q.question);
+
+        const choiceList = document.createElement('div');
+        choiceList.className = 'choice-list quiz-choices';
+
+        const expEl = document.createElement('p');
+        expEl.className = 'feedback explanation';
+        expEl.textContent = q.explanation || '';
+
+        (q.choices || []).forEach((choice, ci) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'choice';
+          btn.textContent = choice;
+
+          btn.addEventListener('click', () => {
+            if (choiceList.dataset.selected === String(ci)) return; // already selected
+
+            const isFirstAnswer = choiceList.dataset.answered !== 'true';
+            choiceList.dataset.answered = 'true';
+            choiceList.dataset.selected = String(ci);
+
+            const allBtns = Array.from(choiceList.querySelectorAll('.choice'));
+            allBtns.forEach(b => b.classList.remove('is-selected', 'is-correct', 'is-incorrect'));
+            allBtns[q.correct].classList.add('is-correct');
+            if (ci !== q.correct) btn.classList.add('is-incorrect');
+
+            expEl.classList.add('is-visible');
+
+            if (isFirstAnswer) answered++;
+            correct = questions.reduce((sum, qq, qqi) => {
+              const cl = kcWrap.querySelectorAll('.choice-list')[qqi];
+              const sel = cl && cl.dataset.selected;
+              return sum + (sel !== undefined && parseInt(sel, 10) === qq.correct ? 1 : 0);
+            }, 0);
+
+            if (answered === questions.length) {
+              scoreNum.textContent = correct + ' / ' + questions.length;
+              scoreBar.classList.add('is-visible');
+              scoreBar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          });
+
+          choiceList.appendChild(btn);
+        });
+
+        qDiv.append(qHead, choiceList, expEl);
+        kcWrap.appendChild(qDiv);
+      });
+
+      lessonContent.appendChild(kcWrap);
+
+      // --- Takeaways ---
+      if ((lesson.takeaways || []).length) {
+        const ta = document.createElement('div');
+        ta.className = 'takeaways-card';
+        const taEyebrow = document.createElement('p');
+        taEyebrow.className = 'eyebrow';
+        taEyebrow.style.color = 'var(--gold-dark)';
+        taEyebrow.textContent = 'Remember These';
+        const taTitle = document.createElement('h3');
+        taTitle.textContent = 'Key Takeaways';
+        const taList = document.createElement('ul');
+        lesson.takeaways.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          taList.appendChild(li);
+        });
+        ta.append(taEyebrow, taTitle, taList);
+        lessonContent.appendChild(ta);
+      }
+
+      // --- Disclaimer ---
+      const disc = document.createElement('p');
+      disc.className = 'source-note';
+      disc.textContent = 'This lesson was generated by an AI (Anthropic Claude) based on the Cancer in the Commonwealth curriculum. Always verify health information with a qualified healthcare professional.';
+      lessonContent.appendChild(disc);
+
+      // --- Show lesson phase ---
+      askPhase.hidden = true;
+      lessonPhase.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ---- Utility ---- */
+    function escText(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    /* ---- Print ---- */
+    printBtn.addEventListener('click', () => window.print());
+
+    /* ---- Download HTML ---- */
+    downloadBtn.addEventListener('click', () => {
+      if (!currentLesson) return;
+      const html = buildDownloadHTML(currentLesson, currentQuestion);
+      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const slug = (currentLesson.title || 'cancer-lesson')
+        .toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60);
+      a.download = slug + '.html';
+      a.click();
+    });
+
+    /* ---- Build self-contained download HTML ---- */
+    function buildDownloadHTML(lesson, question) {
+      const sections = (lesson.sections || []).map(sec => {
+        const colors = SECTION_COLORS[sec.id] || SECTION_COLORS.basics;
+        const paragraphsHTML = (sec.paragraphs || [])
+          .map(p => `<p>${escText(p)}</p>`).join('\n');
+        const keyPointsHTML = (sec.keyPoints || [])
+          .map(k => `<li>${escText(k)}</li>`).join('\n');
+
+        return `
+        <div class="lesson-section" style="border-top:4px solid ${colors.border}">
+          <p class="eyebrow" style="background:${colors.bg};color:${colors.text};display:inline-block;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;margin-bottom:0.5rem;">${escText(sec.eyebrow || '')}</p>
+          <h3>${escText(sec.title || '')}</h3>
+          <div class="body-text">${paragraphsHTML}</div>
+          <div class="key-points" style="border-left:4px solid ${colors.border}">
+            <p class="kp-label">Key Points</p>
+            <ul>${keyPointsHTML}</ul>
+          </div>
+        </div>`;
+      }).join('\n');
+
+      const questionsHTML = (lesson.knowledgeCheck || []).map((q, qi) => {
+        const choicesHTML = (q.choices || []).map((c, ci) =>
+          `<button class="choice" data-correct="${q.correct}" data-index="${ci}" onclick="pickAnswer(this,${qi},${ci},${q.correct})">${escText(c)}</button>`
+        ).join('\n');
+        return `
+        <div class="quiz-question" id="qq${qi}">
+          <h4><span class="q-num">${qi + 1}.</span> ${escText(q.question)}</h4>
+          <div class="choice-list" id="cl${qi}">${choicesHTML}</div>
+          <p class="explanation" id="exp${qi}" style="display:none">${escText(q.explanation || '')}</p>
+        </div>`;
+      }).join('\n');
+
+      const takeawaysHTML = (lesson.takeaways || [])
+        .map(t => `<li>${escText(t)}</li>`).join('\n');
+
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>${escText(lesson.title || 'Cancer Lesson')} | Cancer in the Commonwealth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#233029;--ink-soft:#5d6e64;--ink-faint:#93a39a;
+  --ridge-1:#233b32;--ridge-2:#3c5c4c;--ridge-3:#6f9482;--ridge-4:#b9cdbd;
+  --gold:#d9a23b;--gold-dark:#ad7a23;--gold-soft:#f3e2bb;
+  --clay:#c1623f;--clay-soft:#f3dccf;
+  --sky:#51808f;--sky-soft:#d9e8ec;
+  --bg:#f2f6f0;--card:#fff;--bg-deep:#e7efe4;
+  --font-display:"Fraunces",Georgia,serif;
+  --font-body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --font-mono:"Space Mono","Courier New",monospace;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.15;color:var(--ridge-1);font-weight:600;}
+p+p{margin-top:0.8em;}
+ul{padding-left:1.3em;}
+li+li{margin-top:0.35em;}
+a{color:var(--sky);}
+
+.page-header{background:var(--ridge-1);color:#f6f8f4;padding:1rem 2rem;display:flex;align-items:center;gap:1rem;}
+.page-header__brand{font-family:var(--font-display);font-size:1rem;font-weight:700;}
+.page-header__tag{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ridge-4);}
+
+.shell{max-width:900px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+
+.lesson-header{background:linear-gradient(135deg,var(--ridge-1),var(--ridge-2));color:#fff;border-radius:var(--radius);padding:2rem 2.4rem;margin-bottom:1.5rem;}
+.lesson-header h1{color:#fbfbf6;font-size:clamp(1.5rem,3vw,2.2rem);margin:0.4rem 0 0.8rem;}
+.lesson-header p{color:var(--ridge-4);max-width:60ch;}
+.question-echo{margin-top:1.2rem;background:rgba(255,255,255,0.1);border-left:4px solid var(--gold);border-radius:8px;padding:0.75rem 1rem;font-size:0.95rem;color:var(--ridge-4);font-style:italic;}
+.eyebrow{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-dark);font-weight:700;}
+
+.lesson-section{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 2px rgba(35,48,41,.06),0 8px 24px -12px rgba(35,48,41,.18);padding:2rem clamp(1.4rem,4vw,2.8rem);margin-bottom:1.5rem;}
+.lesson-section h3{font-size:clamp(1.2rem,2.5vw,1.6rem);margin:0.4rem 0 1rem;}
+.body-text{color:var(--ink);max-width:70ch;}
+.key-points{background:var(--bg-deep);border-radius:10px;padding:1.1rem 1.3rem;margin-top:1.2rem;}
+.kp-label{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);font-weight:700;margin-bottom:0.6rem;}
+.key-points ul{margin:0;font-size:0.95rem;}
+
+.knowledge-check{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 2px rgba(35,48,41,.06),0 8px 24px -12px rgba(35,48,41,.18);padding:2rem clamp(1.4rem,4vw,2.8rem);margin-bottom:1.5rem;}
+.knowledge-check h2{font-size:1.5rem;margin-bottom:0.3rem;}
+.knowledge-check .lede{color:var(--ink-soft);font-size:1.05rem;margin-bottom:1.4rem;}
+.quiz-question{margin-bottom:1.6rem;padding-bottom:1.4rem;border-bottom:1px solid var(--bg-deep);}
+.quiz-question:last-child{border-bottom:none;padding-bottom:0;}
+.quiz-question h4{font-family:var(--font-body);font-weight:700;font-size:1.02rem;margin-bottom:0.7rem;color:var(--ink);}
+.q-num{font-family:var(--font-mono);color:var(--gold-dark);margin-right:0.4rem;}
+.choice-list{display:flex;flex-direction:column;gap:0.5rem;}
+.choice{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--ridge-4);border-radius:8px;padding:0.75rem 1rem;font-size:0.96rem;font-weight:600;color:var(--ink);cursor:pointer;font-family:var(--font-body);transition:all 0.12s;}
+.choice:hover:not(:disabled){border-color:var(--gold);}
+.choice.is-correct{background:#eaf3ec;border-color:#6f9482;color:var(--ridge-1);}
+.choice.is-incorrect{background:var(--clay-soft);border-color:var(--clay);color:#8a3e23;}
+.choice:disabled{cursor:default;}
+.explanation{margin-top:0.8rem;color:var(--ink-soft);background:var(--bg-deep);border-left:4px solid var(--sky);border-radius:8px;padding:0.8rem 1rem;font-size:0.92rem;}
+
+.score-bar{display:none;background:var(--bg-deep);border-radius:10px;padding:0.9rem 1.2rem;margin:0 0 1.4rem;align-items:center;gap:1rem;}
+.score-bar.visible{display:flex;}
+.score-num{font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--ridge-1);}
+.score-lbl{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft);}
+
+.takeaways{background:linear-gradient(135deg,var(--gold-soft),#fff8ec);border:1px solid var(--gold);border-radius:var(--radius);padding:1.8rem 2rem;margin-bottom:1.5rem;}
+.takeaways h2{font-size:1.3rem;margin-bottom:0.8rem;color:var(--gold-dark);}
+.takeaways ul{margin:0;}
+
+.source-note{font-size:0.82rem;color:var(--ink-faint);border-top:1px solid var(--bg-deep);margin-top:1.4rem;padding-top:0.8rem;}
+
+.page-footer{background:var(--ridge-1);color:var(--ridge-4);padding:2rem;text-align:center;font-size:0.88rem;}
+.page-footer a{color:var(--gold);}
+
+@media print{
+  .page-header,.page-footer{display:block;}
+  body{background:#fff;}
+  .lesson-section,.knowledge-check,.takeaways{box-shadow:none;border:1px solid #ddd;}
+  .choice{border:1px solid #ccc;}
+}
+@media(max-width:600px){
+  .shell{padding:1rem 1rem 3rem;}
+  .lesson-header,.knowledge-check,.lesson-section,.takeaways{padding:1.4rem 1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div class="page-header__brand">Cancer in the Commonwealth</div>
+    <div class="page-header__tag">Ask Common &mdash; AI-Generated Lesson</div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <div class="lesson-header">
+    <p class="eyebrow" style="color:var(--gold)">Personalized Lesson</p>
+    <h1>${escText(lesson.title || 'Cancer Lesson')}</h1>
+    <p>${escText(lesson.introduction || '')}</p>
+    <div class="question-echo">&ldquo;${escText(question)}&rdquo;</div>
+  </div>
+
+  ${sections}
+
+  <div class="knowledge-check">
+    <p class="eyebrow">Check Your Understanding</p>
+    <h2>Knowledge Check</h2>
+    <p class="lede">Answer each question &mdash; you&rsquo;ll see right away whether you got it and why.</p>
+    <div class="score-bar" id="scoreBar">
+      <div class="score-num" id="scoreNum"></div>
+      <div class="score-lbl">Questions answered correctly</div>
+    </div>
+    ${questionsHTML}
+  </div>
+
+  ${takeawaysHTML ? `
+  <div class="takeaways">
+    <p class="eyebrow" style="color:var(--gold-dark)">Remember These</p>
+    <h2>Key Takeaways</h2>
+    <ul>${takeawaysHTML}</ul>
+  </div>` : ''}
+
+  <p class="source-note">
+    This lesson was generated by an AI (Anthropic Claude) based on the
+    <em>Cancer in the Commonwealth</em> curriculum &copy; University of Kentucky Markey Cancer
+    Center, 2020&ndash;2025. Always verify health information with a qualified healthcare professional.
+  </p>
+
+</div>
+
+<div class="page-footer">
+  <p>Cancer in the Commonwealth &mdash; Appalachian KY Cancer Education Curriculum</p>
+  <p style="margin-top:0.4rem;">
+    <a href="https://ukhealthcare.uky.edu/markey-cancer-center">UK Markey Cancer Center</a>
+  </p>
+</div>
+
+<script>
+// Track knowledge check state
+var kcState = {
+  total: ${(lesson.knowledgeCheck || []).length},
+  answered: 0,
+  correct: 0
+};
+
+function pickAnswer(btn, qIdx, choiceIdx, correctIdx) {
+  var cl = document.getElementById('cl' + qIdx);
+  if (cl.dataset.selected === String(choiceIdx)) return; // already selected
+
+  var isFirstAnswer = cl.dataset.answered !== 'true';
+  cl.dataset.answered = 'true';
+  cl.dataset.selected = String(choiceIdx);
+
+  var btns = cl.querySelectorAll('.choice');
+  btns.forEach(function(b) { b.classList.remove('is-correct', 'is-incorrect'); });
+  btns[correctIdx].classList.add('is-correct');
+  if (choiceIdx !== correctIdx) btn.classList.add('is-incorrect');
+
+  var exp = document.getElementById('exp' + qIdx);
+  if (exp) exp.style.display = 'block';
+
+  if (isFirstAnswer) kcState.answered++;
+
+  // Recompute the score fresh from every question's current selection,
+  // reading each question's correct-answer index off its own buttons
+  // (data-correct is already stamped onto every choice button below).
+  kcState.correct = 0;
+  for (var i = 0; i < kcState.total; i++) {
+    var list = document.getElementById('cl' + i);
+    if (!list || list.dataset.selected === undefined) continue;
+    var firstBtn = list.querySelector('.choice');
+    var correctForThisQ = firstBtn ? parseInt(firstBtn.dataset.correct, 10) : -1;
+    if (parseInt(list.dataset.selected, 10) === correctForThisQ) kcState.correct++;
+  }
+
+  if (kcState.answered === kcState.total) {
+    var bar = document.getElementById('scoreBar');
+    var num = document.getElementById('scoreNum');
+    if (bar && num) {
+      num.textContent = kcState.correct + ' / ' + kcState.total;
+      bar.classList.add('visible');
+      bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+}
+<\/script>
+</body>
+</html>`;
+    }
+
+  </script>
+
+</body>
+</html>

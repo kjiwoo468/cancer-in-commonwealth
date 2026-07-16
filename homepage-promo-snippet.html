@@ -1,0 +1,85 @@
+<!-- ============================================================
+     Risk Calculator homepage promo — paste this into index.html,
+     right after the hero section (or wherever the module cards
+     are listed). Self-contained: doesn't depend on unknown
+     classes from the rest of style.css, so it's safe to drop in
+     without conflicts. Uses the same fonts/colors as the
+     calculator page itself for visual consistency.
+     ============================================================ -->
+<section class="calc-promo">
+  <style>
+    .calc-promo {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+    .calc-promo__card {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #233b32, #2f4d41);
+      border-radius: 18px;
+      padding: 2rem 2.25rem;
+      color: #f4f6f4;
+    }
+    .calc-promo__text { flex: 1 1 360px; }
+    .calc-promo__eyebrow {
+      font-family: "Figtree", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #D9A33E;
+      margin: 0 0 0.4rem;
+    }
+    .calc-promo__title {
+      font-family: "Fraunces", serif;
+      font-size: 1.6rem;
+      margin: 0 0 0.5rem;
+      color: #ffffff;
+    }
+    .calc-promo__body {
+      font-family: "Figtree", sans-serif;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: #dfe7e2;
+      margin: 0 0 1.1rem;
+      max-width: 60ch;
+    }
+    .calc-promo__cta {
+      display: inline-block;
+      background: #D9A33E;
+      color: #233b32;
+      font-family: "Figtree", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.4rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .calc-promo__cta:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+    .calc-promo__art { flex: 0 0 auto; width: 120px; opacity: 0.9; }
+    @media (max-width: 560px) {
+      .calc-promo__card { padding: 1.5rem; }
+    }
+  </style>
+  <div class="calc-promo__card">
+    <div class="calc-promo__text">
+      <p class="calc-promo__eyebrow">Free &middot; 2 minutes &middot; No account needed</p>
+      <h2 class="calc-promo__title">See how your own risk factors stack up</h2>
+      <p class="calc-promo__body">
+        Our Cancer Risk Estimator compares your answers on smoking, weight, alcohol, screening,
+        and a few other factors to Kentucky's own averages &mdash; across lung, colorectal,
+        cervical, laryngeal, and oral/throat cancer, plus one combined overall estimate.
+        It's educational, not a diagnosis, and takes about two minutes.
+      </p>
+      <a class="calc-promo__cta" href="risk-calculator.html">Try the Risk Calculator &rarr;</a>
+    </div>
+    <svg class="calc-promo__art" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="70" cy="24" r="14" fill="#D9A33E" opacity="0.85"/>
+      <path d="M0 70 L22 40 L38 58 L55 30 L78 62 L100 46 L100 100 L0 100 Z" fill="#6f9482" opacity="0.9"/>
+    </svg>
+  </div>
+</section>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cancer-in-commonwealth.vercel.app/sitemap.xml

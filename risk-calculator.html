@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cancer Risk Estimator | Cancer in the Commonwealth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    /* ============================================================
+       Risk Calculator \u2014 page-specific styles only.
+       Everything above (header, footer, .btn, .eyebrow, .lede,
+       .accordion__*, .modal-overlay, etc.) is already styled by
+       assets/style.css and is intentionally left untouched here.
+       ============================================================ */
+    .calc-shell {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+    .calc-intro { margin-bottom: 2rem; }
+    .calc-disclaimer {
+      background: #fbf3df;
+      border: 1px solid #e3c98a;
+      border-left: 6px solid #D9A33E;
+      border-radius: 10px;
+      padding: 1.1rem 1.3rem;
+      margin: 1.25rem 0 2rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .calc-disclaimer strong { color: #6b4e17; }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    .calc-section {
+      background: #ffffff;
+      border: 1px solid #e2e6e2;
+      border-radius: 14px;
+      padding: 1.5rem 1.5rem 1.75rem;
+      box-shadow: 0 1px 2px rgba(20, 30, 25, 0.04);
+    }
+    .calc-section h3 {
+      margin: 0 0 0.25rem;
+      font-family: "Fraunces", serif;
+      color: #233b32;
+      font-size: 1.15rem;
+    }
+    .calc-section__hint {
+      margin: 0 0 1rem;
+      font-size: 0.88rem;
+      color: #5b6b62;
+    }
+    .calc-field { margin-bottom: 1.1rem; }
+    .calc-field:last-child { margin-bottom: 0; }
+    .calc-field > label,
+    .calc-field > .calc-field__legend {
+      display: block;
+      font-weight: 600;
+      font-size: 0.93rem;
+      color: #233b32;
+      margin-bottom: 0.4rem;
+    }
+    .calc-field select,
+    .calc-field input[type="number"] {
+      width: 100%;
+      max-width: 320px;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid #c7d0c9;
+      border-radius: 8px;
+      font-family: "Figtree", sans-serif;
+      font-size: 0.95rem;
+      background: #fbfcfb;
+    }
+    .calc-inline-fields { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .calc-inline-fields .calc-subfield { flex: 1 1 120px; }
+    .calc-subfield label { display: block; font-size: 0.82rem; color: #5b6b62; margin-bottom: 0.25rem; }
+    .calc-radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .calc-radio-group label {
+      display: flex; align-items: flex-start; gap: 0.55rem;
+      font-weight: 400; font-size: 0.93rem; color: #233b32;
+      cursor: pointer;
+    }
+    .calc-radio-group input { margin-top: 0.2rem; }
+    .calc-bmi-readout {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: "Space Mono", monospace;
+      font-size: 0.85rem;
+      color: #45594e;
+      background: #eef3ee;
+      border-radius: 6px;
+      padding: 0.2rem 0.55rem;
+    }
+    .calc-actions { display: flex; gap: 0.75rem; margin: 2rem 0; flex-wrap: wrap; }
+
+    /* Results */
+    .calc-results { margin-top: 2.5rem; }
+    .calc-results[hidden] { display: none; }
+    .risk-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.1rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+    .risk-card {
+      border-radius: 14px;
+      padding: 1.2rem 1.3rem 1.35rem;
+      border: 1px solid #e2e6e2;
+      background: #fff;
+    }
+    .risk-card__site {
+      font-family: "Fraunces", serif;
+      font-size: 1.05rem;
+      color: #233b32;
+      margin: 0 0 0.35rem;
+    }
+    .risk-card__multiple {
+      font-family: "Space Mono", monospace;
+      font-size: 1.9rem;
+      margin: 0.1rem 0 0.2rem;
+    }
+    .risk-card__category {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      margin-bottom: 0.7rem;
+    }
+    .risk-card--low .risk-card__multiple, .risk-card--low .risk-card__category { color: #1f6b45; }
+    .risk-card--low .risk-card__category { background: #e2f2e7; }
+    .risk-card--avg .risk-card__multiple, .risk-card--avg .risk-card__category { color: #7a5b12; }
+    .risk-card--avg .risk-card__category { background: #f7ecd2; }
+    .risk-card--high .risk-card__multiple, .risk-card--high .risk-card__category { color: #a04512; }
+    .risk-card--high .risk-card__category { background: #fbe4d4; }
+    .risk-card--vhigh .risk-card__multiple, .risk-card--vhigh .risk-card__category { color: #a12626; }
+    .risk-card--vhigh .risk-card__category { background: #fadada; }
+    .risk-card__meter {
+      height: 8px; border-radius: 999px; background: #eceeec; overflow: hidden; margin-bottom: 0.85rem;
+    }
+    .risk-card__meter-fill { height: 100%; border-radius: 999px; }
+    .risk-card--low .risk-card__meter-fill { background: #2f8f5b; }
+    .risk-card--avg .risk-card__meter-fill { background: #D9A33E; }
+    .risk-card--high .risk-card__meter-fill { background: #d9722f; }
+    .risk-card--vhigh .risk-card__meter-fill { background: #c23a3a; }
+    .risk-card__factors {
+      margin: 0 0 0.85rem;
+      padding-left: 1.1rem;
+      font-size: 0.85rem;
+      color: #47554d;
+    }
+    .risk-card__factors li { margin-bottom: 0.25rem; }
+    .risk-card__actions { margin: 0; padding: 0; list-style: none; }
+    .risk-card__actions li {
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .risk-card__actions li::before {
+      content: "\2192";
+      position: absolute; left: 0; color: #6f9482;
+    }
+    .risk-card__actions a { color: #1f4d3d; font-weight: 600; }
+
+    .calc-note {
+      font-size: 0.85rem;
+      color: #5b6b62;
+      margin-top: 0.5rem;
+    }
+    .calc-cite-list {
+      font-size: 0.82rem;
+      color: #47554d;
+      line-height: 1.6;
+      columns: 1;
+    }
+    @media (min-width: 720px) {
+      .calc-cite-list { columns: 2; column-gap: 2rem; }
+    }
+    .approx-flag {
+      font-size: 0.72rem;
+      color: #a0731e;
+      font-weight: 700;
+      vertical-align: super;
+    }
+
+    .overall-card {
+      border-radius: 16px;
+      padding: 1.5rem 1.7rem 1.7rem;
+      border: 2px solid #233b32;
+      background: linear-gradient(135deg, #f6f8f6, #eef3ee);
+      margin-bottom: 1.5rem;
+    }
+    .overall-card__label {
+      margin: 0 0 0.2rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #233b32;
+    }
+    .overall-card__multiple {
+      font-family: "Space Mono", monospace;
+      font-size: 2.6rem;
+      margin: 0.1rem 0 0.3rem;
+    }
+    .overall-card--low .overall-card__multiple { color: #1f6b45; }
+    .overall-card--avg .overall-card__multiple { color: #7a5b12; }
+    .overall-card--high .overall-card__multiple { color: #a04512; }
+    .overall-card--vhigh .overall-card__multiple { color: #a12626; }
+    .overall-card .risk-card__meter { margin-top: 0.8rem; }
+    .overall-card__note {
+      margin: 0.9rem 0 0;
+      font-size: 0.88rem;
+      color: #47554d;
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
+          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
+          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+        </svg>
+        <span class="brand__text">
+          <span class="brand__title">Cancer in the Commonwealth</span>
+          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="module1.html">Module 1</a>
+        <a href="module2.html">Module 2</a>
+        <a href="module3.html">Module 3</a>
+        <a href="risk-calculator.html" class="is-active">Risk Calculator</a>
+      <a href="certificate.html" id="certNavLink" class="cert-nav-link">Certificates</a>      <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+      </nav>
+      <div class="account-ui">
+        <span class="account-status" id="accountStatus"></span>
+        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="calc-shell">
+    <div class="calc-intro">
+      <p class="eyebrow">Educational tool &mdash; not a diagnosis</p>
+      <h1>Cancer Risk Estimator for Appalachian Kentucky</h1>
+      <p class="lede">
+        This tool gives a rough, personalized sense of how a few well-studied risk factors line
+        up for the five cancers where Appalachian Kentucky carries the largest share of the
+        nation's burden: lung, colorectal, cervical, laryngeal, and oral cavity/pharyngeal
+        cancer. It compares your inputs to Kentucky's own average, not the national average.
+      </p>
+      <div class="calc-disclaimer">
+        <strong>This is an educational estimate, not a medical risk assessment.</strong>
+        It's built from published relative-risk research (see <em>How this is calculated</em>
+        below), but it has not been validated against actual patient outcomes the way a
+        clinical tool like the Gail model or PLCO<sub>m2012</sub> has. It cannot diagnose
+        cancer, and it isn't a substitute for talking with a doctor &mdash; especially if you
+        have a strong family history of cancer. If a number here worries you, that's worth
+        bringing to a doctor; please don't let it cause distress on its own.
+      </div>
+    </div>
+
+    <form id="riskCalcForm" novalidate>
+      <div class="calc-grid">
+
+        <div class="calc-section">
+          <h3>About you</h3>
+          <p class="calc-section__hint">Used only to decide which sections below apply to you. Nothing here is stored unless you choose to save your answers on this device.</p>
+          <div class="calc-field">
+            <label for="calcAge">Age</label>
+            <input type="number" id="calcAge" min="10" max="110" placeholder="e.g., 45" />
+          </div>
+          <div class="calc-field">
+            <span class="calc-field__legend">Do you have a cervix (i.e., were you assigned female at birth and have not had a full hysterectomy)?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="hasCervix" value="yes"> Yes</label>
+              <label><input type="radio" name="hasCervix" value="no" checked> No</label>
+              <label><input type="radio" name="hasCervix" value="unsure"> Prefer not to say</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-section">
+          <h3>Tobacco</h3>
+          <p class="calc-section__hint">The single biggest driver of lung, laryngeal, and oral/throat cancer risk in Kentucky.</p>
+          <div class="calc-field">
+            <span class="calc-field__legend">Smoking status</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="smoking" value="never" checked> Never smoked</label>
+              <label><input type="radio" name="smoking" value="former_long"> Former smoker &mdash; quit more than 15 years ago</label>
+              <label><input type="radio" name="smoking" value="former_recent"> Former smoker &mdash; quit within the last 15 years</label>
+              <label><input type="radio" name="smoking" value="current"> Current smoker</label>
+            </div>
+          </div>
+          <div class="calc-field" id="secondhandField">
+            <span class="calc-field__legend">Regular secondhand smoke exposure at home or work?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="secondhand" value="yes"> Yes</label>
+              <label><input type="radio" name="secondhand" value="no" checked> No</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-section">
+          <h3>Body weight</h3>
+          <p class="calc-section__hint">Excess body weight affects colorectal, cervical, and several other cancer risks. We'll calculate your BMI from height and weight &mdash; you can skip this if you'd rather not share it.</p>
+          <div class="calc-inline-fields">
+            <div class="calc-subfield">
+              <label for="calcHeightFt">Height (ft)</label>
+              <input type="number" id="calcHeightFt" min="3" max="8" placeholder="5" />
+            </div>
+            <div class="calc-subfield">
+              <label for="calcHeightIn">Height (in)</label>
+              <input type="number" id="calcHeightIn" min="0" max="11" placeholder="6" />
+            </div>
+            <div class="calc-subfield">
+              <label for="calcWeightLb">Weight (lb)</label>
+              <input type="number" id="calcWeightLb" min="60" max="600" placeholder="170" />
+            </div>
+          </div>
+          <span class="calc-bmi-readout" id="bmiReadout">Enter height &amp; weight to calculate BMI</span>
+        </div>
+
+        <div class="calc-section">
+          <h3>Alcohol &amp; diet</h3>
+          <div class="calc-field">
+            <span class="calc-field__legend">Alcohol use</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="alcohol" value="none" checked> None</label>
+              <label><input type="radio" name="alcohol" value="light"> Light to moderate (up to 1 drink/day)</label>
+              <label><input type="radio" name="alcohol" value="heavy"> Heavy (2+ drinks/day)</label>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field__legend">How often do you eat processed meat (bacon, sausage, deli meat, hot dogs)?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="meat" value="rarely" checked> Rarely</label>
+              <label><input type="radio" name="meat" value="sometimes"> A few times a week</label>
+              <label><input type="radio" name="meat" value="daily"> Daily</label>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field__legend">Physical activity</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="activity" value="sedentary" checked> Little to no regular exercise</label>
+              <label><input type="radio" name="activity" value="moderate"> Some most weeks</label>
+              <label><input type="radio" name="activity" value="active"> Regular (150+ min/week)</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-section">
+          <h3>Family history &amp; occupation</h3>
+          <div class="calc-field">
+            <span class="calc-field__legend">Has a parent or sibling had colorectal cancer?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="famHistory" value="yes"> Yes</label>
+              <label><input type="radio" name="famHistory" value="no" checked> No / not sure</label>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field__legend">Have you ever worked in underground coal mining?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="coalMining" value="yes"> Yes</label>
+              <label><input type="radio" name="coalMining" value="no" checked> No</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-section" id="hpvSection" hidden>
+          <h3>HPV vaccination</h3>
+          <p class="calc-section__hint">Only affects the cervical cancer estimate below.</p>
+          <div class="calc-field">
+            <span class="calc-field__legend">HPV vaccination status</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="hpv" value="none" checked> Not vaccinated</label>
+              <label><input type="radio" name="hpv" value="early"> Vaccinated before age 15</label>
+              <label><input type="radio" name="hpv" value="later"> Vaccinated later, or not sure of timing</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-section">
+          <h3>Screening &amp; radon</h3>
+          <p class="calc-section__hint">These don't change your underlying biological odds the way the factors above do &mdash; they change the odds that an early, treatable problem gets caught. We'll flag them separately rather than folding them into the numbers above.</p>
+          <div class="calc-field">
+            <span class="calc-field__legend">Up to date on colorectal cancer screening (colonoscopy or FIT, if age 45+)?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="crcScreen" value="yes"> Yes</label>
+              <label><input type="radio" name="crcScreen" value="no"> No</label>
+              <label><input type="radio" name="crcScreen" value="na" checked> Not yet 45 / not sure</label>
+            </div>
+          </div>
+          <div class="calc-field" id="cervScreenField" hidden>
+            <span class="calc-field__legend">Up to date on cervical cancer screening (Pap/HPV test)?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="cervScreen" value="yes"> Yes</label>
+              <label><input type="radio" name="cervScreen" value="no"> No</label>
+              <label><input type="radio" name="cervScreen" value="na" checked> Not sure</label>
+            </div>
+          </div>
+          <div class="calc-field">
+            <span class="calc-field__legend">Has your home been tested for radon?</span>
+            <div class="calc-radio-group">
+              <label><input type="radio" name="radon" value="low"> Tested, and it's below the EPA action level</label>
+              <label><input type="radio" name="radon" value="mitigated"> Tested high, and it's been mitigated</label>
+              <label><input type="radio" name="radon" value="high"> Tested high, not yet mitigated</label>
+              <label><input type="radio" name="radon" value="never" checked> Never tested</label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="calc-actions">
+        <button type="submit" class="btn btn--gold">Calculate my estimate</button>
+        <button type="button" class="btn btn--ghost" id="calcResetBtn">Reset</button>
+      </div>
+    </form>
+
+    <div class="calc-results" id="calcResults" hidden>
+      <h2>Your estimate</h2>
+      <p class="lede">Each card shows your estimated risk as a multiple of the average Kentuckian's risk for that cancer &mdash; not a percent chance of getting cancer.</p>
+      <div id="overallCard" class="overall-card"></div>
+      <div class="risk-cards" id="riskCards"></div>
+      <p class="calc-note" id="cervicalNote"></p>
+    </div>
+
+    <div class="accordion" style="margin-top: 2.5rem;">
+      <div class="accordion__item">
+        <button class="accordion__trigger" aria-expanded="false">How this is calculated</button>
+        <div class="accordion__content">
+          <p class="lede">
+            This tool follows the same relative-risk logic used by the Harvard Cancer Risk
+            Index / <em>Your Disease Risk</em>, but anchors the comparison to Kentucky's own
+            average instead of the U.S. average, and adds a few Appalachian-Kentucky-specific
+            inputs (radon, coal-mining history, HPV vaccination, and regional screening gaps)
+            that national tools don't ask about. It is documented in full, including every
+            citation below, in the accompanying research paper,
+            <em>A Regionally Calibrated Approach to Cancer Risk Estimation for Appalachian
+            Kentucky</em>. Values marked <span class="approx-flag">approx.</span> are
+            reasoned interpolations between published estimates rather than a single directly
+            cited number &mdash; the paper explains each one.
+          </p>
+          <ul class="calc-cite-list">
+            <li>Current smoking &amp; lung cancer: ~20&times; (lifetime average)</li>
+            <li>Secondhand smoke, never-smokers, lung cancer: 1.24&times;</li>
+            <li>Coal-mining employment, lung cancer: ~1.3&times; <span class="approx-flag">approx.</span></li>
+            <li>BMI and colorectal/cervical cancer: 1.10&times; per 5&nbsp;kg/m&sup2;</li>
+            <li>Least- vs. most-active, colorectal cancer: ~1.3&times; <span class="approx-flag">approx.</span></li>
+            <li>Heavy alcohol use, colorectal cancer: 1.44&times;</li>
+            <li>Processed meat, colorectal cancer: 1.18&times; per 50&nbsp;g/day</li>
+            <li>First-degree family history, colorectal cancer: ~2.5&times; <span class="approx-flag">approx.</span></li>
+            <li>HPV vaccination before exposure, cervical cancer: up to ~90% risk reduction</li>
+            <li>Current smoking, oral/pharyngeal cancer: 3.58&times;; former smoking: 1.61&times;</li>
+            <li>Heavy alcohol use, oral/pharyngeal cancer: 5.13&times;</li>
+            <li>Current smoking, laryngeal cancer: 7.0&times; (isolated from alcohol)</li>
+            <li>Heavy alcohol use, laryngeal cancer: 2.65&times;</li>
+          </ul>
+          <p class="lede">
+            To avoid double-counting how common some of these factors already are in Kentucky
+            (for example, about 1 in 4 adults already smoke), the calculator first works out
+            an implied \u201creference\u201d rate for someone with none of the region's common risk
+            factors, then rebuilds an individual estimate from your specific answers. Full
+            derivation and limitations are in the research paper. This tool assumes risk
+            factors act independently, which is a simplification &mdash; in reality several of
+            them (like smoking and heavy drinking) tend to cluster together.
+          </p>
+          <p class="lede">
+            <strong>About the \u201coverall\u201d number:</strong> it's a weighted average of the
+            five site-specific estimates, weighted by how common each cancer actually is
+            (using national SEER incidence rates as the weighting basis, since precise
+            site-by-site Appalachian Kentucky rates aren't available for all five). That
+            weighting means a large multiplier on a rare cancer like larynx (about 2.5 cases
+            per 100,000 people nationally) moves the overall number much less than the same
+            size multiplier on a common one like lung (about 47 per 100,000) or colorectal
+            cancer (about 38 per 100,000) &mdash; which mirrors how these risks actually add up
+            in real life. It is a combined estimate across only the five cancers this tool
+            covers, <strong>not</strong> a general \u201ccancer risk\u201d figure; most cancer types
+            (breast, prostate, skin, kidney, and dozens of others) aren't modeled here at all,
+            mainly because they aren't where Appalachian Kentucky's documented excess burden
+            is concentrated (see the research paper, Section 3).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p>Adapted from the <em>Cancer in the Commonwealth</em> curriculum, &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.</p>
+      <p><a href="index.html">&larr; Back to all modules</a></p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="accountModal" hidden>
+    <div class="modal">
+      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
+      <p class="eyebrow">Optional</p>
+      <h2>Save your progress</h2>
+      <p>
+        Create a free account to save your progress and pick up where you left off on any
+        device. You can also keep using this site without an account &mdash; your progress
+        will just stay on this device.
+      </p>
+      <form id="accountForm">
+        <label for="accountEmail">Email</label>
+        <input type="email" id="accountEmail" autocomplete="email" required>
+        <label for="accountPassword">Password</label>
+        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
+        <p class="form-error" id="accountError"></p>
+        <p class="form-info" id="accountInfo"></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
+          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+        </div>
+        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+      </form>
+      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+    </div>
+  </div>
+
+  <script src="assets/script.js"></script>
+  <script>
+    CIC.initAccordions();
+  </script>
+  <script src="assets/risk-calculator.js"></script>
+  <script type="module" src="assets/account.js"></script>
+</body>
+</html>
