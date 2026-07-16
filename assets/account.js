@@ -56,6 +56,7 @@ async function initAccounts() {
   const passwordInput = document.getElementById("accountPassword");
   const errorEl = document.getElementById("accountError");
   const infoEl = document.getElementById("accountInfo");
+  const signInBtn = document.getElementById("accountSignIn");
   const signUpBtn = document.getElementById("accountSignUp");
   const forgotBtn = document.getElementById("accountForgot");
   const continueGuestBtn = document.getElementById("accountContinueGuest");
@@ -96,6 +97,21 @@ async function initAccounts() {
   function setInfo(msg) {
     if (infoEl) infoEl.textContent = msg;
     if (msg && errorEl) errorEl.textContent = "";
+  }
+
+  // Small helper: disable a button and swap its label while an async
+  // action runs, then always restore it — even if the action throws.
+  async function withLoadingState(btn, loadingText, action) {
+    if (!btn) return action();
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = loadingText;
+    try {
+      return await action();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
   }
 
   if (accountBtn) {
@@ -152,8 +168,10 @@ async function initAccounts() {
       const password = passwordInput.value;
       setError("");
       setInfo("");
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) setError(friendlyError(error));
+      await withLoadingState(signInBtn, "Signing in\u2026", async () => {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) setError(friendlyError(error));
+      });
     });
   }
 
@@ -171,14 +189,16 @@ async function initAccounts() {
         setError("Password must be at least 6 characters.");
         return;
       }
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) {
-        setError(friendlyError(error));
-        return;
-      }
-      if (!data.session) {
-        setInfo("Account created! If your teacher has email confirmation turned on, check your inbox for a confirmation link, then sign in.");
-      }
+      await withLoadingState(signUpBtn, "Creating account\u2026", async () => {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) {
+          setError(friendlyError(error));
+          return;
+        }
+        if (!data.session) {
+          setInfo("Account created! If your teacher has email confirmation turned on, check your inbox for a confirmation link, then sign in.");
+        }
+      });
     });
   }
 
@@ -192,12 +212,14 @@ async function initAccounts() {
         return;
       }
       const redirectTo = new URL("reset-password.html", window.location.href).toString();
-      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
-      if (error) {
-        setError(friendlyError(error));
-      } else {
-        setInfo("Check your email for a link to reset your password.");
-      }
+      await withLoadingState(forgotBtn, "Sending\u2026", async () => {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) {
+          setError(friendlyError(error));
+        } else {
+          setInfo("Check your email for a link to reset your password.");
+        }
+      });
     });
   }
 

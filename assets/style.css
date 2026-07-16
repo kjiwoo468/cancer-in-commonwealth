@@ -44,6 +44,31 @@
   --font-display: "Fraunces", "Georgia", serif;
   --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
   --font-mono: "Space Mono", "Courier New", monospace;
+
+  /* ---------- Type scale ----------
+     A small set of steps, named by role rather than raw size, so
+     "a section sub-heading" is always the same size wherever it
+     appears instead of drifting by a few px per component.
+     Base unit is 1rem = 17px (see body font-size below). */
+  --text-xs:   0.72rem;   /* eyebrows, mono labels, fine print   */
+  --text-sm:   0.85rem;   /* secondary copy, table cells         */
+  --text-base: 1rem;      /* body copy                           */
+  --text-md:   1.08rem;   /* lede / intro paragraphs             */
+  --text-lg:   1.2rem;    /* h3/h4-level sub-headings             */
+  --text-xl:   1.6rem;    /* h2-level section headings (clamp'd) */
+  --text-2xl:  2.4rem;    /* hero / display headings (clamp'd)   */
+
+  /* ---------- Spacing scale ----------
+     Consolidates the many near-duplicate paddings/gaps (1.1rem vs
+     1.25rem vs 1.4rem, etc.) that had accumulated into a clean set
+     of steps. Existing rules keep their own values where the size
+     is genuinely intentional (e.g. the hero's larger padding). */
+  --space-1: 0.4rem;
+  --space-2: 0.6rem;
+  --space-3: 1rem;
+  --space-4: 1.4rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
 }
 
 /* ---------- Reset ---------- */
@@ -127,7 +152,7 @@ textarea:focus-visible,
 /* ---------- Eyebrow / labels ---------- */
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold-dark);
@@ -290,7 +315,7 @@ textarea:focus-visible,
 
 .hero h1 {
   color: #fbfbf6;
-  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-size: clamp(var(--text-2xl), 5vw, 3.6rem);
   margin: 0.5rem 0 1.1rem;
   max-width: 14ch;
 }
@@ -492,11 +517,11 @@ textarea:focus-visible,
   border: 1px solid var(--bg-deep);
   border-left: 6px solid var(--gold);
   border-radius: var(--radius-md);
-  padding: 1.4rem 1.6rem;
+  padding: var(--space-4) 1.6rem;
 }
 
 .callout h3 {
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   margin-bottom: 0.4rem;
 }
 
@@ -603,6 +628,16 @@ textarea:focus-visible,
   cursor: pointer;
   transition: all 0.15s ease;
   flex-shrink: 0;
+  position: relative;
+}
+
+/* Enlarge the tappable area on touch devices without changing the
+   visual dot size — 30px reads fine but is under the ~44px minimum
+   comfortable touch target, so we pad the hit area invisibly. */
+.trail-step__dot::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
 }
 
 .trail-step__dot:hover {
@@ -696,12 +731,12 @@ textarea:focus-visible,
 }
 
 .screen h2 {
-  font-size: clamp(1.5rem, 3vw, 2.05rem);
+  font-size: clamp(var(--text-xl), 3vw, 2.05rem);
   margin-bottom: 1rem;
 }
 
 .screen h3 {
-  font-size: 1.2rem;
+  font-size: var(--text-lg);
   margin: 1.4rem 0 0.5rem;
   color: var(--ridge-2);
 }
@@ -717,7 +752,7 @@ textarea:focus-visible,
 }
 
 .lede {
-  font-size: 1.08rem;
+  font-size: var(--text-md);
   color: var(--ink-soft);
 }
 
@@ -808,13 +843,13 @@ textarea:focus-visible,
   background: var(--card-soft);
   border: 1px solid var(--bg-deep);
   border-radius: var(--radius-md);
-  padding: 1.1rem 1.25rem;
+  padding: var(--space-4) 1.25rem;
 }
 
 .info-card h4 {
   font-family: var(--font-display);
   color: var(--ridge-1);
-  font-size: 1.05rem;
+  font-size: var(--text-lg);
   margin-bottom: 0.35rem;
 }
 
@@ -868,7 +903,7 @@ textarea:focus-visible,
 
 .compare__col h4 {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: var(--text-lg);
   margin-bottom: 0.5rem;
 }
 
@@ -884,7 +919,7 @@ textarea:focus-visible,
 .activity {
   background: var(--bg-deep);
   border-radius: var(--radius-md);
-  padding: 1.4rem 1.5rem;
+  padding: var(--space-4) 1.5rem;
   margin: 1.3rem 0;
   border: 1px dashed var(--ridge-3);
 }
@@ -1011,7 +1046,12 @@ textarea:focus-visible,
   background: var(--card);
   padding: 0.8rem 1rem;
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  /* 16px minimum: iOS Safari auto-zooms into any input/textarea whose
+     computed font-size is below 16px on focus, which feels like a bug
+     to anyone typing a reflection on a phone. 1rem = 17px here, so
+     this already clears the threshold — kept explicit so it stays
+     true even if the base font-size ever changes. */
+  font-size: 1rem;
   color: var(--ink);
   resize: vertical;
 }
@@ -1432,7 +1472,8 @@ textarea:focus-visible,
   border: 2px solid var(--ridge-4);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  /* 16px minimum — see .reflection textarea comment above */
+  font-size: 1rem;
   background: var(--card-soft);
   color: var(--ink);
 }
@@ -1469,6 +1510,12 @@ textarea:focus-visible,
 
 .link-btn:hover {
   color: var(--gold-dark);
+}
+
+.link-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  text-decoration: none;
 }
 
 .form-error {
@@ -1549,7 +1596,8 @@ textarea:focus-visible,
   border: 2px solid var(--ridge-4);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  /* 16px minimum — see .reflection textarea comment above */
+  font-size: 1rem;
   background: var(--card-soft);
   color: var(--ink);
   min-width: 220px;
@@ -1569,6 +1617,11 @@ textarea:focus-visible,
   background: var(--card-soft);
   position: relative;
   overflow: hidden;
+  /* Chrome/Edge strip background colors and gradients from printed
+     pages by default unless a page explicitly opts back in — without
+     this, the gold/green striped border below prints as blank white. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 .certificate::before,
@@ -1685,72 +1738,55 @@ textarea:focus-visible,
   .certificate {
     border-width: 4px;
   }
+  /* Certificates read better wide than tall. If the browser doesn't
+     support @page size (older Firefox/Safari), this is simply
+     ignored and the user's own print-dialog default applies. */
+  @page {
+    size: landscape;
+    margin: 0.5in;
+  }
 }
 
-/* ---------- Dashboard ---------- */
-.dashboard-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.4rem;
-}
-
-.dashboard-table-wrap {
-  overflow-x: auto;
-  border: 1px solid var(--bg-deep);
-  border-radius: var(--radius-md);
-}
-
-.dashboard-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.dashboard-table th,
-.dashboard-table td {
-  padding: 0.65rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--bg-deep);
-}
-
-.dashboard-table thead th {
-  background: var(--ridge-1);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 700;
-  position: sticky;
-  top: 0;
-}
-
-.dashboard-table tbody tr:nth-child(even) {
-  background: var(--card-soft);
-}
-
-.dashboard-table tbody tr:hover {
-  background: var(--bg-deep);
-}
-
-.dashboard-table .score-cell {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-}
-
-.dashboard-empty,
-.dashboard-locked {
+/* ---------- 404 page ---------- */
+.not-found {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(3rem, 10vw, 7rem) 1.5rem;
   text-align: center;
-  padding: 3rem 1.5rem;
-  color: var(--ink-soft);
 }
 
-.dashboard-locked h2 {
-  margin-bottom: 0.6rem;
+.not-found__code {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+}
+
+.not-found h1 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin: 0.6rem 0 1rem;
+}
+
+.not-found p {
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0 auto;
+  font-size: var(--text-md);
+}
+
+.not-found__actions {
+  margin-top: 1.8rem;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.not-found__ridgeline {
+  max-width: 420px;
+  margin: 2.2rem auto 0;
+  opacity: 0.85;
 }
 
 /* ---------- Utility ---------- */
