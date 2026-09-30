@@ -211,6 +211,22 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
   .partner-logo img { height: 32px; }
   .login-status { display: none; }
 }
+.nav { 
+  display: flex; 
+  align-items: center; 
+  gap: 1rem; /* Reduced from 1.6rem to prevent horizontal crowding */
+}
+
+/* added .nav a{} on 9/29/2026 manually because of text wrapping issues */
+.nav a {
+  color: rgba(255,255,255,0.82); 
+  text-decoration: none; 
+  font-weight: 700; 
+  font-size: 0.92rem;
+  padding: 0.3rem 0; 
+  border-bottom: 2px solid transparent;
+  white-space: nowrap; /* Prevents "Module 1" from wrapping to two lines */
+}
 
 /* ---------- Sign-in modal ---------- */
 .modal-overlay {
