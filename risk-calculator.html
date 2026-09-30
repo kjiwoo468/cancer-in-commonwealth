@@ -3,543 +3,386 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cancer Risk Estimator | Cancer in the Commonwealth</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <title>Cancer Risk Calculator | Cancer in the Commonwealth</title>
+  <meta name="description" content="An educational cancer risk calculator based on the same relative-risk methodology used by published tools like the Harvard Cancer Risk Index and Cancer Care Ontario's My CancerIQ. For informational purposes only — not a diagnosis." />
+  <link rel="canonical" href="https://cancer-in-commonwealth.vercel.app/risk-calculator.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Cancer in the Commonwealth" />
+  <meta property="og:title" content="Cancer Risk Calculator" />
+  <meta property="og:description" content="See how everyday habits and history combine to raise or lower cancer risk — an educational tool, not a diagnosis." />
+  <meta property="og:url" content="https://cancer-in-commonwealth.vercel.app/risk-calculator.html" />
+  <meta property="og:image" content="https://cancer-in-commonwealth.vercel.app/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="assets/style.css" />
-  <style>
-    /* ============================================================
-       Risk Calculator \u2014 page-specific styles only.
-       Everything above (header, footer, .btn, .eyebrow, .lede,
-       .accordion__*, .modal-overlay, etc.) is already styled by
-       assets/style.css and is intentionally left untouched here.
-       ============================================================ */
-    .calc-shell {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
-    }
-    .calc-intro { margin-bottom: 2rem; }
-    .calc-disclaimer {
-      background: #fbf3df;
-      border: 1px solid #e3c98a;
-      border-left: 6px solid #D9A33E;
-      border-radius: 10px;
-      padding: 1.1rem 1.3rem;
-      margin: 1.25rem 0 2rem;
-      font-size: 0.95rem;
-      line-height: 1.55;
-    }
-    .calc-disclaimer strong { color: #6b4e17; }
-    .calc-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
-    }
-    .calc-section {
-      background: #ffffff;
-      border: 1px solid #e2e6e2;
-      border-radius: 14px;
-      padding: 1.5rem 1.5rem 1.75rem;
-      box-shadow: 0 1px 2px rgba(20, 30, 25, 0.04);
-    }
-    .calc-section h3 {
-      margin: 0 0 0.25rem;
-      font-family: "Fraunces", serif;
-      color: #233b32;
-      font-size: 1.15rem;
-    }
-    .calc-section__hint {
-      margin: 0 0 1rem;
-      font-size: 0.88rem;
-      color: #5b6b62;
-    }
-    .calc-field { margin-bottom: 1.1rem; }
-    .calc-field:last-child { margin-bottom: 0; }
-    .calc-field > label,
-    .calc-field > .calc-field__legend {
-      display: block;
-      font-weight: 600;
-      font-size: 0.93rem;
-      color: #233b32;
-      margin-bottom: 0.4rem;
-    }
-    .calc-field select,
-    .calc-field input[type="number"] {
-      width: 100%;
-      max-width: 320px;
-      padding: 0.55rem 0.7rem;
-      border: 1px solid #c7d0c9;
-      border-radius: 8px;
-      font-family: "Figtree", sans-serif;
-      font-size: 0.95rem;
-      background: #fbfcfb;
-    }
-    .calc-inline-fields { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-    .calc-inline-fields .calc-subfield { flex: 1 1 120px; }
-    .calc-subfield label { display: block; font-size: 0.82rem; color: #5b6b62; margin-bottom: 0.25rem; }
-    .calc-radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    .calc-radio-group label {
-      display: flex; align-items: flex-start; gap: 0.55rem;
-      font-weight: 400; font-size: 0.93rem; color: #233b32;
-      cursor: pointer;
-    }
-    .calc-radio-group input { margin-top: 0.2rem; }
-    .calc-bmi-readout {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-family: "Space Mono", monospace;
-      font-size: 0.85rem;
-      color: #45594e;
-      background: #eef3ee;
-      border-radius: 6px;
-      padding: 0.2rem 0.55rem;
-    }
-    .calc-actions { display: flex; gap: 0.75rem; margin: 2rem 0; flex-wrap: wrap; }
-
-    /* Results */
-    .calc-results { margin-top: 2.5rem; }
-    .calc-results[hidden] { display: none; }
-    .risk-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.1rem;
-      margin: 1.25rem 0 1.5rem;
-    }
-    .risk-card {
-      border-radius: 14px;
-      padding: 1.2rem 1.3rem 1.35rem;
-      border: 1px solid #e2e6e2;
-      background: #fff;
-    }
-    .risk-card__site {
-      font-family: "Fraunces", serif;
-      font-size: 1.05rem;
-      color: #233b32;
-      margin: 0 0 0.35rem;
-    }
-    .risk-card__multiple {
-      font-family: "Space Mono", monospace;
-      font-size: 1.9rem;
-      margin: 0.1rem 0 0.2rem;
-    }
-    .risk-card__category {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      margin-bottom: 0.7rem;
-    }
-    .risk-card--low .risk-card__multiple, .risk-card--low .risk-card__category { color: #1f6b45; }
-    .risk-card--low .risk-card__category { background: #e2f2e7; }
-    .risk-card--avg .risk-card__multiple, .risk-card--avg .risk-card__category { color: #7a5b12; }
-    .risk-card--avg .risk-card__category { background: #f7ecd2; }
-    .risk-card--high .risk-card__multiple, .risk-card--high .risk-card__category { color: #a04512; }
-    .risk-card--high .risk-card__category { background: #fbe4d4; }
-    .risk-card--vhigh .risk-card__multiple, .risk-card--vhigh .risk-card__category { color: #a12626; }
-    .risk-card--vhigh .risk-card__category { background: #fadada; }
-    .risk-card__meter {
-      height: 8px; border-radius: 999px; background: #eceeec; overflow: hidden; margin-bottom: 0.85rem;
-    }
-    .risk-card__meter-fill { height: 100%; border-radius: 999px; }
-    .risk-card--low .risk-card__meter-fill { background: #2f8f5b; }
-    .risk-card--avg .risk-card__meter-fill { background: #D9A33E; }
-    .risk-card--high .risk-card__meter-fill { background: #d9722f; }
-    .risk-card--vhigh .risk-card__meter-fill { background: #c23a3a; }
-    .risk-card__factors {
-      margin: 0 0 0.85rem;
-      padding-left: 1.1rem;
-      font-size: 0.85rem;
-      color: #47554d;
-    }
-    .risk-card__factors li { margin-bottom: 0.25rem; }
-    .risk-card__actions { margin: 0; padding: 0; list-style: none; }
-    .risk-card__actions li {
-      font-size: 0.85rem;
-      margin-bottom: 0.4rem;
-      padding-left: 1.2rem;
-      position: relative;
-    }
-    .risk-card__actions li::before {
-      content: "\2192";
-      position: absolute; left: 0; color: #6f9482;
-    }
-    .risk-card__actions a { color: #1f4d3d; font-weight: 600; }
-
-    .calc-note {
-      font-size: 0.85rem;
-      color: #5b6b62;
-      margin-top: 0.5rem;
-    }
-    .calc-cite-list {
-      font-size: 0.82rem;
-      color: #47554d;
-      line-height: 1.6;
-      columns: 1;
-    }
-    @media (min-width: 720px) {
-      .calc-cite-list { columns: 2; column-gap: 2rem; }
-    }
-    .approx-flag {
-      font-size: 0.72rem;
-      color: #a0731e;
-      font-weight: 700;
-      vertical-align: super;
-    }
-
-    .overall-card {
-      border-radius: 16px;
-      padding: 1.5rem 1.7rem 1.7rem;
-      border: 2px solid #233b32;
-      background: linear-gradient(135deg, #f6f8f6, #eef3ee);
-      margin-bottom: 1.5rem;
-    }
-    .overall-card__label {
-      margin: 0 0 0.2rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #233b32;
-    }
-    .overall-card__multiple {
-      font-family: "Space Mono", monospace;
-      font-size: 2.6rem;
-      margin: 0.1rem 0 0.3rem;
-    }
-    .overall-card--low .overall-card__multiple { color: #1f6b45; }
-    .overall-card--avg .overall-card__multiple { color: #7a5b12; }
-    .overall-card--high .overall-card__multiple { color: #a04512; }
-    .overall-card--vhigh .overall-card__multiple { color: #a12626; }
-    .overall-card .risk-card__meter { margin-top: 0.8rem; }
-    .overall-card__note {
-      margin: 0.9rem 0 0;
-      font-size: 0.88rem;
-      color: #47554d;
-      line-height: 1.55;
-      max-width: 62ch;
-    }
-
-  </style>
 </head>
-<body>
+<body data-page="risk-calculator">
 
   <header class="site-header">
-    <div class="site-header__inner">
+    <div class="site-header__row">
       <a class="brand" href="index.html">
         <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
-          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
-          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+          <circle cx="20" cy="20" r="19" fill="#0033a0"/>
+          <circle cx="20" cy="20" r="11" fill="none" stroke="#ffffff" stroke-width="2.4"/>
+          <circle cx="20" cy="20" r="4" fill="#ffffff"/>
         </svg>
         <span class="brand__text">
-          <span class="brand__title">Cancer in the Commonwealth</span>
-          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+          <span class="brand__name">Cancer in the Commonwealth</span>
+          <span class="brand__tag">Appalachian KY Curriculum</span>
         </span>
       </a>
-      <nav aria-label="Main navigation">
+      <div class="site-header__right">
+      <nav class="nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="module1.html">Module 1</a>
         <a href="module2.html">Module 2</a>
         <a href="module3.html">Module 3</a>
+        <a href="certificate.html">Certificates</a>
         <a href="risk-calculator.html" class="is-active">Risk Calculator</a>
-      <a href="certificate.html" id="certNavLink" class="cert-nav-link">Certificates</a>      <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
       </nav>
-      <div class="account-ui">
-        <span class="account-status" id="accountStatus"></span>
-        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      <a class="partner-logo" href="https://ukhealthcare.uky.edu/markey-cancer-center" target="_blank" rel="noopener noreferrer">
+        <img src="assets/uk-healthcare-logo.png" alt="University of Kentucky HealthCare" />
+      </a>
+      <div class="login-ui">
+        <span class="login-status" id="loginStatus" hidden></span>
+        <button class="btn btn--ghost on-dark btn--sm" id="loginBtn" type="button">Sign in</button>
+      </div>
       </div>
     </div>
   </header>
 
-  <div class="calc-shell">
-    <div class="calc-intro">
-      <p class="eyebrow">Educational tool &mdash; not a diagnosis</p>
-      <h1>Cancer Risk Estimator for Appalachian Kentucky</h1>
-      <p class="lede">
-        This tool gives a rough, personalized sense of how a few well-studied risk factors line
-        up for the five cancers where Appalachian Kentucky carries the largest share of the
-        nation's burden: lung, colorectal, cervical, laryngeal, and oral cavity/pharyngeal
-        cancer. It compares your inputs to Kentucky's own average, not the national average.
-      </p>
-      <div class="calc-disclaimer">
-        <strong>This is an educational estimate, not a medical risk assessment.</strong>
-        It's built from published relative-risk research (see <em>How this is calculated</em>
-        below), but it has not been validated against actual patient outcomes the way a
-        clinical tool like the Gail model or PLCO<sub>m2012</sub> has. It cannot diagnose
-        cancer, and it isn't a substitute for talking with a doctor &mdash; especially if you
-        have a strong family history of cancer. If a number here worries you, that's worth
-        bringing to a doctor; please don't let it cause distress on its own.
+  <div class="calc-page">
+    <p class="kicker">Informational tool</p>
+    <h1>Cancer risk calculator</h1>
+    <p class="lede">
+      Answer a short set of questions about your habits, history, and environment to see a
+      simplified, educational snapshot of how those factors combine — modeled on the same
+      basic approach used by published cancer risk tools.
+    </p>
+
+    <div class="calc-disclaimer">
+      <span class="calc-disclaimer__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 3.5L2.5 20h19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.5" r="0.9" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <div>
+        <h2>This is not a diagnostic tool</h2>
+        <p>
+          This calculator is for <strong>informational and educational purposes only</strong>. It
+          cannot tell you whether you have cancer, whether you will develop it, or your exact
+          numerical chance of getting it — no online tool can do that reliably. It does not
+          replace a doctor, a screening test, or medical advice. If you have questions about
+          your own health, talk to a parent or guardian, a school nurse, or a health care
+          provider.
+        </p>
       </div>
     </div>
 
-    <form id="riskCalcForm" novalidate>
-      <div class="calc-grid">
-
-        <div class="calc-section">
-          <h3>About you</h3>
-          <p class="calc-section__hint">Used only to decide which sections below apply to you. Nothing here is stored unless you choose to save your answers on this device.</p>
-          <div class="calc-field">
-            <label for="calcAge">Age</label>
-            <input type="number" id="calcAge" min="10" max="110" placeholder="e.g., 45" />
-          </div>
-          <div class="calc-field">
-            <span class="calc-field__legend">Do you have a cervix (i.e., were you assigned female at birth and have not had a full hysterectomy)?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="hasCervix" value="yes"> Yes</label>
-              <label><input type="radio" name="hasCervix" value="no" checked> No</label>
-              <label><input type="radio" name="hasCervix" value="unsure"> Prefer not to say</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="calc-section">
-          <h3>Tobacco</h3>
-          <p class="calc-section__hint">The single biggest driver of lung, laryngeal, and oral/throat cancer risk in Kentucky.</p>
-          <div class="calc-field">
-            <span class="calc-field__legend">Smoking status</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="smoking" value="never" checked> Never smoked</label>
-              <label><input type="radio" name="smoking" value="former_long"> Former smoker &mdash; quit more than 15 years ago</label>
-              <label><input type="radio" name="smoking" value="former_recent"> Former smoker &mdash; quit within the last 15 years</label>
-              <label><input type="radio" name="smoking" value="current"> Current smoker</label>
-            </div>
-          </div>
-          <div class="calc-field" id="secondhandField">
-            <span class="calc-field__legend">Regular secondhand smoke exposure at home or work?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="secondhand" value="yes"> Yes</label>
-              <label><input type="radio" name="secondhand" value="no" checked> No</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="calc-section">
-          <h3>Body weight</h3>
-          <p class="calc-section__hint">Excess body weight affects colorectal, cervical, and several other cancer risks. We'll calculate your BMI from height and weight &mdash; you can skip this if you'd rather not share it.</p>
-          <div class="calc-inline-fields">
-            <div class="calc-subfield">
-              <label for="calcHeightFt">Height (ft)</label>
-              <input type="number" id="calcHeightFt" min="3" max="8" placeholder="5" />
-            </div>
-            <div class="calc-subfield">
-              <label for="calcHeightIn">Height (in)</label>
-              <input type="number" id="calcHeightIn" min="0" max="11" placeholder="6" />
-            </div>
-            <div class="calc-subfield">
-              <label for="calcWeightLb">Weight (lb)</label>
-              <input type="number" id="calcWeightLb" min="60" max="600" placeholder="170" />
-            </div>
-          </div>
-          <span class="calc-bmi-readout" id="bmiReadout">Enter height &amp; weight to calculate BMI</span>
-        </div>
-
-        <div class="calc-section">
-          <h3>Alcohol &amp; diet</h3>
-          <div class="calc-field">
-            <span class="calc-field__legend">Alcohol use</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="alcohol" value="none" checked> None</label>
-              <label><input type="radio" name="alcohol" value="light"> Light to moderate (up to 1 drink/day)</label>
-              <label><input type="radio" name="alcohol" value="heavy"> Heavy (2+ drinks/day)</label>
-            </div>
-          </div>
-          <div class="calc-field">
-            <span class="calc-field__legend">How often do you eat processed meat (bacon, sausage, deli meat, hot dogs)?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="meat" value="rarely" checked> Rarely</label>
-              <label><input type="radio" name="meat" value="sometimes"> A few times a week</label>
-              <label><input type="radio" name="meat" value="daily"> Daily</label>
-            </div>
-          </div>
-          <div class="calc-field">
-            <span class="calc-field__legend">Physical activity</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="activity" value="sedentary" checked> Little to no regular exercise</label>
-              <label><input type="radio" name="activity" value="moderate"> Some most weeks</label>
-              <label><input type="radio" name="activity" value="active"> Regular (150+ min/week)</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="calc-section">
-          <h3>Family history &amp; occupation</h3>
-          <div class="calc-field">
-            <span class="calc-field__legend">Has a parent or sibling had colorectal cancer?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="famHistory" value="yes"> Yes</label>
-              <label><input type="radio" name="famHistory" value="no" checked> No / not sure</label>
-            </div>
-          </div>
-          <div class="calc-field">
-            <span class="calc-field__legend">Have you ever worked in underground coal mining?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="coalMining" value="yes"> Yes</label>
-              <label><input type="radio" name="coalMining" value="no" checked> No</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="calc-section" id="hpvSection" hidden>
-          <h3>HPV vaccination</h3>
-          <p class="calc-section__hint">Only affects the cervical cancer estimate below.</p>
-          <div class="calc-field">
-            <span class="calc-field__legend">HPV vaccination status</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="hpv" value="none" checked> Not vaccinated</label>
-              <label><input type="radio" name="hpv" value="early"> Vaccinated before age 15</label>
-              <label><input type="radio" name="hpv" value="later"> Vaccinated later, or not sure of timing</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="calc-section">
-          <h3>Screening &amp; radon</h3>
-          <p class="calc-section__hint">These don't change your underlying biological odds the way the factors above do &mdash; they change the odds that an early, treatable problem gets caught. We'll flag them separately rather than folding them into the numbers above.</p>
-          <div class="calc-field">
-            <span class="calc-field__legend">Up to date on colorectal cancer screening (colonoscopy or FIT, if age 45+)?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="crcScreen" value="yes"> Yes</label>
-              <label><input type="radio" name="crcScreen" value="no"> No</label>
-              <label><input type="radio" name="crcScreen" value="na" checked> Not yet 45 / not sure</label>
-            </div>
-          </div>
-          <div class="calc-field" id="cervScreenField" hidden>
-            <span class="calc-field__legend">Up to date on cervical cancer screening (Pap/HPV test)?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="cervScreen" value="yes"> Yes</label>
-              <label><input type="radio" name="cervScreen" value="no"> No</label>
-              <label><input type="radio" name="cervScreen" value="na" checked> Not sure</label>
-            </div>
-          </div>
-          <div class="calc-field">
-            <span class="calc-field__legend">Has your home been tested for radon?</span>
-            <div class="calc-radio-group">
-              <label><input type="radio" name="radon" value="low"> Tested, and it's below the EPA action level</label>
-              <label><input type="radio" name="radon" value="mitigated"> Tested high, and it's been mitigated</label>
-              <label><input type="radio" name="radon" value="high"> Tested high, not yet mitigated</label>
-              <label><input type="radio" name="radon" value="never" checked> Never tested</label>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="calc-actions">
-        <button type="submit" class="btn btn--gold">Calculate my estimate</button>
-        <button type="button" class="btn btn--ghost" id="calcResetBtn">Reset</button>
-      </div>
-    </form>
-
-    <div class="calc-results" id="calcResults" hidden>
-      <h2>Your estimate</h2>
-      <p class="lede">Each card shows your estimated risk as a multiple of the average Kentuckian's risk for that cancer &mdash; not a percent chance of getting cancer.</p>
-      <div id="overallCard" class="overall-card"></div>
-      <div class="risk-cards" id="riskCards"></div>
-      <p class="calc-note" id="cervicalNote"></p>
-    </div>
-
-    <div class="accordion" style="margin-top: 2.5rem;">
-      <div class="accordion__item">
-        <button class="accordion__trigger" aria-expanded="false">How this is calculated</button>
-        <div class="accordion__content">
-          <p class="lede">
-            This tool follows the same relative-risk logic used by the Harvard Cancer Risk
-            Index / <em>Your Disease Risk</em>, but anchors the comparison to Kentucky's own
-            average instead of the U.S. average, and adds a few Appalachian-Kentucky-specific
-            inputs (radon, coal-mining history, HPV vaccination, and regional screening gaps)
-            that national tools don't ask about. It is documented in full, including every
-            citation below, in the accompanying research paper,
-            <em>A Regionally Calibrated Approach to Cancer Risk Estimation for Appalachian
-            Kentucky</em>. Values marked <span class="approx-flag">approx.</span> are
-            reasoned interpolations between published estimates rather than a single directly
-            cited number &mdash; the paper explains each one.
+    <div class="calc-howworks">
+      <button class="btn btn--ghost btn--sm reveal-btn" data-target="calcHowWorks" data-show-text="Show more: how this calculator works" data-hide-text="Hide: how this calculator works"></button>
+      <div class="reveal-panel reveal-panel--tall" id="calcHowWorks">
+        <div class="reveal-panel__inner calc-howworks__inner">
+          <h3>Where this approach comes from</h3>
+          <p>
+            Most public cancer-risk tools don't try to output an exact percentage chance of
+            getting cancer — the science isn't precise enough for that at an individual level.
+            Instead, two well-known tools use a <strong>relative-risk</strong> approach: they
+            compare a person's combination of factors to the average person of the same age,
+            and report whether that combination is below, about, or above average.
           </p>
-          <ul class="calc-cite-list">
-            <li>Current smoking &amp; lung cancer: ~20&times; (lifetime average)</li>
-            <li>Secondhand smoke, never-smokers, lung cancer: 1.24&times;</li>
-            <li>Coal-mining employment, lung cancer: ~1.3&times; <span class="approx-flag">approx.</span></li>
-            <li>BMI and colorectal/cervical cancer: 1.10&times; per 5&nbsp;kg/m&sup2;</li>
-            <li>Least- vs. most-active, colorectal cancer: ~1.3&times; <span class="approx-flag">approx.</span></li>
-            <li>Heavy alcohol use, colorectal cancer: 1.44&times;</li>
-            <li>Processed meat, colorectal cancer: 1.18&times; per 50&nbsp;g/day</li>
-            <li>First-degree family history, colorectal cancer: ~2.5&times; <span class="approx-flag">approx.</span></li>
-            <li>HPV vaccination before exposure, cervical cancer: up to ~90% risk reduction</li>
-            <li>Current smoking, oral/pharyngeal cancer: 3.58&times;; former smoking: 1.61&times;</li>
-            <li>Heavy alcohol use, oral/pharyngeal cancer: 5.13&times;</li>
-            <li>Current smoking, laryngeal cancer: 7.0&times; (isolated from alcohol)</li>
-            <li>Heavy alcohol use, laryngeal cancer: 2.65&times;</li>
+          <ul>
+            <li>The <strong>Harvard Cancer Risk Index</strong>, developed by researchers at the
+            Harvard Center for Cancer Prevention and still used today as <em>Your Disease
+            Risk</em> (Siteman Cancer Center, Washington University in St. Louis), assigns each
+            risk factor a point value based on how strongly research links it to cancer, sums
+            those points, and compares the total to a population average.</li>
+            <li><strong>My CancerIQ</strong>, built by Cancer Care Ontario / Ontario Health,
+            works the same basic way: each factor gets a number showing how much it raises or
+            lowers risk, and the combined score is compared to the average person of the same
+            age and sex — then sorted into a small number of risk bands rather than a precise
+            percentage.</li>
           </ul>
-          <p class="lede">
-            To avoid double-counting how common some of these factors already are in Kentucky
-            (for example, about 1 in 4 adults already smoke), the calculator first works out
-            an implied \u201creference\u201d rate for someone with none of the region's common risk
-            factors, then rebuilds an individual estimate from your specific answers. Full
-            derivation and limitations are in the research paper. This tool assumes risk
-            factors act independently, which is a simplification &mdash; in reality several of
-            them (like smoking and heavy drinking) tend to cluster together.
+          <h3>How this calculator scores your answers</h3>
+          <p>
+            This tool uses a simplified version of the same idea. Every answer starts at a
+            neutral <strong>0 points</strong>. Each answer then adds or subtracts points based
+            on how strongly published research links that factor to cancer risk, using the same
+            weak / moderate / strong / very strong scale that the Your Disease Risk reference
+            table itself publishes:
           </p>
-          <p class="lede">
-            <strong>About the \u201coverall\u201d number:</strong> it's a weighted average of the
-            five site-specific estimates, weighted by how common each cancer actually is
-            (using national SEER incidence rates as the weighting basis, since precise
-            site-by-site Appalachian Kentucky rates aren't available for all five). That
-            weighting means a large multiplier on a rare cancer like larynx (about 2.5 cases
-            per 100,000 people nationally) moves the overall number much less than the same
-            size multiplier on a common one like lung (about 47 per 100,000) or colorectal
-            cancer (about 38 per 100,000) &mdash; which mirrors how these risks actually add up
-            in real life. It is a combined estimate across only the five cancers this tool
-            covers, <strong>not</strong> a general \u201ccancer risk\u201d figure; most cancer types
-            (breast, prostate, skin, kidney, and dozens of others) aren't modeled here at all,
-            mainly because they aren't where Appalachian Kentucky's documented excess burden
-            is concentrated (see the research paper, Section 3).
+          <div class="calc-howworks__key">
+            <span><strong>±1</strong> — weak association</span>
+            <span><strong>±2</strong> — moderate association</span>
+            <span><strong>±3</strong> — strong association</span>
+            <span><strong>±4</strong> — very strong association</span>
+          </div>
+          <p>
+            All of your points are added together into one total, and that total places you
+            into one of five bands: <em>well below average, below average, about average, above
+            average,</em> or <em>well above average</em> — always relative to other people, never
+            a specific percentage or prediction.
           </p>
+          <h3>What this calculator leaves out (on purpose)</h3>
+          <ul>
+            <li>It does not ask about weight/BMI. Adult weight cutoffs used in research don't
+            translate cleanly to teenagers, whose bodies are still developing.</li>
+            <li>It does not ask about sex-specific factors (like reproductive or hormonal
+            history) so that it stays relevant to every student answering it.</li>
+            <li>It only covers some of the many known risk factors, and it can't account for
+            genetic testing, specific medical conditions, or the interactions researchers are
+            still studying.</li>
+            <li>It reports one combined score across cancer in general — real clinical tools
+            usually calculate risk separately for each specific cancer type.</li>
+          </ul>
+          <h3>Sources</h3>
+          <ol class="calc-howworks__refs">
+            <li>Colditz GA, Atwood KA, Emmons K, et al. Harvard Report on Cancer Prevention
+            Volume 4: Harvard Cancer Risk Index. <em>Cancer Causes &amp; Control</em>, 2000.</li>
+            <li>Freedman AN, Seminara D, Gail MH, et al. Cancer risk prediction models: a
+            workshop on development, evaluation, and application. <em>J Natl Cancer Inst</em>,
+            2005 (validation of the Harvard Cancer Risk Index).</li>
+            <li>Siteman Cancer Center, Washington University in St. Louis. <em>Your Disease
+            Risk</em> relative risk reference tables, 2017/2024 revisions.</li>
+            <li>Cancer Care Ontario / Ontario Health. <em>My CancerIQ</em> — "How We Calculate
+            Your Risk."</li>
+            <li>American Cancer Society, International Agency for Research on Cancer (IARC),
+            and CDC — consensus classifications of tobacco, alcohol, UV exposure, physical
+            inactivity, diet, and HPV as cancer risk/protective factors.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <form id="calcForm"></form>
+
+    <div class="calc-actions">
+      <span class="calc-actions__progress" id="calcProgress">0 of 0 answered</span>
+      <button type="button" class="btn btn--gold" id="calcSubmit" disabled>Calculate my result</button>
+    </div>
+
+    <div class="calc-result" id="calcResult" hidden>
+      <div class="calc-result__box" data-tone="average">
+        <div class="calc-result__head">
+          <svg class="calc-gauge" viewBox="0 0 200 105" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gauge showing your risk tier">
+            <path d="M20,92 A80,80 0 0,1 35.28,44.98" fill="none" stroke="#1e7145" stroke-width="18"/>
+            <path d="M35.28,44.98 A80,80 0 0,1 75.28,15.92" fill="none" stroke="#4f9d63" stroke-width="18"/>
+            <path d="M75.28,15.92 A80,80 0 0,1 124.72,15.92" fill="none" stroke="#e0a323" stroke-width="18"/>
+            <path d="M124.72,15.92 A80,80 0 0,1 164.72,44.98" fill="none" stroke="#c76a10" stroke-width="18"/>
+            <path d="M164.72,44.98 A80,80 0 0,1 180,92" fill="none" stroke="#b3261e" stroke-width="18"/>
+            <g id="calcNeedle">
+              <line x1="100" y1="92" x2="100" y2="22" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="100" cy="92" r="6" fill="#1a1a1a"/>
+            </g>
+          </svg>
+          <div class="calc-result__headline">
+            <p class="calc-result__eyebrow">Compared to others your age, your habits and history are</p>
+            <h2 class="calc-result__tier">About average</h2>
+            <p>This reflects only the factors you answered above — not a diagnosis, and not a
+            percentage chance of getting cancer.</p>
+          </div>
+        </div>
+
+        <div class="calc-result__lists">
+          <div>
+            <h4>⬆ May be raising your score</h4>
+            <ul class="calc-result__up"></ul>
+          </div>
+          <div>
+            <h4>⬇ May be lowering your score</h4>
+            <ul class="calc-result__down"></ul>
+          </div>
+        </div>
+
+        <div class="calc-result__disclaimer">
+          <strong>Remember:</strong> this is an educational estimate, not a medical test. Many
+          of the factors above — like tobacco use, alcohol, diet, activity, and sun protection —
+          are things you have the power to change. Module 2 covers these risk factors in depth,
+          and Module 3 covers screening and early detection. If anything here concerns you,
+          please talk with a parent/guardian, school nurse, or doctor.
+        </div>
+
+        <div class="calc-result__actions">
+          <button type="button" class="btn btn--ghost" id="calcRetake">Retake the calculator</button>
+          <a class="btn btn--ghost" href="module2.html">Review Module 2: Risk Factors →</a>
         </div>
       </div>
     </div>
   </div>
 
   <footer class="site-footer">
-    <div class="site-footer__inner">
+    <div class="container" style="text-align:center;">
       <p>Adapted from the <em>Cancer in the Commonwealth</em> curriculum, &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.</p>
-      <p><a href="index.html">&larr; Back to all modules</a></p>
+      <p style="margin-top:0.4rem;"><a href="index.html">&larr; Back to all modules</a></p>
     </div>
   </footer>
 
-  <div class="modal-overlay" id="accountModal" hidden>
+  <div class="modal-overlay" id="loginModal" hidden>
     <div class="modal">
-      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
-      <p class="eyebrow">Optional</p>
-      <h2>Save your progress</h2>
-      <p>
-        Create a free account to save your progress and pick up where you left off on any
-        device. You can also keep using this site without an account &mdash; your progress
-        will just stay on this device.
+      <button class="modal__close" id="loginModalClose" type="button" aria-label="Close">&times;</button>
+      <p class="kicker">Optional</p>
+      <h2>Sign in</h2>
+      <p class="lede" style="margin-top:0.5rem; font-size:0.95rem;">
+        New here? Fill in all four fields and select <strong>Create account</strong>. Already
+        signed up? Just enter your username and password and select <strong>Sign in</strong>.
       </p>
-      <form id="accountForm">
-        <label for="accountEmail">Email</label>
-        <input type="email" id="accountEmail" autocomplete="email" required>
-        <label for="accountPassword">Password</label>
-        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
-        <p class="form-error" id="accountError"></p>
-        <p class="form-info" id="accountInfo"></p>
-        <div class="modal__actions">
-          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
-          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+      <p class="lede" style="margin-top:0.6rem; font-size:0.88rem;">
+        Your username, county, and school are stored on your school or university's own
+        server, not a third-party service. Your password is sent for verification only and
+        is never saved in this browser &mdash; and progress still also saves on this device
+        either way.
+      </p>
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" name="username" autocomplete="username" required>
         </div>
-        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <div class="field__password-wrap">
+            <input type="password" id="loginPassword" name="password" autocomplete="current-password" required>
+            <button type="button" class="field__toggle-visibility" id="loginPasswordToggle" aria-label="Show password">Show</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="loginCounty">County</label>
+          <select id="loginCounty" name="county">
+            <option value="" disabled selected>Select your county&hellip;</option>
+            <option>Adair</option>
+            <option>Allen</option>
+            <option>Anderson</option>
+            <option>Ballard</option>
+            <option>Barren</option>
+            <option>Bath</option>
+            <option>Bell</option>
+            <option>Boone</option>
+            <option>Bourbon</option>
+            <option>Boyd</option>
+            <option>Boyle</option>
+            <option>Bracken</option>
+            <option>Breathitt</option>
+            <option>Breckinridge</option>
+            <option>Bullitt</option>
+            <option>Butler</option>
+            <option>Caldwell</option>
+            <option>Calloway</option>
+            <option>Campbell</option>
+            <option>Carlisle</option>
+            <option>Carroll</option>
+            <option>Carter</option>
+            <option>Casey</option>
+            <option>Christian</option>
+            <option>Clark</option>
+            <option>Clay</option>
+            <option>Clinton</option>
+            <option>Crittenden</option>
+            <option>Cumberland</option>
+            <option>Daviess</option>
+            <option>Edmonson</option>
+            <option>Elliott</option>
+            <option>Estill</option>
+            <option>Fayette</option>
+            <option>Fleming</option>
+            <option>Floyd</option>
+            <option>Franklin</option>
+            <option>Fulton</option>
+            <option>Gallatin</option>
+            <option>Garrard</option>
+            <option>Grant</option>
+            <option>Graves</option>
+            <option>Grayson</option>
+            <option>Green</option>
+            <option>Greenup</option>
+            <option>Hancock</option>
+            <option>Hardin</option>
+            <option>Harlan</option>
+            <option>Harrison</option>
+            <option>Hart</option>
+            <option>Henderson</option>
+            <option>Henry</option>
+            <option>Hickman</option>
+            <option>Hopkins</option>
+            <option>Jackson</option>
+            <option>Jefferson</option>
+            <option>Jessamine</option>
+            <option>Johnson</option>
+            <option>Kenton</option>
+            <option>Knott</option>
+            <option>Knox</option>
+            <option>Larue</option>
+            <option>Laurel</option>
+            <option>Lawrence</option>
+            <option>Lee</option>
+            <option>Leslie</option>
+            <option>Letcher</option>
+            <option>Lewis</option>
+            <option>Lincoln</option>
+            <option>Livingston</option>
+            <option>Logan</option>
+            <option>Lyon</option>
+            <option>McCracken</option>
+            <option>McCreary</option>
+            <option>McLean</option>
+            <option>Madison</option>
+            <option>Magoffin</option>
+            <option>Marion</option>
+            <option>Marshall</option>
+            <option>Martin</option>
+            <option>Mason</option>
+            <option>Meade</option>
+            <option>Menifee</option>
+            <option>Mercer</option>
+            <option>Metcalfe</option>
+            <option>Monroe</option>
+            <option>Montgomery</option>
+            <option>Morgan</option>
+            <option>Muhlenberg</option>
+            <option>Nelson</option>
+            <option>Nicholas</option>
+            <option>Ohio</option>
+            <option>Oldham</option>
+            <option>Owen</option>
+            <option>Owsley</option>
+            <option>Pendleton</option>
+            <option>Perry</option>
+            <option>Pike</option>
+            <option>Powell</option>
+            <option>Pulaski</option>
+            <option>Robertson</option>
+            <option>Rockcastle</option>
+            <option>Rowan</option>
+            <option>Russell</option>
+            <option>Scott</option>
+            <option>Shelby</option>
+            <option>Simpson</option>
+            <option>Spencer</option>
+            <option>Taylor</option>
+            <option>Todd</option>
+            <option>Trigg</option>
+            <option>Trimble</option>
+            <option>Union</option>
+            <option>Warren</option>
+            <option>Washington</option>
+            <option>Wayne</option>
+            <option>Webster</option>
+            <option>Whitley</option>
+            <option>Wolfe</option>
+            <option>Woodford</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="loginSchool">School name</label>
+          <input type="text" id="loginSchool" name="school" autocomplete="organization">
+        </div>
+        <p class="form-error" id="loginError" hidden></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold btn--block" id="loginSignInBtn">Sign in</button>
+          <button type="button" class="btn btn--ghost btn--block" id="loginRegisterBtn">Create account</button>
+        </div>
       </form>
-      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+      <p class="modal__note"><button type="button" class="link-btn" id="loginContinueGuest">Continue without signing in</button></p>
     </div>
   </div>
 
-  <script src="assets/script.js"></script>
-  <script>
-    CIC.initAccordions();
-  </script>
-  <script src="assets/risk-calculator.js"></script>
-  <script type="module" src="assets/account.js"></script>
+  <script src="assets/api-config.js"></script>
+  <script src="assets/risk-calc-data.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

@@ -6,121 +6,256 @@
   <title>Certificates | Cancer in the Commonwealth</title>
   <meta name="description" content="Print or save a certificate of completion for the Cancer in the Commonwealth cancer education course." />
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body>
+<body data-page="certificate">
 
   <header class="site-header no-print">
-    <div class="site-header__inner">
+    <div class="site-header__row">
       <a class="brand" href="index.html">
         <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
-          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
-          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+          <circle cx="20" cy="20" r="19" fill="#0033a0"/>
+          <circle cx="20" cy="20" r="11" fill="none" stroke="#ffffff" stroke-width="2.4"/>
+          <circle cx="20" cy="20" r="4" fill="#ffffff"/>
         </svg>
         <span class="brand__text">
-          <span class="brand__title">Cancer in the Commonwealth</span>
-          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+          <span class="brand__name">Cancer in the Commonwealth</span>
+          <span class="brand__tag">Appalachian KY Curriculum</span>
         </span>
       </a>
-      <nav aria-label="Main navigation">
+      <div class="site-header__right">
+      <nav class="nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="module1.html">Module 1</a>
         <a href="module2.html">Module 2</a>
         <a href="module3.html">Module 3</a>
-        <a href="certificate.html" id="certNavLink" class="cert-nav-link is-active">Certificates</a>
-        <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+        <a href="certificate.html" class="is-active">Certificates</a>
+        <a href="risk-calculator.html">Risk Calculator</a>
       </nav>
-      <div class="account-ui">
-        <span class="account-status" id="accountStatus"></span>
-        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      <a class="partner-logo" href="https://ukhealthcare.uky.edu/markey-cancer-center" target="_blank" rel="noopener noreferrer">
+        <img src="assets/uk-healthcare-logo.png" alt="University of Kentucky HealthCare" />
+      </a>
+      <div class="login-ui">
+        <span class="login-status" id="loginStatus" hidden></span>
+        <button class="btn btn--ghost on-dark btn--sm" id="loginBtn" type="button">Sign in</button>
+      </div>
       </div>
     </div>
   </header>
 
-  <div class="simple-shell">
-    <div class="module-head no-print">
+  <div class="cert-page">
+    <div class="no-print" style="display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.6rem;">
       <div>
-        <p class="eyebrow">Nice work</p>
+        <p class="kicker">Nice work</p>
         <h1>Your certificates</h1>
       </div>
-      <a class="module-head__back" href="index.html">&larr; All modules</a>
+      <a href="index.html" style="font-weight:600; font-size:0.9rem;">&larr; All modules</a>
     </div>
 
-    <div class="simple-card">
-      <div class="dashboard-empty" id="certEmptyState" hidden>
-        <p class="eyebrow">No certificates yet</p>
-        <h2>Complete a module to unlock its certificate</h2>
-        <p>
-          Once you finish a module's post-test, a certificate for that module will appear
-          here. Finish all three modules to unlock a certificate for the full course.
-        </p>
-        <p class="mt-lg"><a class="btn btn--gold" href="module1.html">Go to Module 1</a></p>
-      </div>
+    <div class="empty-state" id="certEmptyState" hidden>
+      <p class="kicker" style="justify-content:center;">No certificates yet</p>
+      <h2>Complete a module to unlock its certificate</h2>
+      <p>Once you finish a module's post-test, a certificate for that module will appear here.
+      Finish all three modules to unlock a certificate for the full course.</p>
+      <p class="mt-lg"><a class="btn btn--gold" href="module1.html">Go to Module 1</a></p>
+    </div>
 
-      <div id="certControls" hidden>
-        <p class="lede no-print">
-          Pick a certificate below, add your name, and print it (or save it as a PDF using
-          your browser's print dialog).
-        </p>
-        <div class="certificate-controls no-print" id="certControlsRow">
-          <div class="field">
-            <label for="certName">Your name</label>
-            <input type="text" id="certName" placeholder="e.g., Jordan Combs" autocomplete="name">
-          </div>
-          <div class="field">
-            <label for="certSelect">Certificate</label>
-            <select id="certSelect"></select>
-          </div>
-          <div class="field">
-            <button class="btn btn--gold" id="certPrintBtn" hidden>Print certificate</button>
-          </div>
+    <div id="certControls" hidden>
+      <p class="lede no-print" style="margin-bottom:1rem;">Pick a certificate below, add your
+      name, and print it (or save it as a PDF using your browser's print dialog).</p>
+      <div class="cert-toolbar no-print">
+        <div class="field">
+          <label for="certName">Your name</label>
+          <input type="text" id="certName" placeholder="e.g., Jordan Combs" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="certSelect">Certificate</label>
+          <select id="certSelect"></select>
+        </div>
+        <div class="field">
+          <button class="btn btn--gold btn--block" id="certPrintBtn" hidden>Print certificate</button>
         </div>
       </div>
-
-      <div class="certificate" id="certificateOutput" hidden></div>
     </div>
+
+    <div class="certificate" id="certificateOutput"></div>
   </div>
 
   <footer class="site-footer no-print">
-    <div class="site-footer__inner">
+    <div class="container" style="text-align:center;">
       <p>Adapted from the <em>Cancer in the Commonwealth</em> curriculum, &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.</p>
-      <p><a href="index.html">&larr; Back to all modules</a></p>
+      <p style="margin-top:0.4rem;"><a href="index.html">&larr; Back to all modules</a></p>
     </div>
   </footer>
 
-  <div class="modal-overlay" id="accountModal" hidden>
+  <div class="modal-overlay" id="loginModal" hidden>
     <div class="modal">
-      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
-      <p class="eyebrow">Optional</p>
-      <h2>Save your progress</h2>
-      <p>
-        Create a free account to save your progress and pick up where you left off on any
-        device. You can also keep using this site without an account &mdash; your progress
-        will just stay on this device.
+      <button class="modal__close" id="loginModalClose" type="button" aria-label="Close">&times;</button>
+      <p class="kicker">Optional</p>
+      <h2>Sign in</h2>
+      <p class="lede" style="margin-top:0.5rem; font-size:0.95rem;">
+        New here? Fill in all four fields and select <strong>Create account</strong>. Already
+        signed up? Just enter your username and password and select <strong>Sign in</strong>.
       </p>
-      <form id="accountForm">
-        <label for="accountEmail">Email</label>
-        <input type="email" id="accountEmail" autocomplete="email" required>
-        <label for="accountPassword">Password</label>
-        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
-        <p class="form-error" id="accountError"></p>
-        <p class="form-info" id="accountInfo"></p>
-        <div class="modal__actions">
-          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
-          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+      <p class="lede" style="margin-top:0.6rem; font-size:0.88rem;">
+        Your username, county, and school are stored on your school or university's own
+        server, not a third-party service. Your password is sent for verification only and
+        is never saved in this browser &mdash; and progress still also saves on this device
+        either way.
+      </p>
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" name="username" autocomplete="username" required>
         </div>
-        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <div class="field__password-wrap">
+            <input type="password" id="loginPassword" name="password" autocomplete="current-password" required>
+            <button type="button" class="field__toggle-visibility" id="loginPasswordToggle" aria-label="Show password">Show</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="loginCounty">County</label>
+          <select id="loginCounty" name="county">
+            <option value="" disabled selected>Select your county&hellip;</option>
+            <option>Adair</option>
+            <option>Allen</option>
+            <option>Anderson</option>
+            <option>Ballard</option>
+            <option>Barren</option>
+            <option>Bath</option>
+            <option>Bell</option>
+            <option>Boone</option>
+            <option>Bourbon</option>
+            <option>Boyd</option>
+            <option>Boyle</option>
+            <option>Bracken</option>
+            <option>Breathitt</option>
+            <option>Breckinridge</option>
+            <option>Bullitt</option>
+            <option>Butler</option>
+            <option>Caldwell</option>
+            <option>Calloway</option>
+            <option>Campbell</option>
+            <option>Carlisle</option>
+            <option>Carroll</option>
+            <option>Carter</option>
+            <option>Casey</option>
+            <option>Christian</option>
+            <option>Clark</option>
+            <option>Clay</option>
+            <option>Clinton</option>
+            <option>Crittenden</option>
+            <option>Cumberland</option>
+            <option>Daviess</option>
+            <option>Edmonson</option>
+            <option>Elliott</option>
+            <option>Estill</option>
+            <option>Fayette</option>
+            <option>Fleming</option>
+            <option>Floyd</option>
+            <option>Franklin</option>
+            <option>Fulton</option>
+            <option>Gallatin</option>
+            <option>Garrard</option>
+            <option>Grant</option>
+            <option>Graves</option>
+            <option>Grayson</option>
+            <option>Green</option>
+            <option>Greenup</option>
+            <option>Hancock</option>
+            <option>Hardin</option>
+            <option>Harlan</option>
+            <option>Harrison</option>
+            <option>Hart</option>
+            <option>Henderson</option>
+            <option>Henry</option>
+            <option>Hickman</option>
+            <option>Hopkins</option>
+            <option>Jackson</option>
+            <option>Jefferson</option>
+            <option>Jessamine</option>
+            <option>Johnson</option>
+            <option>Kenton</option>
+            <option>Knott</option>
+            <option>Knox</option>
+            <option>Larue</option>
+            <option>Laurel</option>
+            <option>Lawrence</option>
+            <option>Lee</option>
+            <option>Leslie</option>
+            <option>Letcher</option>
+            <option>Lewis</option>
+            <option>Lincoln</option>
+            <option>Livingston</option>
+            <option>Logan</option>
+            <option>Lyon</option>
+            <option>McCracken</option>
+            <option>McCreary</option>
+            <option>McLean</option>
+            <option>Madison</option>
+            <option>Magoffin</option>
+            <option>Marion</option>
+            <option>Marshall</option>
+            <option>Martin</option>
+            <option>Mason</option>
+            <option>Meade</option>
+            <option>Menifee</option>
+            <option>Mercer</option>
+            <option>Metcalfe</option>
+            <option>Monroe</option>
+            <option>Montgomery</option>
+            <option>Morgan</option>
+            <option>Muhlenberg</option>
+            <option>Nelson</option>
+            <option>Nicholas</option>
+            <option>Ohio</option>
+            <option>Oldham</option>
+            <option>Owen</option>
+            <option>Owsley</option>
+            <option>Pendleton</option>
+            <option>Perry</option>
+            <option>Pike</option>
+            <option>Powell</option>
+            <option>Pulaski</option>
+            <option>Robertson</option>
+            <option>Rockcastle</option>
+            <option>Rowan</option>
+            <option>Russell</option>
+            <option>Scott</option>
+            <option>Shelby</option>
+            <option>Simpson</option>
+            <option>Spencer</option>
+            <option>Taylor</option>
+            <option>Todd</option>
+            <option>Trigg</option>
+            <option>Trimble</option>
+            <option>Union</option>
+            <option>Warren</option>
+            <option>Washington</option>
+            <option>Wayne</option>
+            <option>Webster</option>
+            <option>Whitley</option>
+            <option>Wolfe</option>
+            <option>Woodford</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="loginSchool">School name</label>
+          <input type="text" id="loginSchool" name="school" autocomplete="organization">
+        </div>
+        <p class="form-error" id="loginError" hidden></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold btn--block" id="loginSignInBtn">Sign in</button>
+          <button type="button" class="btn btn--ghost btn--block" id="loginRegisterBtn">Create account</button>
+        </div>
       </form>
-      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+      <p class="modal__note"><button type="button" class="link-btn" id="loginContinueGuest">Continue without signing in</button></p>
     </div>
   </div>
 
-  <script src="assets/script.js"></script>
-  <script src="assets/certificate.js"></script>
-  <script type="module" src="assets/account.js"></script>
+  <script src="assets/api-config.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

@@ -6,525 +6,629 @@
   <title>Module 3: Diagnosis &amp; Treatment | Cancer in the Commonwealth</title>
   <meta name="description" content="Module 3 of the free Cancer in the Commonwealth course: how cancer is diagnosed, why early detection matters, and the eight major types of cancer treatment." />
   <link rel="canonical" href="https://cancer-in-commonwealth.vercel.app/module3.html" />
-
-  <!-- Open Graph / social sharing preview -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Cancer in the Commonwealth" />
-  <meta property="og:title" content="Module 3: Diagnosis &amp; Treatment | Cancer in the Commonwealth" />
+  <meta property="og:title" content="Module 3: Diagnosis &amp; Treatment" />
   <meta property="og:description" content="How cancer is diagnosed, why early detection matters, and the eight major types of cancer treatment." />
   <meta property="og:url" content="https://cancer-in-commonwealth.vercel.app/module3.html" />
   <meta property="og:image" content="https://cancer-in-commonwealth.vercel.app/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Module 3: Diagnosis &amp; Treatment" />
-  <meta name="twitter:description" content="How cancer is diagnosed, why early detection matters, and the eight major types of cancer treatment." />
-  <meta name="twitter:image" content="https://cancer-in-commonwealth.vercel.app/assets/og-image.png" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body>
+<body data-page="module3">
 
   <header class="site-header">
-    <div class="site-header__inner">
+    <div class="site-header__row">
       <a class="brand" href="index.html">
         <svg class="brand__mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="28" cy="12" r="6" fill="#D9A33E"/>
-          <path d="M0 32 L10 18 L17 26 L24 14 L34 28 L40 22 L40 40 L0 40 Z" fill="#6f9482"/>
-          <path d="M0 36 L14 24 L26 34 L40 30 L40 40 L0 40 Z" fill="#233b32"/>
+          <circle cx="20" cy="20" r="19" fill="#0033a0"/>
+          <circle cx="20" cy="20" r="11" fill="none" stroke="#ffffff" stroke-width="2.4"/>
+          <circle cx="20" cy="20" r="4" fill="#ffffff"/>
         </svg>
         <span class="brand__text">
-          <span class="brand__title">Cancer in the Commonwealth</span>
-          <span class="brand__subtitle">Appalachian KY Cancer Curriculum</span>
+          <span class="brand__name">Cancer in the Commonwealth</span>
+          <span class="brand__tag">Appalachian KY Curriculum</span>
         </span>
       </a>
-      <nav aria-label="Main navigation">
+      <div class="site-header__right">
+      <nav class="nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="module1.html">Module 1</a>
         <a href="module2.html">Module 2</a>
         <a href="module3.html" class="is-active">Module 3</a>
-
-      <a href="certificate.html" id="certNavLink" class="cert-nav-link">Certificates</a>      <a href="dashboard.html" id="dashboardLink" class="dashboard-link" hidden>Dashboard</a>
+        <a href="certificate.html">Certificates</a>
+        <a href="risk-calculator.html">Risk Calculator</a>
       </nav>
-      <div class="account-ui">
-        <span class="account-status" id="accountStatus"></span>
-        <button class="btn btn--ghost btn--sm" id="accountBtn">Sign in to save progress</button>
+      <a class="partner-logo" href="https://ukhealthcare.uky.edu/markey-cancer-center" target="_blank" rel="noopener noreferrer">
+        <img src="assets/uk-healthcare-logo.png" alt="University of Kentucky HealthCare" />
+      </a>
+      <div class="login-ui">
+        <span class="login-status" id="loginStatus" hidden></span>
+        <button class="btn btn--ghost on-dark btn--sm" id="loginBtn" type="button">Sign in</button>
+      </div>
       </div>
     </div>
   </header>
 
-  <div class="module-shell">
-    <div class="module-head">
+  <div class="module-hero">
+    <div class="module-hero__row">
       <div>
-        <p class="eyebrow">Module 3 of 3</p>
+        <p class="kicker on-dark">Module 3 of 3</p>
         <h1>Diagnosis &amp; Treatment</h1>
       </div>
-      <a class="module-head__back" href="index.html">&larr; All modules</a>
+      <a class="module-hero__back" href="index.html">&larr; All modules</a>
     </div>
+  </div>
 
-    <nav class="trail-nav" aria-label="Module sections">
-      <div class="trail-nav__track" id="trailTrack"></div>
-      <p class="trail-nav__label" id="trailLabel">Section <span>1</span></p>
-    </nav>
+  <nav class="progress-rail" aria-label="Module sections">
+    <div class="progress-rail__inner">
+      <p class="progress-rail__label" id="railLabel">Section <span>1 / 11</span></p>
+      <div class="progress-rail__track"><div class="progress-rail__fill" id="railFill"></div></div>
+      <div class="step-dots" id="stepDots"></div>
+    </div>
+  </nav>
 
-    <div class="screen-stage" id="screenStage">
+  <div class="stage" id="stage">
 
-      <!-- 1 -->
-      <section class="screen" data-title="Welcome">
-        <div class="screen__kicker"><span class="eyebrow">Welcome back</span></div>
-        <h2>From risk to diagnosis and treatment</h2>
-        <p class="lede">
-          Module 2 covered the behaviors and exposures that raise or lower cancer risk. This
-          final module covers what happens once cancer is found: how it's diagnosed, why catching
-          it early matters so much, and the major ways it's treated.
+    <section class="screen" data-title="Welcome">
+      <p class="screen__eyebrow kicker">Welcome back</p>
+      <h2>From risk to diagnosis and treatment</h2>
+      <p class="lede">
+        Module 2 covered the behaviors and exposures that raise or lower cancer risk. This
+        final module covers what happens once cancer is found: how it's diagnosed, why
+        catching it early matters so much, and the major ways it's treated.
+      </p>
+      <div class="activity">
+        <p class="activity__label">A note on the classroom activity</p>
+        <p>In a classroom setting, students split into four groups, each researching one
+        treatment — <strong>chemotherapy, radiation therapy, surgery, or stem cell
+        transplant</strong> — in depth (how it works, why it's useful, and possible side
+        effects), then teach it to another group.</p>
+        <p>This module walks through all eight major treatment types so you get that same
+        picture on your own.</p>
+      </div>
+      <div class="journal">
+        <label for="m3q_pre">Before reading on: pick one cancer treatment you've heard of (it doesn't have to be one listed above). What do you think you know about how it works?</label>
+        <textarea id="m3q_pre" data-key="m3_pre" placeholder="Type your thoughts here…"></textarea>
+        <p class="journal__note">Saved on this device</p>
+      </div>
+    </section>
+
+    <section class="screen" data-title="Pre-Test">
+      <p class="screen__eyebrow kicker">Before you begin</p>
+      <h2>Pre-test: what do you know already?</h2>
+      <p class="lede">
+        Try these 10 questions before you start. Don't worry about getting them "right" — this
+        is just a snapshot of where you're starting from. You'll see this exact set of
+        questions again at the end of the module so you can see what's changed.
+      </p>
+      <div class="quiz" data-test-type="pre" data-bank="module3" data-result="m3pretestResult"></div>
+      <div class="quiz-result" id="m3pretestResult">
+        <p class="kicker">Your starting score</p>
+        <p class="quiz-result__score">0 / 10</p>
+        <p class="quiz-result__msg"></p>
+      </div>
+    </section>
+
+    <section class="screen" data-title="How Cancer Is Diagnosed">
+      <p class="screen__eyebrow kicker">Section 3</p>
+      <h2>How is cancer diagnosed?</h2>
+      <p class="lede">
+        A patient might come in with a lump or another symptom — but the cells involved have
+        to be examined closely before anyone can say whether it's cancer.
+      </p>
+      <div class="tile-grid">
+        <div class="tile"><span class="tile__tag">1</span><h4>Scan</h4><p>Cancer is often first identified using an imaging scan.</p></div>
+        <div class="tile"><span class="tile__tag">2</span><h4>Biopsy</h4><p>A doctor performs a <strong>biopsy</strong>: removing a sample of the tissue in question and sending it to a lab.</p></div>
+        <div class="tile"><span class="tile__tag">3</span><h4>Microscope exam</h4><p>An expert examines the sample under a microscope to determine whether it's cancerous — the kind of comparison you made back in Module 1.</p></div>
+        <div class="tile"><span class="tile__tag">4</span><h4>Treatment begins</h4><p>Once cancer is confirmed, doctors can begin planning treatment — the focus of the rest of this module.</p></div>
+      </div>
+
+      <h3>Quick recap: what a pathologist looks for</h3>
+      <p class="lede" style="margin-bottom:0.6rem;">Remember the cell comparisons from Module 1? These are the exact features a pathologist checks under the microscope during that biopsy exam:</p>
+      <div class="tile-grid">
+        <div class="tile"><span class="tile__tag">👀</span><h4>Large, oddly-shaped nuclei</h4></div>
+        <div class="tile"><span class="tile__tag">🔀</span><h4>Many dividing, disorganized cells</h4></div>
+        <div class="tile"><span class="tile__tag">📐</span><h4>Big variation in cell size &amp; shape</h4></div>
+        <div class="tile"><span class="tile__tag">🚫</span><h4>Loss of the cell's normal features</h4></div>
+      </div>
+    </section>
+
+    <section class="screen" data-title="Why Early Detection Matters">
+      <p class="screen__eyebrow kicker">Section 4</p>
+      <h2>Why early detection matters</h2>
+      <p class="lede">
+        <strong>Early detection</strong> means cancer is found while it's still in its early
+        stages: it's small, it hasn't spread, and there are usually few or no symptoms yet.
+        Early detection is achieved through regular screening tests for specific cancer types.
+      </p>
+      <div class="activity">
+        <p class="activity__label">Which is easier to cure?</p>
+        <p>Compare these two scenarios:</p>
+        <div class="tile-grid" style="margin-top:0.6rem;">
+          <div class="tile"><span class="tile__tag">Scenario A</span><p>A cancer that is <strong>large</strong> and has <strong>spread</strong> to different areas of the body.</p></div>
+          <div class="tile"><span class="tile__tag">Scenario B</span><p>A cancer that is <strong>small</strong> and has <strong>not yet spread</strong>.</p></div>
+        </div>
+        <p style="margin-top:0.8rem;"><strong>Which is generally easier to treat successfully?</strong></p>
+        <div class="choice-list" data-correct="1">
+          <button class="choice">Scenario A — large and spread</button>
+          <button class="choice">Scenario B — small and not yet spread</button>
+        </div>
+        <p class="feedback is-correct-msg">
+          <strong>Right.</strong> Early detection improves a patient's chances of survival. A
+          small, localized cancer is generally far easier to treat — sometimes with a single
+          treatment like surgery — than a cancer that has already spread to multiple parts of
+          the body.
         </p>
-        <div class="activity">
-          <p class="activity__label">A note on the classroom activity</p>
-          <p>
-            In a classroom setting, students split into four groups, each researching one
-            treatment &mdash; <strong>chemotherapy, radiation therapy, surgery, or stem cell
-            transplant</strong> &mdash; in depth (how it works, why it's useful, and possible
-            side effects), then teach it to another group.
-          </p>
-          <p>This module walks through all eight major treatment types so you get that same
-          picture on your own.</p>
-        </div>
-        <div class="reflection">
-          <label for="m3q_pre">Before reading on: pick one cancer treatment you've heard of (it doesn't have to be one listed above). What do you think you know about how it works?</label>
-          <textarea id="m3q_pre" data-key="m3_pre" placeholder="Type your thoughts here&hellip;"></textarea>
-          <p class="save-note">Saved on this device</p>
-        </div>
-      </section>
-
-      <!-- 2 -->
-      <section class="screen" data-title="Pre-Test">
-        <div class="screen__kicker"><span class="eyebrow">Before you begin</span></div>
-        <h2>Pre-test: what do you know already?</h2>
-        <p class="lede">
-          Try these 10 questions before you start. Don't worry about getting them "right" &mdash;
-          this is just a snapshot of where you're starting from. You'll see this exact set of
-          questions again at the end of the module so you can see what's changed.
+        <p class="feedback is-incorrect-msg">
+          Actually, it's Scenario B. Early detection improves a patient's chances of survival —
+          a small, localized cancer is generally far easier to treat than one that has already
+          spread.
         </p>
-        <div class="quiz" data-test-type="pre" data-bank="module3" data-module="module3" data-result="m3pretestResult"></div>
-        <div class="quiz-result" id="m3pretestResult">
-          <p class="eyebrow">Your starting score</p>
-          <p class="quiz-result__score">0 / 10</p>
-          <p class="quiz-result__msg"></p>
+      </div>
+    </section>
+
+    <section class="screen" data-title="Barriers to Early Detection">
+      <p class="screen__eyebrow kicker">Section 5</p>
+      <h2>What happens if early detection doesn't occur?</h2>
+      <p class="lede">
+        Patients living in rural areas are more likely to be diagnosed with later-stage
+        cancers than patients living in urban areas — often because of a lack of access to
+        healthcare services. A later-stage diagnosis can affect a patient's entire treatment
+        plan.
+      </p>
+      <div class="activity">
+        <p class="activity__label">Think about it</p>
+        <p>Before reading on: what parts of Kentucky do you think might have limited access to
+        cancer care, and why?</p>
+      </div>
+      <h3>Barriers for rural Appalachian Kentucky residents</h3>
+      <div class="tile-grid">
+        <div class="tile"><h4>Distance</h4><p>Many residents live very far from the nearest cancer care facility.</p></div>
+        <div class="tile"><h4>Road conditions</h4><p>The roads connecting rural areas to medical centers can be winding and dangerous — especially in bad weather.</p></div>
+        <div class="tile"><h4>Time off work</h4><p>Traveling for care often means taking time off work, which isn't always possible.</p></div>
+      </div>
+    </section>
+
+    <section class="screen" data-title="8 Types of Treatment">
+      <p class="screen__eyebrow kicker">Section 6</p>
+      <h2>Eight types of cancer treatment</h2>
+      <p class="lede">
+        There isn't one single "cancer treatment" — doctors choose from (and often combine)
+        several different approaches depending on the cancer type, its stage, and the patient.
+        Click each one to learn more.
+      </p>
+      <div class="card-picker">
+        <div class="card-picker__grid">
+          <button class="card-picker__btn" data-target="tx-chemo">
+            <span class="card-picker__icon card-picker__icon--c1"><svg viewBox="0 0 24 24"><path d="M9 3h6l1 4H8l1-4z"/><path d="M8 7h8l-1 6a3 3 0 0 1-6 0L8 7z"/><path d="M12 16v5"/></svg></span>
+            <span class="card-picker__label">Chemotherapy</span>
+          </button>
+          <button class="card-picker__btn" data-target="tx-radiation">
+            <span class="card-picker__icon card-picker__icon--c2"><svg viewBox="0 0 24 24"><circle cx="12" cy="17" r="2.6"/><path d="M12 2v6M6 8l2.5 2M18 8l-2.5 2"/></svg></span>
+            <span class="card-picker__label">Radiation Therapy</span>
+          </button>
+          <button class="card-picker__btn" data-target="tx-surgery">
+            <span class="card-picker__icon card-picker__icon--c3"><svg viewBox="0 0 24 24"><path d="M4 20l7-7"/><path d="M11 13l6.2-6.2a2 2 0 0 0-2.8-2.8L8.2 10.2"/><circle cx="18.5" cy="5.5" r="1.1"/></svg></span>
+            <span class="card-picker__label">Surgery</span>
+          </button>
+          <button class="card-picker__btn" data-target="tx-immuno">
+            <span class="card-picker__icon card-picker__icon--c4"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.3 7.8-7 9-3.7-1.2-7-4-7-9V6l7-3z"/><path d="M12 9v6M9 12h6"/></svg></span>
+            <span class="card-picker__label">Immunotherapy</span>
+          </button>
+          <button class="card-picker__btn" data-target="tx-stemcell">
+            <span class="card-picker__icon card-picker__icon--c5"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="4"/><circle cx="16" cy="16" r="4"/><path d="M11.4 11.4l3.2 3.2"/></svg></span>
+            <span class="card-picker__label">Stem Cell Transplant</span>
+          </button>
+          <button class="card-picker__btn" data-target="tx-targeted">
+            <span class="card-picker__icon card-picker__icon--c6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="0.9"/></svg></span>
+            <span class="card-picker__label">Targeted Therapy</span>
+          </button>
+          <button class="card-picker__btn" data-target="tx-hormone">
+            <span class="card-picker__icon card-picker__icon--c7"><svg viewBox="0 0 24 24"><rect x="7" y="8" width="10" height="13" rx="2.5"/><path d="M9.2 8V5.2a2.8 2.8 0 0 1 5.6 0V8"/><path d="M7 13h10"/></svg></span>
+            <span class="card-picker__label">Hormone Therapy</span>
+          </button>
+          <button class="card-picker__btn" data-target="tx-precision">
+            <span class="card-picker__icon card-picker__icon--c8"><svg viewBox="0 0 24 24"><path d="M6 2.5c6 3.8 6 7.8 0 11.6M18 2.5c-6 3.8-6 7.8 0 11.6M6 12.1c6 3.8 6 5.9 0 9.4M18 12.1c-6 3.8-6 5.9 0 9.4"/><path d="M7.5 5.5h9M6.8 9.5h10.4M6.8 14.5h10.4M7.5 18.5h9"/></svg></span>
+            <span class="card-picker__label">Precision Medicine</span>
+          </button>
         </div>
-      </section>
 
-      <!-- 3 -->
-      <section class="screen" data-title="How Cancer Is Diagnosed">
-        <div class="screen__kicker"><span class="eyebrow">Section 3</span></div>
-        <h2>How is cancer diagnosed?</h2>
-        <p class="lede">
-          A patient might come in with a lump or another symptom &mdash; but the cells involved
-          have to be examined closely before anyone can say whether it's cancer.
-        </p>
-        <div class="card-grid">
-          <div class="info-card">
-            <span class="tag">1</span>
-            <h4>Scan</h4>
-            <p>Cancer is often first identified using an imaging scan.</p>
-          </div>
-          <div class="info-card">
-            <span class="tag">2</span>
-            <h4>Biopsy</h4>
-            <p>A doctor performs a <strong>biopsy</strong>: removing a sample of the tissue in
-            question and sending it to a lab.</p>
-          </div>
-          <div class="info-card">
-            <span class="tag">3</span>
-            <h4>Microscope exam</h4>
-            <p>An expert examines the sample under a microscope to determine whether it's
-            cancerous &mdash; the kind of comparison you made back in Module 1.</p>
-          </div>
-          <div class="info-card">
-            <span class="tag">4</span>
-            <h4>Treatment begins</h4>
-            <p>Once cancer is confirmed, doctors can begin planning treatment &mdash; the focus
-            of the rest of this module.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3 -->
-      <section class="screen" data-title="Why Early Detection Matters">
-        <div class="screen__kicker"><span class="eyebrow">Section 4</span></div>
-        <h2>Why early detection matters</h2>
-        <p class="lede">
-          <strong>Early detection</strong> means cancer is found while it's still in its early
-          stages: it's small, it hasn't spread, and there are usually few or no symptoms yet.
-          Early detection is achieved through regular screening tests for specific cancer types.
-        </p>
-        <div class="activity">
-          <p class="activity__label">Which is easier to cure?</p>
-          <p>Compare these two scenarios:</p>
-          <div class="card-grid" style="margin-top: 0.6rem;">
-            <div class="info-card">
-              <span class="tag">Scenario A</span>
-              <p>A cancer that is <strong>large</strong> and has <strong>spread</strong> to
-              different areas of the body.</p>
-            </div>
-            <div class="info-card">
-              <span class="tag">Scenario B</span>
-              <p>A cancer that is <strong>small</strong> and has <strong>not yet spread</strong>.</p>
-            </div>
-          </div>
-          <p style="margin-top: 0.8rem;"><strong>Which is generally easier to treat successfully?</strong></p>
-          <div class="choice-list" data-correct="1">
-            <button class="choice">Scenario A &mdash; large and spread</button>
-            <button class="choice">Scenario B &mdash; small and not yet spread</button>
-          </div>
-          <p class="feedback is-correct-msg">
-            <strong>Right.</strong> Early detection improves a patient's chances of survival.
-            A small, localized cancer is generally far easier to treat &mdash; sometimes with a
-            single treatment like surgery &mdash; than a cancer that has already spread to
-            multiple parts of the body.
-          </p>
-          <p class="feedback is-incorrect-msg">
-            Actually, it's Scenario B. Early detection improves a patient's chances of survival
-            &mdash; a small, localized cancer is generally far easier to treat than one that has
-            already spread.
-          </p>
-        </div>
-      </section>
-
-      <!-- 4 -->
-      <section class="screen" data-title="Barriers to Early Detection">
-        <div class="screen__kicker"><span class="eyebrow">Section 5</span></div>
-        <h2>What happens if early detection doesn't occur?</h2>
-        <p class="lede">
-          Patients living in rural areas are more likely to be diagnosed with later-stage cancers
-          than patients living in urban areas &mdash; often because of a lack of access to
-          healthcare services. A later-stage diagnosis can affect a patient's entire treatment
-          plan.
-        </p>
-        <div class="activity">
-          <p class="activity__label">Think about it</p>
-          <p>Before reading on: what parts of Kentucky do you think might have limited access to
-          cancer care, and why?</p>
-        </div>
-        <h3>Barriers for rural Appalachian Kentucky residents</h3>
-        <div class="card-grid">
-          <div class="info-card">
-            <h4>Distance</h4>
-            <p>Many residents live very far from the nearest cancer care facility.</p>
-          </div>
-          <div class="info-card">
-            <h4>Road conditions</h4>
-            <p>The roads connecting rural areas to medical centers can be winding and
-            dangerous &mdash; especially in bad weather.</p>
-          </div>
-          <div class="info-card">
-            <h4>Time off work</h4>
-            <p>Traveling for care often means taking time off work, which isn't always
-            possible.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5 -->
-      <section class="screen" data-title="8 Types of Treatment">
-        <div class="screen__kicker"><span class="eyebrow">Section 6</span></div>
-        <h2>Eight types of cancer treatment</h2>
-        <p class="lede">
-          There isn't one single "cancer treatment" &mdash; doctors choose from (and often
-          combine) several different approaches depending on the cancer type, its stage, and the
-          patient. Click each one to learn more.
-        </p>
-
-        <div class="accordion">
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Chemotherapy</button>
-            <div class="accordion__panel">
-              <p>One of the most common cancer treatments. Chemotherapy uses powerful chemicals
-              (drugs) to kill cancer cells.</p>
-              <ul>
-                <li>May involve a single drug, or multiple drugs infused through an IV.</li>
-                <li>When multiple drugs are used, they're often given in a specific order.</li>
-                <li>The drugs chosen depend on the tumor's size, the cancer's stage, the patient's
-                  age, and the patient's overall health.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Radiation Therapy</button>
-            <div class="accordion__panel">
-              <p>Radiation therapy uses high doses of radiation &mdash; the same general
-              technology used to take an X-ray of a broken bone &mdash; to damage the DNA of
-              cancer cells, killing them and shrinking tumors.</p>
-              <p>Radiation doesn't work immediately: it can take days or weeks of treatment before
-              cancer cells begin to die, and cells continue dying even after treatment ends.</p>
-            </div>
-          </div>
-
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Surgery</button>
-            <div class="accordion__panel">
-              <p>A surgeon removes the tumor from a specific part of the body &mdash; either the
-              entire tumor, or just part of it.</p>
-              <p>Doctors may remove only part of a tumor if removing all of it would damage
-              another part of the body. Removing some or all of a tumor can also help other
-              treatments work better, and can relieve pain or pressure caused by the tumor.</p>
-            </div>
-          </div>
-
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Immunotherapy</button>
-            <div class="accordion__panel">
-              <p>Immunotherapy is a treatment that helps a patient's own immune system better
-              recognize and fight cancer. It's not as widely used as surgery, chemotherapy, or
-              radiation therapy.</p>
-              <p>It can be given in several forms: through an IV, as a pill, as a topical
-              ointment, or inserted directly into the bladder (for certain bladder cancers).</p>
-            </div>
-          </div>
-
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Stem Cell Transplant</button>
-            <div class="accordion__panel">
-              <p><strong>Stem cells</strong> are young cells that can develop into nearly any cell
-              type in the body.</p>
-              <p>A stem cell transplant restores stem cells in patients whose own stem cells were
-              destroyed by chemotherapy or radiation. This helps restore the body's supply of
-              white blood cells, red blood cells, and platelets.</p>
-            </div>
-          </div>
-
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Targeted Therapy</button>
-            <div class="accordion__panel">
-              <p>Targeted therapy aims at specific proteins that control how cancer cells grow,
-              divide, and spread. Depending on the drug, it can:</p>
-              <ul>
-                <li>Help the immune system destroy cancer cells</li>
-                <li>Stop cancer cells from growing</li>
-                <li>Deliver cell-killing substances directly to cancer cells</li>
-                <li>Starve cancer cells of the hormones they need to grow</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Hormone Therapy</button>
-            <div class="accordion__panel">
-              <p>Hormone therapy slows or stops the growth of certain cancers by changing the
-              hormones available to them. It can be used to stop cancer growth or to ease
-              symptoms.</p>
-              <p>It's only used to treat patients with <strong>prostate</strong> or
-              <strong>breast</strong> cancer &mdash; cancers whose growth can be influenced by
-              hormone levels.</p>
-            </div>
-          </div>
-
-          <div class="accordion__item">
-            <button class="accordion__trigger" aria-expanded="false">Precision Medicine</button>
-            <div class="accordion__panel">
-              <p>With precision medicine, doctors choose a treatment based on a genetic
-              understanding of the patient's specific tumor.</p>
-              <p>Each tumor type has a genetic change that allows it to grow and spread. Patients
-              whose tumors share that genetic change receive one type of treatment, while
-              patients with a different genetic change receive a different treatment.</p>
-              <p>This approach only works if the tumor has a genetic change that can actually be
-              targeted by an existing drug.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6 -->
-      <section class="screen" data-title="Why Plans Differ">
-        <div class="screen__kicker"><span class="eyebrow">Section 7</span></div>
-        <h2>Why treatment plans differ between patients</h2>
-        <div class="activity">
-          <p class="activity__label">Quick question</p>
-          <p><strong>True or false:</strong> the same treatment works equally well for every
-          patient with the same type of cancer.</p>
-          <div class="choice-list" data-correct="1">
-            <button class="choice">True</button>
-            <button class="choice">False</button>
-          </div>
-          <p class="feedback is-correct-msg">
-            <strong>Correct &mdash; false.</strong> Some treatments work for some patients and not
-            for others, even with the same general type of cancer.
-          </p>
-          <p class="feedback is-incorrect-msg">
-            Not quite &mdash; the statement is <strong>false</strong>. Some treatments work for
-            some patients and not for others, even with the same general type of cancer.
-          </p>
-        </div>
-        <p class="lede">Three big factors explain why:</p>
-        <div class="card-grid">
-          <div class="info-card">
-            <h4>Genetics</h4>
-            <p>A patient's individual genetic makeup can affect how their body responds to a
-            given treatment.</p>
-          </div>
-          <div class="info-card">
-            <h4>Drug &amp; treatment interactions</h4>
-            <p>How a drug or treatment interacts with a patient's body &mdash; including other
-            medications they take &mdash; varies from person to person.</p>
-          </div>
-          <div class="info-card">
-            <h4>Cancer &amp; tumor type</h4>
-            <p>The specific type of cancer and tumor &mdash; including its genetic
-            characteristics &mdash; affects which treatments are even an option.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 7 -->
-      <section class="screen" data-title="Combination Therapy">
-        <div class="screen__kicker"><span class="eyebrow">Section 8</span></div>
-        <h2>Combination therapy</h2>
-        <p class="lede">
-          <strong>Combination therapy</strong> is when a doctor combines two or more drugs or
-          treatment types. This can mean combining different kinds of treatment &mdash; for
-          example, surgery and radiation, or radiation and chemotherapy &mdash; or combining
-          different drugs within a single type of treatment, such as using three different drugs
-          during chemotherapy.
-        </p>
-        <div class="compare">
-          <div class="compare__col compare__col--a">
-            <h4>Advantages</h4>
+        <div class="card-picker__panels">
+          <div class="card-picker__panel" id="tx-chemo">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c1"><svg viewBox="0 0 24 24"><path d="M9 3h6l1 4H8l1-4z"/><path d="M8 7h8l-1 6a3 3 0 0 1-6 0L8 7z"/><path d="M12 16v5"/></svg></span><h3>Chemotherapy</h3></div>
+            <p>One of the most common cancer treatments. Chemotherapy uses powerful chemicals
+            (drugs) to kill cancer cells.</p>
             <ul>
-              <li>Increases the likelihood the cancer will be eliminated</li>
-              <li>Helps prevent the cancer from developing drug resistance</li>
-              <li>Can reduce the overall length of treatment</li>
+              <li>May involve a single drug, or multiple drugs infused through an IV.</li>
+              <li>When multiple drugs are used, they're often given in a specific order.</li>
+              <li>The drugs chosen depend on the tumor's size, the cancer's stage, the
+              patient's age, and the patient's overall health.</li>
             </ul>
           </div>
-          <div class="compare__col compare__col--b">
-            <h4>Disadvantages</h4>
+          <div class="card-picker__panel" id="tx-radiation">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c2"><svg viewBox="0 0 24 24"><circle cx="12" cy="17" r="2.6"/><path d="M12 2v6M6 8l2.5 2M18 8l-2.5 2"/></svg></span><h3>Radiation Therapy</h3></div>
+            <p>Radiation therapy uses high doses of radiation — the same general technology
+            used to take an X-ray of a broken bone — to damage the DNA of cancer cells,
+            killing them and shrinking tumors.</p>
+            <p>Radiation doesn't work immediately: it can take days or weeks of treatment
+            before cancer cells begin to die, and cells continue dying even after treatment
+            ends.</p>
+          </div>
+          <div class="card-picker__panel" id="tx-surgery">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c3"><svg viewBox="0 0 24 24"><path d="M4 20l7-7"/><path d="M11 13l6.2-6.2a2 2 0 0 0-2.8-2.8L8.2 10.2"/><circle cx="18.5" cy="5.5" r="1.1"/></svg></span><h3>Surgery</h3></div>
+            <p>A surgeon removes the tumor from a specific part of the body — either the
+            entire tumor, or just part of it.</p>
+            <p>Doctors may remove only part of a tumor if removing all of it would damage
+            another part of the body. Removing some or all of a tumor can also help other
+            treatments work better, and can relieve pain or pressure caused by the tumor.</p>
+          </div>
+          <div class="card-picker__panel" id="tx-immuno">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c4"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.3 7.8-7 9-3.7-1.2-7-4-7-9V6l7-3z"/><path d="M12 9v6M9 12h6"/></svg></span><h3>Immunotherapy</h3></div>
+            <p>Immunotherapy is a treatment that helps a patient's own immune system better
+            recognize and fight cancer. It's not as widely used as surgery, chemotherapy, or
+            radiation therapy.</p>
+            <p>It can be given in several forms: through an IV, as a pill, as a topical
+            ointment, or inserted directly into the bladder (for certain bladder cancers).</p>
+          </div>
+          <div class="card-picker__panel" id="tx-stemcell">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c5"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="4"/><circle cx="16" cy="16" r="4"/><path d="M11.4 11.4l3.2 3.2"/></svg></span><h3>Stem Cell Transplant</h3></div>
+            <p><strong>Stem cells</strong> are young cells that can develop into nearly any
+            cell type in the body.</p>
+            <p>A stem cell transplant restores stem cells in patients whose own stem cells
+            were destroyed by chemotherapy or radiation. This helps restore the body's supply
+            of white blood cells, red blood cells, and platelets.</p>
+            <div class="step-flow">
+              <div class="step-flow__step"><span class="step-flow__num">1</span><br>Stem cells are collected from a healthy donor (or the patient, beforehand).</div>
+              <div class="step-flow__arrow">→</div>
+              <div class="step-flow__step"><span class="step-flow__num">2</span><br>Chemotherapy or radiation destroys the patient's own damaged stem cells.</div>
+              <div class="step-flow__arrow">→</div>
+              <div class="step-flow__step"><span class="step-flow__num">3</span><br>The patient receives the new stem cells through an IV, restoring their blood cell supply.</div>
+            </div>
+          </div>
+          <div class="card-picker__panel" id="tx-targeted">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="0.9"/></svg></span><h3>Targeted Therapy</h3></div>
+            <p>Targeted therapy aims at specific proteins that control how cancer cells grow,
+            divide, and spread. Depending on the drug, it can:</p>
             <ul>
-              <li>It's not always clear how a patient's body will respond to two treatment types
-                at once</li>
-              <li>It's sometimes unclear how the two treatments or drugs will interact with each
-                other</li>
+              <li>Help the immune system destroy cancer cells</li>
+              <li>Stop cancer cells from growing</li>
+              <li>Deliver cell-killing substances directly to cancer cells</li>
+              <li>Starve cancer cells of the hormones they need to grow</li>
             </ul>
           </div>
-        </div>
-      </section>
-
-      <!-- 8 -->
-      <section class="screen" data-title="Summary">
-        <div class="screen__kicker"><span class="eyebrow">Section 9</span></div>
-        <h2>Module 3 summary</h2>
-        <ul>
-          <li>Cancer is typically diagnosed with a scan, followed by a <strong>biopsy</strong> and
-            examination under a microscope.</li>
-          <li><strong>Early detection is key to survival</strong> &mdash; a small, localized
-            cancer is generally much easier to treat than one that has already spread.</li>
-          <li>Barriers to early detection &mdash; especially in rural Appalachian Kentucky &mdash;
-            include distance to care, road conditions, and the ability to take time off work.</li>
-          <li>There are eight major types of cancer treatment: <strong>chemotherapy, radiation
-            therapy, surgery, immunotherapy, stem cell transplant, targeted therapy, hormone
-            therapy, and precision medicine</strong> &mdash; each working differently and carrying
-            different side effects.</li>
-          <li>Treatment plans differ between patients because of genetics, how drugs interact with
-            the body, and the specific cancer/tumor type.</li>
-          <li><strong>Combination therapy</strong> &mdash; using two or more treatments together
-            &mdash; has real advantages, but also some uncertainties.</li>
-        </ul>
-      </section>
-
-      <!-- 10 -->
-      <section class="screen" data-title="Post-Test">
-        <div class="screen__kicker"><span class="eyebrow">Post-test</span></div>
-        <h2>Post-test: the same 10 questions</h2>
-        <p class="lede">
-          Here's that same set of 10 questions from the start of the module. This time,
-          you'll see right away whether each answer is correct, along with a short
-          explanation &mdash; and how your score compares to your starting score.
-        </p>
-        <div class="quiz" data-test-type="post" data-bank="module3" data-module="module3" data-result="m3posttestResult"></div>
-        <div class="quiz-result" id="m3posttestResult">
-          <p class="eyebrow">Your score</p>
-          <p class="quiz-result__score">0 / 10</p>
-          <p class="quiz-result__msg"></p>
-          <p class="quiz-result__compare" hidden></p>
-        </div>
-      </section>
-
-      <!-- 11 -->
-      <section class="screen" data-title="Wrap-Up">
-        <div class="screen__kicker"><span class="eyebrow">Wrap-up</span></div>
-        <h2>You made it through all three modules</h2>
-        <p class="lede">
-          Look back at what you wrote at the start of this module about how you thought a
-          treatment worked.
-        </p>
-        <div class="reflection">
-          <label for="m3q_post">How does your understanding now compare? What's one thing you'd explain differently to a friend or family member after this course?</label>
-          <textarea id="m3q_post" data-key="m3_post" placeholder="Type your thoughts here&hellip;"></textarea>
-          <p class="save-note">Saved on this device</p>
-        </div>
-
-        <div class="complete-banner" id="completeBanner" hidden>
-          <p class="eyebrow on-dark">Course complete</p>
-          <h2>Congratulations!</h2>
-          <p>
-            You've completed all three modules of <em>Cancer in the Commonwealth</em>: cancer
-            basics and health disparities, risk factors and modifiable behaviors, and diagnosis
-            and treatment. Consider sharing what you've learned &mdash; that's part of "Act" from
-            Module 2!
-          </p>
-          <div class="complete-banner__actions">
-            <a class="btn btn--gold" href="certificate.html">Get your certificate &rarr;</a>
-            <a class="btn btn--ghost" style="border-color:#fff; color:#fff;" href="index.html">Back to all modules</a>
-            <a class="btn btn--ghost" style="border-color:rgba(255,255,255,0.4); color:rgba(255,255,255,0.7);" href="module1.html">Revisit Module 1</a>
+          <div class="card-picker__panel" id="tx-hormone">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c7"><svg viewBox="0 0 24 24"><rect x="7" y="8" width="10" height="13" rx="2.5"/><path d="M9.2 8V5.2a2.8 2.8 0 0 1 5.6 0V8"/><path d="M7 13h10"/></svg></span><h3>Hormone Therapy</h3></div>
+            <p>Hormone therapy slows or stops the growth of certain cancers by changing the
+            hormones available to them. It can be used to stop cancer growth or to ease
+            symptoms.</p>
+            <p>It's only used to treat patients with <strong>prostate</strong> or
+            <strong>breast</strong> cancer — cancers whose growth can be influenced by hormone
+            levels.</p>
+          </div>
+          <div class="card-picker__panel" id="tx-precision">
+            <div class="card-picker__panel-head"><span class="card-picker__icon card-picker__icon--c8"><svg viewBox="0 0 24 24"><path d="M6 2.5c6 3.8 6 7.8 0 11.6M18 2.5c-6 3.8-6 7.8 0 11.6M6 12.1c6 3.8 6 5.9 0 9.4M18 12.1c-6 3.8-6 5.9 0 9.4"/><path d="M7.5 5.5h9M6.8 9.5h10.4M6.8 14.5h10.4M7.5 18.5h9"/></svg></span><h3>Precision Medicine</h3></div>
+            <p>With precision medicine, doctors choose a treatment based on a genetic
+            understanding of the patient's specific tumor.</p>
+            <p>Each tumor type has a genetic change that allows it to grow and spread.
+            Patients whose tumors share that genetic change receive one type of treatment,
+            while patients with a different genetic change receive a different treatment.</p>
+            <p>This approach only works if the tumor has a genetic change that can actually be
+            targeted by an existing drug.</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-    </div>
+    <section class="screen" data-title="Why Plans Differ">
+      <p class="screen__eyebrow kicker">Section 7</p>
+      <h2>Why treatment plans differ between patients</h2>
+      <div class="activity">
+        <p class="activity__label">Quick question</p>
+        <p><strong>True or false:</strong> the same treatment works equally well for every
+        patient with the same type of cancer.</p>
+        <div class="choice-list" data-correct="1">
+          <button class="choice">True</button>
+          <button class="choice">False</button>
+        </div>
+        <p class="feedback is-correct-msg">
+          <strong>Correct — false.</strong> Some treatments work for some patients and not for
+          others, even with the same general type of cancer.
+        </p>
+        <p class="feedback is-incorrect-msg">
+          Not quite — the statement is <strong>false</strong>. Some treatments work for some
+          patients and not for others, even with the same general type of cancer.
+        </p>
+      </div>
+      <p class="lede">Three big factors explain why:</p>
+      <div class="tile-grid">
+        <div class="tile"><h4>Genetics</h4><p>A patient's individual genetic makeup can affect how their body responds to a given treatment.</p></div>
+        <div class="tile"><h4>Drug &amp; treatment interactions</h4><p>How a drug or treatment interacts with a patient's body — including other medications they take — varies from person to person.</p></div>
+        <div class="tile"><h4>Cancer &amp; tumor type</h4><p>The specific type of cancer and tumor — including its genetic characteristics — affects which treatments are even an option.</p></div>
+      </div>
+    </section>
 
-    <div class="stage-controls">
-      <button class="btn btn--ghost" id="prevBtn">&larr; Back</button>
-      <div class="progress-track"><div class="progress-track__fill" id="progressFill"></div></div>
-      <button class="btn" id="nextBtn">Next &rarr;</button>
-    </div>
+    <section class="screen" data-title="Combination Therapy">
+      <p class="screen__eyebrow kicker">Section 8</p>
+      <h2>Combination therapy</h2>
+      <p class="lede">
+        <strong>Combination therapy</strong> is when a doctor combines two or more drugs or
+        treatment types. This can mean combining different kinds of treatment — for example,
+        surgery and radiation, or radiation and chemotherapy — or combining different drugs
+        within a single type of treatment, such as using three different drugs during
+        chemotherapy.
+      </p>
+      <div class="compare">
+        <div class="compare__col compare__col--a">
+          <h4>Advantages</h4>
+          <ul>
+            <li>Increases the likelihood the cancer will be eliminated</li>
+            <li>Helps prevent the cancer from developing drug resistance</li>
+            <li>Can reduce the overall length of treatment</li>
+          </ul>
+        </div>
+        <div class="compare__col compare__col--b">
+          <h4>Disadvantages</h4>
+          <ul>
+            <li>It's not always clear how a patient's body will respond to two treatment
+            types at once</li>
+            <li>It's sometimes unclear how the two treatments or drugs will interact with
+            each other</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-title="Summary">
+      <p class="screen__eyebrow kicker">Section 9</p>
+      <h2>Module 3 summary</h2>
+      <ul>
+        <li>Cancer is typically diagnosed with a scan, followed by a <strong>biopsy</strong>
+        and examination under a microscope.</li>
+        <li><strong>Early detection is key to survival</strong> — a small, localized cancer is
+        generally much easier to treat than one that has already spread.</li>
+        <li>Barriers to early detection — especially in rural Appalachian Kentucky — include
+        distance to care, road conditions, and the ability to take time off work.</li>
+        <li>There are eight major types of cancer treatment: <strong>chemotherapy, radiation
+        therapy, surgery, immunotherapy, stem cell transplant, targeted therapy, hormone
+        therapy, and precision medicine</strong> — each working differently and carrying
+        different side effects.</li>
+        <li>Treatment plans differ between patients because of genetics, how drugs interact
+        with the body, and the specific cancer/tumor type.</li>
+        <li><strong>Combination therapy</strong> — using two or more treatments together —
+        has real advantages, but also some uncertainties.</li>
+      </ul>
+    </section>
+
+    <section class="screen" data-title="Post-Test">
+      <p class="screen__eyebrow kicker">Post-test</p>
+      <h2>Post-test: the same 10 questions</h2>
+      <p class="lede">
+        Here's that same set of 10 questions from the start of the module. This time, you'll
+        see right away whether each answer is correct, along with a short explanation — and
+        how your score compares to your starting score.
+      </p>
+      <div class="quiz" data-test-type="post" data-bank="module3" data-result="m3posttestResult"></div>
+      <div class="quiz-result" id="m3posttestResult">
+        <p class="kicker">Your score</p>
+        <p class="quiz-result__score">0 / 10</p>
+        <p class="quiz-result__msg"></p>
+        <p class="quiz-result__compare" hidden></p>
+      </div>
+    </section>
+
+    <section class="screen" data-title="Wrap-Up">
+      <p class="screen__eyebrow kicker">Wrap-up</p>
+      <h2>You made it through all three modules</h2>
+      <p class="lede">
+        Look back at what you wrote at the start of this module about how you thought a
+        treatment worked.
+      </p>
+      <div class="journal">
+        <label for="m3q_post">How does your understanding now compare? What's one thing you'd explain differently to a friend or family member after this course?</label>
+        <textarea id="m3q_post" data-key="m3_post" placeholder="Type your thoughts here…"></textarea>
+        <p class="journal__note">Saved on this device</p>
+      </div>
+
+      <div class="complete-banner" id="completeBanner" hidden>
+        <p class="kicker on-dark">Course complete</p>
+        <h2>Congratulations!</h2>
+        <p>You've completed all three modules of <em>Cancer in the Commonwealth</em>: cancer
+        basics and health disparities, risk factors and modifiable behaviors, and diagnosis
+        and treatment. Consider sharing what you've learned — that's part of "Act" from
+        Module 2!</p>
+        <div class="complete-banner__actions">
+          <a class="btn btn--gold" href="certificate.html">Get your certificate →</a>
+          <a class="btn btn--ghost on-dark" href="index.html">Back to all modules</a>
+          <a class="btn btn--ghost on-dark" href="module1.html">Revisit Module 1</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="stage-controls">
+    <button class="btn btn--ghost" id="prevBtn">&larr; Back</button>
+    <div class="progress-track" id="progressTrack"></div>
+    <button class="btn" id="nextBtn">Next &rarr;</button>
   </div>
 
   <footer class="site-footer">
-    <div class="site-footer__inner">
+    <div class="container" style="text-align:center;">
       <p>Adapted from the <em>Cancer in the Commonwealth</em> curriculum, &copy; University of Kentucky Markey Cancer Center, 2020&ndash;2025.</p>
-      <p><a href="index.html">&larr; Back to all modules</a></p>
+      <p style="margin-top:0.4rem;"><a href="index.html">&larr; Back to all modules</a></p>
     </div>
   </footer>
 
-  <div class="modal-overlay" id="accountModal" hidden>
+  <div class="modal-overlay" id="loginModal" hidden>
     <div class="modal">
-      <button class="modal__close" id="accountModalClose" aria-label="Close">&times;</button>
-      <p class="eyebrow">Optional</p>
-      <h2>Save your progress</h2>
-      <p>
-        Create a free account to save your progress and pick up where you left off on any
-        device. You can also keep using this site without an account &mdash; your progress
-        will just stay on this device.
+      <button class="modal__close" id="loginModalClose" type="button" aria-label="Close">&times;</button>
+      <p class="kicker">Optional</p>
+      <h2>Sign in</h2>
+      <p class="lede" style="margin-top:0.5rem; font-size:0.95rem;">
+        New here? Fill in all four fields and select <strong>Create account</strong>. Already
+        signed up? Just enter your username and password and select <strong>Sign in</strong>.
       </p>
-      <form id="accountForm">
-        <label for="accountEmail">Email</label>
-        <input type="email" id="accountEmail" autocomplete="email" required>
-        <label for="accountPassword">Password</label>
-        <input type="password" id="accountPassword" autocomplete="current-password" minlength="6" required>
-        <p class="form-error" id="accountError"></p>
-        <p class="form-info" id="accountInfo"></p>
-        <div class="modal__actions">
-          <button type="submit" class="btn btn--gold" id="accountSignIn">Sign in</button>
-          <button type="button" class="btn btn--ghost" id="accountSignUp">Create account</button>
+      <p class="lede" style="margin-top:0.6rem; font-size:0.88rem;">
+        Your username, county, and school are stored on your school or university's own
+        server, not a third-party service. Your password is sent for verification only and
+        is never saved in this browser &mdash; and progress still also saves on this device
+        either way.
+      </p>
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" name="username" autocomplete="username" required>
         </div>
-        <p class="modal__forgot"><button type="button" class="link-btn" id="accountForgot">Forgot password?</button></p>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <div class="field__password-wrap">
+            <input type="password" id="loginPassword" name="password" autocomplete="current-password" required>
+            <button type="button" class="field__toggle-visibility" id="loginPasswordToggle" aria-label="Show password">Show</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="loginCounty">County</label>
+          <select id="loginCounty" name="county">
+            <option value="" disabled selected>Select your county&hellip;</option>
+            <option>Adair</option>
+            <option>Allen</option>
+            <option>Anderson</option>
+            <option>Ballard</option>
+            <option>Barren</option>
+            <option>Bath</option>
+            <option>Bell</option>
+            <option>Boone</option>
+            <option>Bourbon</option>
+            <option>Boyd</option>
+            <option>Boyle</option>
+            <option>Bracken</option>
+            <option>Breathitt</option>
+            <option>Breckinridge</option>
+            <option>Bullitt</option>
+            <option>Butler</option>
+            <option>Caldwell</option>
+            <option>Calloway</option>
+            <option>Campbell</option>
+            <option>Carlisle</option>
+            <option>Carroll</option>
+            <option>Carter</option>
+            <option>Casey</option>
+            <option>Christian</option>
+            <option>Clark</option>
+            <option>Clay</option>
+            <option>Clinton</option>
+            <option>Crittenden</option>
+            <option>Cumberland</option>
+            <option>Daviess</option>
+            <option>Edmonson</option>
+            <option>Elliott</option>
+            <option>Estill</option>
+            <option>Fayette</option>
+            <option>Fleming</option>
+            <option>Floyd</option>
+            <option>Franklin</option>
+            <option>Fulton</option>
+            <option>Gallatin</option>
+            <option>Garrard</option>
+            <option>Grant</option>
+            <option>Graves</option>
+            <option>Grayson</option>
+            <option>Green</option>
+            <option>Greenup</option>
+            <option>Hancock</option>
+            <option>Hardin</option>
+            <option>Harlan</option>
+            <option>Harrison</option>
+            <option>Hart</option>
+            <option>Henderson</option>
+            <option>Henry</option>
+            <option>Hickman</option>
+            <option>Hopkins</option>
+            <option>Jackson</option>
+            <option>Jefferson</option>
+            <option>Jessamine</option>
+            <option>Johnson</option>
+            <option>Kenton</option>
+            <option>Knott</option>
+            <option>Knox</option>
+            <option>Larue</option>
+            <option>Laurel</option>
+            <option>Lawrence</option>
+            <option>Lee</option>
+            <option>Leslie</option>
+            <option>Letcher</option>
+            <option>Lewis</option>
+            <option>Lincoln</option>
+            <option>Livingston</option>
+            <option>Logan</option>
+            <option>Lyon</option>
+            <option>McCracken</option>
+            <option>McCreary</option>
+            <option>McLean</option>
+            <option>Madison</option>
+            <option>Magoffin</option>
+            <option>Marion</option>
+            <option>Marshall</option>
+            <option>Martin</option>
+            <option>Mason</option>
+            <option>Meade</option>
+            <option>Menifee</option>
+            <option>Mercer</option>
+            <option>Metcalfe</option>
+            <option>Monroe</option>
+            <option>Montgomery</option>
+            <option>Morgan</option>
+            <option>Muhlenberg</option>
+            <option>Nelson</option>
+            <option>Nicholas</option>
+            <option>Ohio</option>
+            <option>Oldham</option>
+            <option>Owen</option>
+            <option>Owsley</option>
+            <option>Pendleton</option>
+            <option>Perry</option>
+            <option>Pike</option>
+            <option>Powell</option>
+            <option>Pulaski</option>
+            <option>Robertson</option>
+            <option>Rockcastle</option>
+            <option>Rowan</option>
+            <option>Russell</option>
+            <option>Scott</option>
+            <option>Shelby</option>
+            <option>Simpson</option>
+            <option>Spencer</option>
+            <option>Taylor</option>
+            <option>Todd</option>
+            <option>Trigg</option>
+            <option>Trimble</option>
+            <option>Union</option>
+            <option>Warren</option>
+            <option>Washington</option>
+            <option>Wayne</option>
+            <option>Webster</option>
+            <option>Whitley</option>
+            <option>Wolfe</option>
+            <option>Woodford</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="loginSchool">School name</label>
+          <input type="text" id="loginSchool" name="school" autocomplete="organization">
+        </div>
+        <p class="form-error" id="loginError" hidden></p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--gold btn--block" id="loginSignInBtn">Sign in</button>
+          <button type="button" class="btn btn--ghost btn--block" id="loginRegisterBtn">Create account</button>
+        </div>
       </form>
-      <p class="modal__note"><button type="button" class="link-btn" id="accountContinueGuest">Continue without an account</button></p>
+      <p class="modal__note"><button type="button" class="link-btn" id="loginContinueGuest">Continue without signing in</button></p>
     </div>
   </div>
 
-  <script src="assets/tests-data.js"></script>
-  <script src="assets/script.js"></script>
-  <script src="assets/init-module3.js"></script>
-  <script type="module" src="assets/account.js"></script>
+  <script src="assets/api-config.js"></script>
+  <script src="assets/quiz-data.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>
